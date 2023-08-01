@@ -1,0 +1,22 @@
+# FinGreyLit-Meta
+
+This repository contains a data set of curated Dublin Core style metadata from a selection of Finnish "grey literature" publications. The dataset is mainly intended to enable and facilitate the development of automated methods for metadata extraction from PDF publications. The publications have been sampled from various DSpace based open repository systems administered by the National Library of Finland. The dataset is trilingual, containing publications in Finnish, Swedish and English language.
+
+All the publication PDF files are openly accessible from the original DSpace systems. Due to copyright concerns, this repository contains only the curated metadata and links to the original PDF files. The repository contains scripts for downloading the PDF publications from the original repositories and extracting the full text.
+
+# Contents
+
+TBD
+
+# License
+
+The content of this repository is freely available under the CC0 license. The original metadata used in creating this data set is not copyrightable.
+
+The original publications referenced in this data set are copyrighted by their authors and/or publishers.
+
+# Credits
+
+* Original authors of the publications
+* The people who originally entered metadata for the publications in DSpace (often the authors themselves)
+* Tuukka Hämäläinen who curated and harmonized the metadata
+* NatLibFi automated cataloguing team (Mona Lehtinen, Osma Suominen, Juho Inkinen) for overseeing the project
