@@ -6,7 +6,8 @@ All the publication PDF files are openly accessible from the original DSpace sys
 
 # Contents
 
-TBD
+* [metadata/](metadata/) contains the metadata records
+* [notebooks/](notebooks/) contains Jupyter notebooks for processing the metadata
 
 # License
 
