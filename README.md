@@ -8,6 +8,7 @@ All the publication PDF files are openly accessible from the original DSpace sys
 
 * [metadata/](metadata/) contains the metadata records as JSONL files
 * [conversion/](conversion/) contains Jupyter notebooks for processing the metadata
+* [experiments/](experiments/) contains experiments (in the form of Jupyter notebooks) for metadata extraction
 
 # License
 

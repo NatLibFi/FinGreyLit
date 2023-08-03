@@ -1,0 +1,4 @@
+jupyter
+openai[datalib]
+tiktoken
+Levenshtein
