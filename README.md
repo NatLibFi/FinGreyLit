@@ -1,6 +1,8 @@
 # FinGreyLit-Meta
 
-This repository contains a data set of curated Dublin Core style metadata from a selection of Finnish "grey literature" publications. The dataset is mainly intended to enable and facilitate the development of automated methods for metadata extraction from PDF publications. The publications have been sampled from various DSpace based open repository systems administered by the National Library of Finland. The dataset is trilingual, containing publications in Finnish, Swedish and English language.
+This repository contains a data set of curated Dublin Core style metadata from a selection of Finnish "grey literature" publications. The dataset is mainly intended to enable and facilitate the development of automated methods for metadata extraction from PDF publications, including but not limited to the use of large language models (LLMs).
+
+The publications have been sampled from various DSpace based open repository systems administered by the National Library of Finland. The dataset is trilingual, containing publications in Finnish, Swedish and English language.
 
 All the publication PDF files are openly accessible from the original DSpace systems. Due to copyright concerns, this repository contains only the curated metadata and links to the original PDF files. The repository contains scripts for downloading the PDF publications from the original repositories and extracting the full text.
 
