@@ -2,3 +2,4 @@ jupyter
 pandas
 pymupdf
 requests
+tabulate

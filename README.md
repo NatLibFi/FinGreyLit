@@ -4,6 +4,8 @@ This repository contains a data set of curated Dublin Core style metadata from a
 
 All the publication PDF files are openly accessible from the original DSpace systems. Due to copyright concerns, this repository contains only the curated metadata and links to the original PDF files. The repository contains scripts for downloading the PDF publications from the original repositories and extracting the full text.
 
+For some statistics about the included documents and their metadata, see the automatically generated [statistics report](statistics.md).
+
 # Contents
 
 * [metadata/](metadata/) contains the metadata records as JSONL files
