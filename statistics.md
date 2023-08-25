@@ -1,6 +1,6 @@
 # Statistics about metadata
 
-Automatically generated 2023-08-25 16:58:24
+Automatically generated 2023-08-25 17:32:28
 
 Type is either:
  * S: single-value
@@ -40,18 +40,17 @@ Percentages represent the coverage of a field in a subset. 100% coverage means t
 | dc.date.issued                  | S          | 51%    | 88%       | 100%     | 100%   |
 | dc.format.extent                | S          | 93%    | 73%       | 96%      | 99%    |
 | dc.format.pagerange             | S          | -      | -         | 34%      | 20%    |
-| dc.identifier.isbn              | M (1.0/2)  | -      | 100%      | 33%      | 47%    |
+| dc.identifier.isbn              | M (1.0/2)  | -      | 100%      | 34%      | 47%    |
 | dc.identifier.urn               | S          | 100%   | 100%      | 100%     | 100%   |
 | dc.language.iso                 | S          | 100%   | 100%      | 100%     | 100%   |
 | dc.publisher                    | M (1.0/2)  | 100%   | 100%      | 86%      | 97%    |
 | dc.relation.contractor          | S          | 19%    | -         | -        | -      |
 | dc.relation.doi                 | S          | -      | -         | 20%      | 14%    |
 | dc.relation.eissn               | S          | -      | 59%       | 50%      | -      |
-| dc.relation.isbn                | M (1.0/2)  | -      | 98%       | 6%       | 34%    |
+| dc.relation.isbn                | M (1.0/2)  | -      | 98%       | 7%       | 34%    |
 | dc.relation.ispartofjournal     | S          | -      | -         | 45%      | -      |
 | dc.relation.ispartofseries      | S          | -      | 75%       | 52%      | -      |
 | dc.relation.issue               | S          | -      | -         | 8%       | -      |
-| dc.relation.isversionof         | S          | -      | -         | 2%       | -      |
 | dc.relation.numberinseries      | S          | -      | 73%       | 44%      | -      |
 | dc.relation.pissn               | S          | -      | 33%       | 43%      | -      |
 | dc.relation.volume              | S          | -      | -         | 17%      | -      |
