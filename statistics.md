@@ -1,6 +1,6 @@
 # Statistics about metadata
 
-Automatically generated 2023-08-25 17:32:28
+Automatically generated 2023-08-28 13:03:35
 
 Type is either:
  * S: single-value
@@ -10,12 +10,12 @@ Percentages represent the coverage of a field in a subset. 100% coverage means t
 
 ## Document counts by language and document type
 
-|       |   thes |   docthes |   serial |   mono |   TOTAL |
-|-------|--------|-----------|----------|--------|---------|
-| fin   |     89 |        63 |       74 |     77 |     303 |
-| eng   |     56 |       101 |       67 |     52 |     276 |
-| swe   |     54 |        25 |       59 |     23 |     161 |
-| TOTAL |    199 |       189 |      200 |    152 |     740 |
+| language/iso   |   thes |   docthes |   serial |   mono |   TOTAL |
+|----------------|--------|-----------|----------|--------|---------|
+| fin            |     89 |        63 |       74 |     77 |     303 |
+| eng            |     56 |       101 |       67 |     52 |     276 |
+| swe            |     54 |        25 |       59 |     23 |     161 |
+| TOTAL          |    199 |       189 |      200 |    152 |     740 |
 
 ## Metadata coverage by document type
 
@@ -23,6 +23,7 @@ Percentages represent the coverage of a field in a subset. 100% coverage means t
 |---------------------------------|------------|--------|-----------|----------|--------|
 | doctype                         | S          | 100%   | 100%      | 100%     | 100%   |
 | subset                          | S          | 100%   | 100%      | 100%     | 100%   |
+| repository                      | S          | 100%   | 100%      | 100%     | 100%   |
 | id                              | S          | 100%   | 100%      | 100%     | 100%   |
 | url                             | S          | 100%   | 100%      | 100%     | 100%   |
 | dc.contributor                  | M (1.4/3)  | -      | -         | 25%      | -      |
