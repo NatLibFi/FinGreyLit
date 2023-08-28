@@ -1,6 +1,6 @@
 # Statistics about metadata
 
-Automatically generated 2023-08-28 13:03:35
+Automatically generated 2023-08-28 14:03:53
 
 Type is either:
  * S: single-value
@@ -16,6 +16,21 @@ Percentages represent the coverage of a field in a subset. 100% coverage means t
 | eng            |     56 |       101 |       67 |     52 |     276 |
 | swe            |     54 |        25 |       59 |     23 |     161 |
 | TOTAL          |    199 |       189 |      200 |    152 |     740 |
+
+## Document counts by repository and document type
+
+| Repository   |   thes |   docthes |   serial |   mono |   TOTAL |
+|--------------|--------|-----------|----------|--------|---------|
+| Theseus      |     91 |         0 |       95 |     45 |     231 |
+| Doria        |     29 |        50 |       16 |     16 |     111 |
+| Osuva        |     25 |        23 |       15 |     11 |      74 |
+| Taju         |     23 |         4 |       16 |     36 |      79 |
+| Trepo        |     16 |        45 |        0 |      7 |      68 |
+| UtuPub       |     15 |        40 |        1 |      0 |      56 |
+| LutPub       |      0 |        27 |        2 |      0 |      29 |
+| Kaisu        |      0 |         0 |       42 |      2 |      44 |
+| Julkari      |      0 |         0 |       13 |     35 |      48 |
+| TOTAL        |    199 |       189 |      200 |    152 |     740 |
 
 ## Metadata coverage by document type
 
