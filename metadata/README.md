@@ -2,6 +2,29 @@
 
 The metadata records representing individual documents are split into files that have been divided along three dimensions: document type, language and train/test subset.
 
+## Data format
+
+The metadata is represented as JSON records in [JSON Lines](https://jsonlines.org/) format. That is, each line in a file is a JSON object representing a single document. The files can be easily analyzed using tools like `grep` and `jq`. They can also be parsed in e.g. Python by iterating over the lines of a file and parsing each line as JSON, like this:
+
+```python
+import json
+
+JSONL_FILE = "docthes-eng-test.jsonl"
+with open(JSONL_FILE) as jsonl_file:
+    for line in jsonl_file:
+        record = json.loads(line)
+        # record is now a dictionary with keys such as `url` and `dc.title`:
+        print(f"PDF file at {record['url']} has title {record['dc.title']}")
+```
+
+## File naming
+
+The files in the data set have been named using the following pattern:
+
+    <doctype>-<language>-<subset>.jsonl
+
+Where `<doctype>` represents the document type, `<language>` the document language and `<subset>` the train/test subset. For details on these divisions, see below.
+
 ## Document types
 
 The records representing individual documents have been divided into four distinct categories based on the nature of the documents. This categorization has been done with the aim of grouping similar types of documents together, each sharing common metadata fields. The following document categories have been established:
@@ -28,7 +51,3 @@ The records are divided into Finnish (`fin`), Swedish (`swe`) or English (`eng`)
 ## Train/test split
 
 Each records has been semi-randomly assigned into either the `train` or `test` subset, with approximately 75% of records in the train set and 25% in the test set. The intent is that for machine learning approaches, the train subset will be used for training models and the test set for evaluating the models.
-
-## Data format
-
-The metadata is represented as JSON records in [JSON Lines](https://jsonlines.org/) format. That is, each line in a file is a JSON object representing a single document. The files can be easily analyzed using tools like `grep` and `jq`.
