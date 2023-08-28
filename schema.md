@@ -2,7 +2,7 @@
 
 These fields are used in the metadata records. Most fields are directly defined by Dublin Core, but some are custom adaptations or ad-hoc extensions.
 
-For some statistics on actual usage of these metadata fields in different types of document, see the [statistics report](../statistics.md).
+For some statistics on actual usage of these metadata fields in different types of document, see the [statistics report](statistics.md).
 
 ## doctype
 

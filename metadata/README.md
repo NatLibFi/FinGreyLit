@@ -17,9 +17,9 @@ with open(JSONL_FILE) as jsonl_file:
         print(f"PDF file at {record['url']} has title {record['dc.title']}")
 ```
 
-## Metadata scheme
+## Metadata schema
 
-See the [schema documentation](schema.md) for details on which metadata fields are included and what they represent.
+See the [schema documentation](../schema.md) for details on which metadata fields are included and what they represent.
 
 ## File naming
 
