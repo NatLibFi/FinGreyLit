@@ -234,7 +234,7 @@ The type of the resource according to the Confederation of Open Access Repositor
 
 ## dc.type.okm
 
-The type of the resource according to the Finnish Ministry of Education and Culture [Publication Type Classification]8https://wiki.eduuni.fi/display/cscsuorat/7.5+Julkaisutyypit+2023).
+The type of the resource according to the Finnish Ministry of Education and Culture [Publication Type Classification](https://wiki.eduuni.fi/display/cscsuorat/7.5+Julkaisutyypit+2023).
 
 **Example:** `G2 Pro gradu, diplomityö, ylempi amk-opinnäytetyö`
 
