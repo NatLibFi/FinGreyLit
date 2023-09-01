@@ -1,6 +1,6 @@
 # Statistics about metadata
 
-Automatically generated 2023-08-28 15:34:49
+Automatically generated 2023-09-01 11:09:27
 
 Type is either:
  * S: single-value
@@ -31,6 +31,34 @@ Percentages represent the coverage of a field in a subset. 100% coverage means t
 | Kaisu        |      0 |         0 |       42 |      2 |      44 |
 | Julkari      |      0 |         0 |       13 |     35 |      48 |
 | TOTAL        |    199 |       189 |      200 |    152 |     740 |
+
+## Document counts by COAR resource type and document type
+
+| type/coar         |   thes |   docthes |   serial |   mono |   TOTAL |
+|-------------------|--------|-----------|----------|--------|---------|
+| master thesis     |    114 |         0 |        0 |      0 |     114 |
+| bachelor thesis   |     79 |         0 |        0 |      0 |      79 |
+| thesis            |      4 |         0 |        0 |      0 |       4 |
+| seminar thesis    |      2 |         0 |        0 |      0 |       2 |
+| doctoral thesis   |      0 |       189 |        0 |      0 |     189 |
+| research report   |      0 |         0 |       69 |     39 |     108 |
+| journal article   |      0 |         0 |       35 |      2 |      37 |
+| research article  |      0 |         0 |       31 |      7 |      38 |
+| newspaper article |      0 |         0 |       19 |      0 |      19 |
+| book              |      0 |         0 |       14 |     56 |      70 |
+| blog post         |      0 |         0 |       13 |      0 |      13 |
+| book part         |      0 |         0 |        8 |     27 |      35 |
+| conference paper  |      0 |         0 |        4 |     13 |      17 |
+| periodical        |      0 |         0 |        3 |      0 |       3 |
+| letter            |      0 |         0 |        2 |      0 |       2 |
+| journal           |      0 |         0 |        1 |      0 |       1 |
+| review article    |      0 |         0 |        1 |      0 |       1 |
+| other periodical  |      0 |         0 |        0 |      3 |       3 |
+| conference output |      0 |         0 |        0 |      2 |       2 |
+| book              |      0 |         0 |        0 |      1 |       1 |
+| report            |      0 |         0 |        0 |      1 |       1 |
+| book review       |      0 |         0 |        0 |      1 |       1 |
+| TOTAL             |    199 |       189 |      200 |    152 |     740 |
 
 ## Metadata coverage by document type
 
