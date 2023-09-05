@@ -1,6 +1,6 @@
 # Statistics about metadata
 
-Automatically generated 2023-09-04 10:50:01
+Automatically generated 2023-09-05 16:06:53
 
 Type is either:
  * S: single-value
@@ -69,6 +69,7 @@ Percentages represent the coverage of a field in a subset. 100% coverage means t
 | repository                      | S          | 100%   | 100%      | 100%     | 100%   |
 | id                              | S          | 100%   | 100%      | 100%     | 100%   |
 | url                             | S          | 100%   | 100%      | 100%     | 100%   |
+| rowid                           | S          | 100%   | 100%      | 100%     | 100%   |
 | dc.contributor                  | M (1.4/3)  | -      | -         | 25%      | -      |
 | dc.contributor.author           | M (1.9/58) | 100%   | 100%      | 74%      | 66%    |
 | dc.contributor.degreeSupervisor | M (2.0/9)  | -      | 92%       | -        | -      |

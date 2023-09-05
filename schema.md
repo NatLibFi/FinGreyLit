@@ -34,6 +34,12 @@ The URL of the PDF document.
 
 **Example:** `https://www.utupub.fi/bitstream/handle/10024/148744/Kossila_Johannes_opinnayte.pdf`
 
+## rowid
+
+The sheet ID and row number of the record in the metadata curation spreadsheet. Used for tracing changes back to the spreadsheet to make corrections.
+
+**Example:** `serial2398`
+
 ## dc.contributor
 
 The person, organization, or entity that contributed to the resource.
