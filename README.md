@@ -18,6 +18,29 @@ For some statistics about the included documents and their metadata, see the aut
 * [conversion/](conversion/) contains Jupyter notebooks for processing the metadata
 * [experiments/](experiments/) contains experiments (in the form of Jupyter notebooks) for metadata extraction
 
+# Collection and curation process
+
+## Initial harvesting
+
+The documents were originally harvested from nine different DSpace repositories (Doria, Julkari, Kaisu, LutPub, Osuva, Taju, Theseus, Trepo, UtuPub) that are used for public archiving documents from different Finnish academic and public sector organisations. The criteria for inclusion of individual documents include:
+
+* published in a collection which has a significant number of documents is growing every year
+* PDF format
+* freely accessible on the web
+* born digital (not digitized older documents)
+* published in DSpace in 2020-2023, with the original publication date between 2012-2023
+* at most 200 documents from the same collection (though in practice much less)
+
+The harvesting resulted in approximately 7000 documents.
+
+## Selection and curation
+
+The harvested document metadata was placed in a Google Sheets document on four tabs, separated by document type. We curated the metadata, checking each document and harmonized the metadata fields so that similar documents from different repositories were represented in the same way despite many differences in the original metadata practices. We selected approximately 200 documents of each type, aiming for good representation in terms of document types and genres, languages and sources. We have had to exclude some documents due to various problems in the selection and curation process, so currently there are around 700 documents.
+
+## Conversion to structured metadata
+
+While the Sheets document is still used for curation and adjustments, we have since converted the metadata into files in an easily machine-processable, structured JSONL format, which can be found under the [metadata](metadata) directory. The conversion is handled by the Jupyter Notebook (with Python code) that can be found under the [conversion](conversion) directory.
+
 # License
 
 The content of this repository is freely available under the CC0 license. The original metadata used in creating this data set is not copyrightable.
