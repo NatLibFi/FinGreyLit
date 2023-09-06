@@ -28,6 +28,7 @@ The documents were originally harvested from nine different DSpace repositories 
 * PDF format
 * freely accessible on the web
 * born digital (not digitized older documents)
+* text can be successfully extracted from the cover pages containing metadata
 * published in DSpace in 2020-2023, with the original publication date between 2012-2023
 * at most 200 documents from the same collection (though in practice much less)
 
