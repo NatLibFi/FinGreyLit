@@ -1,6 +1,6 @@
 # Statistics about metadata
 
-Automatically generated 2023-09-07 08:52:53
+Automatically generated 2023-09-07 14:21:23
 
 Type is either:
  * S: single-value
@@ -14,15 +14,15 @@ Percentages represent the coverage of a field in a subset. 100% coverage means t
 |----------------|--------|-----------|----------|--------|---------|
 | fin            |     89 |        54 |       74 |     77 |     294 |
 | eng            |     56 |        99 |       66 |     50 |     271 |
-| swe            |     54 |        25 |       59 |     23 |     161 |
-| TOTAL          |    199 |       178 |      199 |    150 |     726 |
+| swe            |     54 |        25 |       58 |     23 |     160 |
+| TOTAL          |    199 |       178 |      198 |    150 |     725 |
 
 ## Document counts by repository and document type
 
 | Repository   |   thes |   docthes |   serial |   mono |   TOTAL |
 |--------------|--------|-----------|----------|--------|---------|
 | Theseus      |     91 |         0 |       95 |     45 |     231 |
-| Doria        |     29 |        50 |       16 |     16 |     111 |
+| Doria        |     29 |        50 |       15 |     16 |     110 |
 | Osuva        |     25 |        23 |       14 |     10 |      72 |
 | Taju         |     23 |         3 |       16 |     35 |      77 |
 | Trepo        |     16 |        35 |        0 |      7 |      58 |
@@ -30,7 +30,7 @@ Percentages represent the coverage of a field in a subset. 100% coverage means t
 | LutPub       |      0 |        27 |        2 |      0 |      29 |
 | Kaisu        |      0 |         0 |       42 |      2 |      44 |
 | Julkari      |      0 |         0 |       13 |     35 |      48 |
-| TOTAL        |    199 |       178 |      199 |    150 |     726 |
+| TOTAL        |    199 |       178 |      198 |    150 |     725 |
 
 ## Document counts by COAR resource type and document type
 
@@ -41,7 +41,7 @@ Percentages represent the coverage of a field in a subset. 100% coverage means t
 | thesis            |      4 |         0 |        0 |      0 |       4 |
 | seminar thesis    |      2 |         0 |        0 |      0 |       2 |
 | doctoral thesis   |      0 |       178 |        0 |      0 |     178 |
-| research report   |      0 |         0 |       69 |     39 |     108 |
+| research report   |      0 |         0 |       68 |     39 |     107 |
 | journal article   |      0 |         0 |       35 |      2 |      37 |
 | research article  |      0 |         0 |       31 |      7 |      38 |
 | newspaper article |      0 |         0 |       19 |      0 |      19 |
@@ -58,7 +58,7 @@ Percentages represent the coverage of a field in a subset. 100% coverage means t
 | book              |      0 |         0 |        0 |      1 |       1 |
 | report            |      0 |         0 |        0 |      1 |       1 |
 | book review       |      0 |         0 |        0 |      1 |       1 |
-| TOTAL             |    199 |       178 |      199 |    150 |     726 |
+| TOTAL             |    199 |       178 |      198 |    150 |     725 |
 
 ## Metadata coverage by document type
 
@@ -89,15 +89,15 @@ Percentages represent the coverage of a field in a subset. 100% coverage means t
 | dc.publisher                    | M (1.0/2)  | 100%   | 100%      | 86%      | 97%    |
 | dc.relation.contractor          | S          | 19%    | -         | -        | -      |
 | dc.relation.doi                 | S          | -      | -         | 19%      | 15%    |
-| dc.relation.eissn               | S          | -      | 57%       | 49%      | -      |
+| dc.relation.eissn               | S          | -      | 57%       | 26%      | -      |
 | dc.relation.isbn                | M (1.0/2)  | -      | 98%       | 7%       | 34%    |
 | dc.relation.ispartofjournal     | S          | -      | -         | 45%      | -      |
 | dc.relation.ispartofseries      | S          | -      | 73%       | 51%      | -      |
 | dc.relation.issue               | S          | -      | -         | 8%       | -      |
 | dc.relation.numberinseries      | S          | -      | 71%       | 44%      | -      |
-| dc.relation.pissn               | S          | -      | 35%       | 43%      | -      |
+| dc.relation.pissn               | S          | -      | 35%       | 15%      | -      |
 | dc.relation.volume              | S          | -      | -         | 17%      | -      |
-| dc.series.year                  | S          | -      | -         | 53%      | -      |
+| dc.series.year                  | S          | -      | -         | 54%      | -      |
 | dc.subject.degreeprogram        | M (1.5/3)  | 78%    | 44%       | -        | -      |
 | dc.subject.discipline           | M (2.2/6)  | 83%    | 39%       | 6%       | 7%     |
 | dc.title                        | S          | 100%   | 100%      | 100%     | 100%   |
