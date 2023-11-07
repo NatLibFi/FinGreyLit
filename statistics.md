@@ -1,6 +1,6 @@
 # Statistics about metadata
 
-Automatically generated 2023-09-07 14:21:23
+Automatically generated 2023-11-07 12:28:37
 
 Type is either:
  * S: single-value
@@ -83,14 +83,14 @@ Percentages represent the coverage of a field in a subset. 100% coverage means t
 | dc.date.issued                  | S          | 100%   | 100%      | 100%     | 100%   |
 | dc.format.extent                | S          | 93%    | 74%       | 96%      | 99%    |
 | dc.format.pagerange             | S          | -      | -         | 33%      | 20%    |
-| dc.identifier.isbn              | M (1.0/2)  | -      | 100%      | 33%      | 48%    |
+| dc.identifier.isbn              | M (1.0/2)  | -      | 100%      | 33%      | 49%    |
 | dc.identifier.urn               | S          | 100%   | 100%      | 100%     | 100%   |
 | dc.language.iso                 | S          | 100%   | 100%      | 100%     | 100%   |
 | dc.publisher                    | M (1.0/2)  | 100%   | 100%      | 86%      | 97%    |
 | dc.relation.contractor          | S          | 19%    | -         | -        | -      |
 | dc.relation.doi                 | S          | -      | -         | 19%      | 15%    |
 | dc.relation.eissn               | S          | -      | 57%       | 26%      | -      |
-| dc.relation.isbn                | M (1.0/2)  | -      | 98%       | 7%       | 34%    |
+| dc.relation.isbn                | M (1.0/2)  | -      | 98%       | 9%       | 35%    |
 | dc.relation.ispartofjournal     | S          | -      | -         | 45%      | -      |
 | dc.relation.ispartofseries      | S          | -      | 73%       | 51%      | -      |
 | dc.relation.issue               | S          | -      | -         | 8%       | -      |
