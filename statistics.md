@@ -1,6 +1,6 @@
 # Statistics about metadata
 
-Automatically generated 2023-11-08 10:57:01
+Automatically generated 2023-11-08 12:26:48
 
 Type is either:
  * S: single-value
@@ -12,9 +12,9 @@ Percentages represent the coverage of a field in a subset. 100% coverage means t
 
 | language/iso   |   thes |   docthes |   serial |   mono |   TOTAL |
 |----------------|--------|-----------|----------|--------|---------|
-| fin            |     89 |        54 |       74 |     76 |     293 |
-| eng            |     56 |        99 |       66 |     50 |     271 |
-| swe            |     54 |        25 |       58 |     23 |     160 |
+| fin            |     89 |        55 |       74 |     76 |     294 |
+| eng            |     57 |        98 |       66 |     50 |     271 |
+| swe            |     53 |        25 |       58 |     23 |     159 |
 | TOTAL          |    199 |       178 |      198 |    149 |     724 |
 
 ## Document counts by repository and document type
