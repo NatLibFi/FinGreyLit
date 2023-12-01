@@ -1,4 +1,4 @@
-from eval import evaluate_records
+from ..eval import evaluate_records
 
 
 prediction_output_key = "prediction_output"
