@@ -46,7 +46,7 @@ def compare(rec, prediction_output_key, dc_key, field_key):
 
     # special case for "authors" field which may contain multiple values
     if dc_key == "dc.contributor.author":
-        return compare_authors(rec)
+        return compare_authors(rec, prediction_output_key)
 
     # field-specific adjustments
     if dc_key == "dc.language.iso":
@@ -103,13 +103,13 @@ def compare(rec, prediction_output_key, dc_key, field_key):
         return ("wrong", 0)
 
 
-def compare_authors(rec):
+def compare_authors(rec, prediction_output_key):
     true_authors = set(rec.get("dc.contributor.author", []))
     try:
         predicted_authors = set(
             [
                 f"{author['lastname']}, {author['firstname']}"
-                for author in rec["meteor_output"]["authors"]
+                for author in rec[prediction_output_key]["authors"]
             ]
         )
     except (KeyError, TypeError):
