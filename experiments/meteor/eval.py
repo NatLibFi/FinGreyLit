@@ -50,7 +50,7 @@ def compare(rec, prediction_output_key, dc_key, field_key):
 
     # field-specific adjustments
     if dc_key == "dc.language.iso":
-        true_val = LANGMAP[true_val]  # convert to ISO 639-1 2-letter language code
+        true_val = LANGMAP.get(true_val)  # convert to ISO 639-1 2-letter language code
     elif dc_key == "dc.date.issued" and true_val is not None:
         true_val = true_val[:4]  # compare only the year
     elif dc_key == "dc.identifier.isbn" and true_val:
