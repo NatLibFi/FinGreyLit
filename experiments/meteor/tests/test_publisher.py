@@ -4,26 +4,25 @@ from ..eval import evaluate_records
 prediction_output_key = "prediction_output"
 
 
-# def test_publisher_not_relevant_match():  # TODO Not passing, should it?
-#     true_publisher = None
-#     pred_publisher = "None"  # TODO Is it correct to be mapped to string?
-#     records = [
-#         {
-#             "rowid": "1",
-#             "dc.publisher": true_publisher,
-#             "dc.language.iso": "eng",
-#             prediction_output_key: {
-#                 "language": {"value": "en"},
-#                 "publisher": {"value": pred_publisher},
-#             },
-#         },
-#     ]
-#     result = evaluate_records(records, prediction_output_key)
-#     for res in result:
-#         if res["field"] == "publisher":
-#             print(res)
-#             assert res["match_type"] == "not-relevant"
-#             assert res["score"] == 1
+def test_publisher_not_relevant_match():
+    true_publisher = None
+    pred_publisher = None
+    records = [
+        {
+            "rowid": "1",
+            "dc.publisher": true_publisher,
+            "dc.language.iso": "eng",
+            prediction_output_key: {
+                "language": {"value": "en"},
+                "publisher": pred_publisher,
+            },
+        },
+    ]
+    result = evaluate_records(records, prediction_output_key)
+    for res in result:
+        if res["field"] == "publisher":
+            assert res["match_type"] == "not-relevant"
+            assert res["score"] == 1
 
 
 def test_publisher_exact_match():
@@ -68,26 +67,25 @@ def test_publisher_not_found():
             assert res["score"] == 0
 
 
-# def test_publisher_found_nonexistent():  # TODO Not passing, should it?
-#     true_publisher = None
-#     pred_publisher = "Any Publisher"
-#     records = [
-#         {
-#             "rowid": "1",
-#             "dc.publisher": true_publisher,
-#             "dc.language.iso": "eng",
-#             prediction_output_key: {
-#                 "language": {"value": "en"},
-#                 "publisher": pred_publisher,
-#             },
-#         },
-#     ]
-#     result = evaluate_records(records, prediction_output_key)
-#     for res in result:
-#         if res["field"] == "publisher":
-#             print(res)
-#             assert res["match_type"] == "found-nonexistent"
-#             assert res["score"] == 0
+def test_publisher_found_nonexistent():
+    true_publisher = None
+    pred_publisher = "Any Publisher"
+    records = [
+        {
+            "rowid": "1",
+            "dc.publisher": true_publisher,
+            "dc.language.iso": "eng",
+            prediction_output_key: {
+                "language": {"value": "en"},
+                "publisher": {"value": pred_publisher},
+            },
+        },
+    ]
+    result = evaluate_records(records, prediction_output_key)
+    for res in result:
+        if res["field"] == "publisher":
+            assert res["match_type"] == "found-nonexistent"
+            assert res["score"] == 0
 
 
 def test_publisher_superset_match():

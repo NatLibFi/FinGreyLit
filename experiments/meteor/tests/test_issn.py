@@ -109,27 +109,6 @@ def test_issn_wrong_match():
             assert res["score"] == 0
 
 
-def test_issn_printed_match():
-    true_issn = "123-456-789"
-    pred_issn = "123-456-789"
-    records = [
-        {
-            "rowid": "1",
-            "dc.relation.pissn": true_issn,  # different field for true value
-            "dc.language.iso": "eng",
-            prediction_output_key: {
-                "language": {"value": "en"},
-                "issn": {"value": pred_issn},
-            },
-        },
-    ]
-    result = evaluate_records(records, prediction_output_key)
-    for res in result:
-        if res["field"] == "issn":
-            assert res["match_type"] == "printed-issn"
-            assert res["score"] == 1  # TODO Should this be counted as success?
-
-
 def test_issn_printed_correct_match():
     true_pissn = "123-456-789"
     pred_issn = "123-456-789"
@@ -158,8 +137,8 @@ def test_issn_printed_wrong_match():
     records = [
         {
             "rowid": "1",
-            "dc.relation.eissn": true_eissn,  # different field for true value
-            "dc.relation.pissn": true_pissn,  # different field for true value
+            "dc.relation.eissn": true_eissn,
+            "dc.relation.pissn": true_pissn,
             "dc.language.iso": "eng",
             prediction_output_key: {
                 "language": {"value": "en"},

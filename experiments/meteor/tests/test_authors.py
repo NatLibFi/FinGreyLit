@@ -4,7 +4,7 @@ from ..eval import evaluate_records
 prediction_output_key = "prediction_output"
 
 
-def test_authors_not_relevant_match():  # TODO Not passing, should it?
+def test_authors_not_relevant_match():
     true_authors = []
     pred_authors = []
     records = [
@@ -50,7 +50,8 @@ def test_authors_exact_multiple_match():
     true_authors = ["Mylastname, Myfirstname", "Myotherlastname, Myotherfirstname"]
     pred_authors = [
         {"firstname": "Myfirstname", "lastname": "Mylastname"},
-        {"firstname": "Myotherfirstname", "lastname": "Myotherlastname"}]
+        {"firstname": "Myotherfirstname", "lastname": "Myotherlastname"},
+    ]
     records = [
         {
             "rowid": "1",
@@ -65,7 +66,6 @@ def test_authors_exact_multiple_match():
     result = evaluate_records(records, prediction_output_key)
     for res in result:
         if res["field"] == "authors":
-            print(res)
             assert res["match_type"] == "exact"
             assert res["score"] == 1
 
@@ -116,7 +116,8 @@ def test_authors_superset_match():
     true_authors = ["Mylastname, Myfirstname"]
     pred_authors = [
         {"firstname": "Myfirstname", "lastname": "Mylastname"},
-        {"firstname": "Myotherfirstname", "lastname": "Myotherlastname"}]
+        {"firstname": "Myotherfirstname", "lastname": "Myotherlastname"},
+    ]
     records = [
         {
             "rowid": "1",
@@ -160,7 +161,8 @@ def test_authors_overlap_match():
     true_authors = ["Mylastname, Myfirstname", "Myotherfirstname, Myotherlastname"]
     pred_authors = [
         {"firstname": "Myfirstname", "lastname": "Mylastname"},
-        {"firstname": "Myaltfirstname", "lastname": "Myaltlastname"}]
+        {"firstname": "Myaltfirstname", "lastname": "Myaltlastname"},
+    ]
     records = [
         {
             "rowid": "1",
