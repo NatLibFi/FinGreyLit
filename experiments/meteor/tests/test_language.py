@@ -1,10 +1,7 @@
-from ..eval import evaluate_records
-
-
 prediction_output_key = "prediction_output"
 
 
-def test_language_not_relevant_match():
+def test_language_not_relevant_match(evaluator):
     true_language = None
     pred_language = None  # TODO Is it correct to be mapped to string?
     records = [
@@ -16,14 +13,14 @@ def test_language_not_relevant_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "language":
             assert res["match_type"] == "not-relevant"
             assert res["score"] == 1
 
 
-def test_language_exact_match():
+def test_language_exact_match(evaluator):
     true_language = "eng"
     pred_language = "en"
     records = [
@@ -35,14 +32,14 @@ def test_language_exact_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "language":
             assert res["match_type"] == "exact"
             assert res["score"] == 1
 
 
-def test_language_not_found():
+def test_language_not_found(evaluator):
     true_language = "eng"
     pred_language = None
     records = [
@@ -54,14 +51,14 @@ def test_language_not_found():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "language":
             assert res["match_type"] == "not-found"
             assert res["score"] == 0
 
 
-def test_language_found_nonexistent():
+def test_language_found_nonexistent(evaluator):
     true_language = None
     pred_language = "en"
     records = [
@@ -73,14 +70,14 @@ def test_language_found_nonexistent():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "language":
             assert res["match_type"] == "found-nonexistent"
             assert res["score"] == 0
 
 
-def test_language_wrong_match():
+def test_language_wrong_match(evaluator):
     true_language = "eng"
     pred_language = "fi"
     records = [
@@ -92,7 +89,7 @@ def test_language_wrong_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "language":
             assert res["match_type"] == "wrong"

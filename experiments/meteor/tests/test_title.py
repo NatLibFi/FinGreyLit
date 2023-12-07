@@ -1,10 +1,7 @@
-from ..eval import evaluate_records
-
-
 prediction_output_key = "prediction_output"
 
 
-def test_title_not_relevant_match():
+def test_title_not_relevant_match(evaluator):
     true_title = None
     pred_title = None
     records = [
@@ -18,14 +15,14 @@ def test_title_not_relevant_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "title":
             assert res["match_type"] == "not-relevant"
             assert res["score"] == 1
 
 
-def test_title_exact_match():
+def test_title_exact_match(evaluator):
     true_title = "My Title"
     pred_title = "My Title"
     records = [
@@ -39,14 +36,14 @@ def test_title_exact_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "title":
             assert res["match_type"] == "exact"
             assert res["score"] == 1
 
 
-def test_title_not_found():
+def test_title_not_found(evaluator):
     true_title = "My Title"
     pred_title = None
     records = [
@@ -60,14 +57,14 @@ def test_title_not_found():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "title":
             assert res["match_type"] == "not-found"
             assert res["score"] == 0
 
 
-def test_title_found_nonexistent():
+def test_title_found_nonexistent(evaluator):
     true_title = None
     pred_title = "Any Title"
     records = [
@@ -81,14 +78,14 @@ def test_title_found_nonexistent():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "title":
             assert res["match_type"] == "found-nonexistent"
             assert res["score"] == 0
 
 
-def test_title_superset_match():
+def test_title_superset_match(evaluator):
     true_title = "My Title"
     pred_title = "My Title and More"
     records = [
@@ -102,14 +99,14 @@ def test_title_superset_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "title":
             assert res["match_type"] == "superset"
             assert res["score"] == 1
 
 
-def test_title_case_match():
+def test_title_case_match(evaluator):
     true_title = "My Title"
     pred_title = "MY TITLE"
     records = [
@@ -123,14 +120,14 @@ def test_title_case_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "title":
             assert res["match_type"] == "case"
             assert res["score"] == 1
 
 
-def test_title_superset_case_match():
+def test_title_superset_case_match(evaluator):
     true_title = "My Title"
     pred_title = "MY TITLE AND MORE"
     records = [
@@ -144,14 +141,14 @@ def test_title_superset_case_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "title":
             assert res["match_type"] == "superset-case"
             assert res["score"] == 1
 
 
-def test_title_almost_match():
+def test_title_almost_match(evaluator):
     true_title = "My Long Title"
     pred_title = "My Long Tittle"  # One character difference
     records = [
@@ -165,14 +162,14 @@ def test_title_almost_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "title":
             assert res["match_type"] == "almost"
             assert res["score"] == 1
 
 
-def test_title_almost_case_match():
+def test_title_almost_case_match(evaluator):
     true_title = "My Long Title"
     pred_title = "MY LONG TITTLE"  # One character difference
     records = [
@@ -186,14 +183,14 @@ def test_title_almost_case_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "title":
             assert res["match_type"] == "almost-case"
             assert res["score"] == 1
 
 
-def test_title_wrong_match():
+def test_title_wrong_match(evaluator):
     true_title = "My Title"
     pred_title = "Different Title"
     records = [
@@ -207,7 +204,7 @@ def test_title_wrong_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "title":
             assert res["match_type"] == "wrong"

@@ -1,10 +1,7 @@
-from ..eval import evaluate_records
-
-
 prediction_output_key = "prediction_output"
 
 
-def test_authors_not_relevant_match():
+def test_authors_not_relevant_match(evaluator):
     true_authors = []
     pred_authors = []
     records = [
@@ -18,14 +15,14 @@ def test_authors_not_relevant_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "authors":
             assert res["match_type"] == "not-relevant"
             assert res["score"] == 1
 
 
-def test_authors_exact_match():
+def test_authors_exact_match(evaluator):
     true_authors = ["Mylastname, Myfirstname"]
     pred_authors = [{"firstname": "Myfirstname", "lastname": "Mylastname"}]
     records = [
@@ -39,14 +36,14 @@ def test_authors_exact_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "authors":
             assert res["match_type"] == "exact"
             assert res["score"] == 1
 
 
-def test_authors_exact_multiple_match():
+def test_authors_exact_multiple_match(evaluator):
     true_authors = ["Mylastname, Myfirstname", "Myotherlastname, Myotherfirstname"]
     pred_authors = [
         {"firstname": "Myfirstname", "lastname": "Mylastname"},
@@ -63,14 +60,14 @@ def test_authors_exact_multiple_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "authors":
             assert res["match_type"] == "exact"
             assert res["score"] == 1
 
 
-def test_authors_not_found():
+def test_authors_not_found(evaluator):
     true_authors = ["Mylastname, Myfirstname"]
     pred_authors = []
     records = [
@@ -84,14 +81,14 @@ def test_authors_not_found():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "authors":
             assert res["match_type"] == "not-found"
             assert res["score"] == 0
 
 
-def test_authors_found_nonexistent():
+def test_authors_found_nonexistent(evaluator):
     true_authors = []
     pred_authors = [{"firstname": "Myfirstname", "lastname": "Mylastname"}]
     records = [
@@ -105,14 +102,14 @@ def test_authors_found_nonexistent():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "authors":
             assert res["match_type"] == "found-nonexistent"
             assert res["score"] == 0
 
 
-def test_authors_superset_match():
+def test_authors_superset_match(evaluator):
     true_authors = ["Mylastname, Myfirstname"]
     pred_authors = [
         {"firstname": "Myfirstname", "lastname": "Mylastname"},
@@ -129,14 +126,14 @@ def test_authors_superset_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "authors":
             assert res["match_type"] == "superset"
             assert res["score"] == 1
 
 
-def test_authors_subset_match():
+def test_authors_subset_match(evaluator):
     true_authors = ["Mylastname, Myfirstname", "Myotherlastname, Myotherfirstname"]
     pred_authors = [{"firstname": "Myfirstname", "lastname": "Mylastname"}]
     records = [
@@ -150,14 +147,14 @@ def test_authors_subset_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "authors":
             assert res["match_type"] == "subset"
             assert res["score"] == 0
 
 
-def test_authors_overlap_match():
+def test_authors_overlap_match(evaluator):
     true_authors = ["Mylastname, Myfirstname", "Myotherfirstname, Myotherlastname"]
     pred_authors = [
         {"firstname": "Myfirstname", "lastname": "Mylastname"},
@@ -174,14 +171,14 @@ def test_authors_overlap_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "authors":
             assert res["match_type"] == "overlap"
             assert res["score"] == 0
 
 
-def test_authors_wrong_match():
+def test_authors_wrong_match(evaluator):
     true_authors = ["Mylastname, Myfirstname"]
     pred_authors = [{"firstname": "Otherfirst", "lastname": "Otherlast"}]
     records = [
@@ -195,7 +192,7 @@ def test_authors_wrong_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "authors":
             assert res["match_type"] == "wrong"

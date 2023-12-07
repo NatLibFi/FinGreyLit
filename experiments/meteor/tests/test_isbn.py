@@ -1,10 +1,7 @@
-from ..eval import evaluate_records
-
-
 prediction_output_key = "prediction_output"
 
 
-def test_isbn_not_relevant_match():
+def test_isbn_not_relevant_match(evaluator):
     true_isbn = None
     pred_isbn = None
     records = [
@@ -18,14 +15,14 @@ def test_isbn_not_relevant_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "isbn":
             assert res["match_type"] == "not-relevant"
             assert res["score"] == 1
 
 
-def test_isbn_exact_match():
+def test_isbn_exact_match(evaluator):
     true_isbn = ["123-456-789"]
     pred_isbn = "123456789"
     records = [
@@ -39,14 +36,14 @@ def test_isbn_exact_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "isbn":
             assert res["match_type"] == "exact"
             assert res["score"] == 1
 
 
-def test_isbn_not_found():
+def test_isbn_not_found(evaluator):
     true_isbn = ["123-456-789"]
     pred_isbn = None
     records = [
@@ -60,14 +57,14 @@ def test_isbn_not_found():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "isbn":
             assert res["match_type"] == "not-found"
             assert res["score"] == 0
 
 
-def test_isbn_found_nonexistent():
+def test_isbn_found_nonexistent(evaluator):
     true_isbn = None
     pred_isbn = "123456789"
     records = [
@@ -81,14 +78,14 @@ def test_isbn_found_nonexistent():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "isbn":
             assert res["match_type"] == "found-nonexistent"
             assert res["score"] == 0
 
 
-def test_isbn_wrong_match():
+def test_isbn_wrong_match(evaluator):
     true_isbn = ["123-456-789"]
     pred_isbn = "000000000"
     records = [
@@ -102,14 +99,14 @@ def test_isbn_wrong_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "isbn":
             assert res["match_type"] == "wrong"
             assert res["score"] == 0
 
 
-def test_isbn_relation_match():
+def test_isbn_relation_match(evaluator):
     true_isbn = ["123-456-789"]
     pred_isbn = "123456789"
     records = [
@@ -123,7 +120,7 @@ def test_isbn_relation_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "isbn":
             assert res["match_type"] == "related-isbn"

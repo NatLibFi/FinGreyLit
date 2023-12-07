@@ -1,10 +1,7 @@
-from ..eval import evaluate_records
-
-
 prediction_output_key = "prediction_output"
 
 
-def test_year_not_relevant_match():
+def test_year_not_relevant_match(evaluator):
     true_year = None
     pred_year = None
     records = [
@@ -18,14 +15,14 @@ def test_year_not_relevant_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "year":
             assert res["match_type"] == "not-relevant"
             assert res["score"] == 1
 
 
-def test_year_exact_match():
+def test_year_exact_match(evaluator):
     true_year = "2019-02-15"
     pred_year = "2019"
     records = [
@@ -39,14 +36,14 @@ def test_year_exact_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "year":
             assert res["match_type"] == "exact"
             assert res["score"] == 1
 
 
-def test_year_not_found():
+def test_year_not_found(evaluator):
     true_year = "2019-02-15"
     pred_year = None
     records = [
@@ -60,14 +57,14 @@ def test_year_not_found():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "year":
             assert res["match_type"] == "not-found"
             assert res["score"] == 0
 
 
-def test_year_found_nonexistent():
+def test_year_found_nonexistent(evaluator):
     true_year = None
     pred_year = "2019"
     records = [
@@ -81,14 +78,14 @@ def test_year_found_nonexistent():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "year":
             assert res["match_type"] == "found-nonexistent"
             assert res["score"] == 0
 
 
-def test_year_wrong_match():
+def test_year_wrong_match(evaluator):
     true_year = "2019-02-15"
     pred_year = "2020"
     records = [
@@ -102,7 +99,7 @@ def test_year_wrong_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "year":
             assert res["match_type"] == "wrong"

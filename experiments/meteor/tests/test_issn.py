@@ -1,10 +1,7 @@
-from ..eval import evaluate_records
-
-
 prediction_output_key = "prediction_output"
 
 
-def test_issn_not_relevant_match():
+def test_issn_not_relevant_match(evaluator):
     true_issn = None
     pred_issn = None
     records = [
@@ -18,14 +15,14 @@ def test_issn_not_relevant_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "issn":
             assert res["match_type"] == "not-relevant"
             assert res["score"] == 1
 
 
-def test_issn_exact_match():
+def test_issn_exact_match(evaluator):
     true_issn = "123-456-789"
     pred_issn = "123-456-789"  # TODO Why not dash replacement as for ISBN?
     records = [
@@ -39,14 +36,14 @@ def test_issn_exact_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "issn":
             assert res["match_type"] == "exact"
             assert res["score"] == 1
 
 
-def test_issn_not_found():
+def test_issn_not_found(evaluator):
     true_issn = "123-456-789"
     pred_issn = None
     records = [
@@ -60,14 +57,14 @@ def test_issn_not_found():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "issn":
             assert res["match_type"] == "not-found"
             assert res["score"] == 0
 
 
-def test_issn_found_nonexistent():
+def test_issn_found_nonexistent(evaluator):
     true_issn = None
     pred_issn = "123456789"
     records = [
@@ -81,14 +78,14 @@ def test_issn_found_nonexistent():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "issn":
             assert res["match_type"] == "found-nonexistent"
             assert res["score"] == 0
 
 
-def test_issn_wrong_match():
+def test_issn_wrong_match(evaluator):
     true_issn = "123-456-789"
     pred_issn = "000000000"
     records = [
@@ -102,14 +99,14 @@ def test_issn_wrong_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "issn":
             assert res["match_type"] == "wrong"
             assert res["score"] == 0
 
 
-def test_issn_printed_correct_match():
+def test_issn_printed_correct_match(evaluator):
     true_pissn = "123-456-789"
     pred_issn = "123-456-789"
     records = [
@@ -123,14 +120,14 @@ def test_issn_printed_correct_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "issn":
             assert res["match_type"] == "printed-issn"
             assert res["score"] == 1
 
 
-def test_issn_printed_wrong_match():
+def test_issn_printed_wrong_match(evaluator):
     true_eissn = "000-000-000"
     true_pissn = "123-456-789"
     pred_issn = "123-456-789"
@@ -146,7 +143,7 @@ def test_issn_printed_wrong_match():
             },
         },
     ]
-    result = evaluate_records(records, prediction_output_key)
+    result = evaluator.evaluate_records(records)
     for res in result:
         if res["field"] == "issn":
             assert res["match_type"] == "printed-issn"
