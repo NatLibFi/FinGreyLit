@@ -1,6 +1,3 @@
-prediction_output_key = "prediction"
-
-
 def test_isbn_not_relevant_match(evaluator):
     true_isbn = None
     pred_isbn = None
@@ -9,7 +6,7 @@ def test_isbn_not_relevant_match(evaluator):
             "rowid": "1",
             "dc.identifier.isbn": true_isbn,
             "dc.language.iso": "eng",
-            prediction_output_key: {
+            "prediction": {
                 "dc.identifier.isbn": pred_isbn,
             },
         },
@@ -29,7 +26,7 @@ def test_isbn_exact_match(evaluator):
             "rowid": "1",
             "dc.identifier.isbn": true_isbn,
             "dc.language.iso": "eng",
-            prediction_output_key: {
+            "prediction": {
                 "dc.identifier.isbn": pred_isbn,
             },
         },
@@ -49,7 +46,7 @@ def test_isbn_not_found(evaluator):
             "rowid": "1",
             "dc.identifier.isbn": true_isbn,
             "dc.language.iso": "eng",
-            prediction_output_key: {
+            "prediction": {
                 "dc.identifier.isbn": pred_isbn,
             },
         },
@@ -69,7 +66,7 @@ def test_isbn_found_nonexistent(evaluator):
             "rowid": "1",
             "dc.identifier.isbn": true_isbn,
             "dc.language.iso": "eng",
-            prediction_output_key: {
+            "prediction": {
                 "dc.identifier.isbn": pred_isbn,
             },
         },
@@ -89,7 +86,7 @@ def test_isbn_wrong_match(evaluator):
             "rowid": "1",
             "dc.identifier.isbn": true_isbn,
             "dc.language.iso": "eng",
-            prediction_output_key: {
+            "prediction": {
                 "dc.identifier.isbn": pred_isbn,
             },
         },
@@ -109,7 +106,7 @@ def test_isbn_relation_match(evaluator):
             "rowid": "1",
             "dc.relation.isbn": true_isbn,  # different field for true value
             "dc.language.iso": "eng",
-            prediction_output_key: {
+            "prediction": {
                 "dc.identifier.isbn": pred_isbn,
             },
         },

@@ -1,6 +1,3 @@
-prediction_output_key = "prediction"
-
-
 def test_language_not_relevant_match(evaluator):
     true_language = None
     pred_language = None  # TODO Is it correct to be mapped to string?
@@ -8,7 +5,7 @@ def test_language_not_relevant_match(evaluator):
         {
             "rowid": "1",
             "dc.language.iso": true_language,
-            prediction_output_key: {
+            "prediction": {
                 "dc.language.iso": pred_language,
             },
         },
@@ -27,7 +24,7 @@ def test_language_exact_match(evaluator):
         {
             "rowid": "1",
             "dc.language.iso": true_language,
-            prediction_output_key: {
+            "prediction": {
                 "dc.language.iso": pred_language,
             },
         },
@@ -46,7 +43,7 @@ def test_language_not_found(evaluator):
         {
             "rowid": "1",
             "dc.language.iso": true_language,
-            prediction_output_key: {
+            "prediction": {
                 "dc.language.iso": pred_language,
             },
         },
@@ -65,7 +62,7 @@ def test_language_found_nonexistent(evaluator):
         {
             "rowid": "1",
             "dc.language.iso": true_language,
-            prediction_output_key: {
+            "prediction": {
                 "dc.language.iso": pred_language,
             },
         },
@@ -84,7 +81,7 @@ def test_language_wrong_match(evaluator):
         {
             "rowid": "1",
             "dc.language.iso": true_language,
-            prediction_output_key: {
+            "prediction": {
                 "dc.language.iso": pred_language,
             },
         },

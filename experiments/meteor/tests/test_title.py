@@ -1,6 +1,3 @@
-prediction_output_key = "prediction"
-
-
 def test_title_not_relevant_match(evaluator):
     true_title = None
     pred_title = None
@@ -9,7 +6,7 @@ def test_title_not_relevant_match(evaluator):
             "rowid": "1",
             "dc.title": true_title,
             "dc.language.iso": "eng",
-            prediction_output_key: {
+            "prediction": {
                 "title": pred_title,
             },
         },
@@ -29,7 +26,7 @@ def test_title_exact_match(evaluator):
             "rowid": "1",
             "dc.title": true_title,
             "dc.language.iso": "eng",
-            prediction_output_key: {
+            "prediction": {
                 "dc.title": pred_title,
             },
         },
@@ -49,7 +46,7 @@ def test_title_not_found(evaluator):
             "rowid": "1",
             "dc.title": true_title,
             "dc.language.iso": "eng",
-            prediction_output_key: {
+            "prediction": {
                 "dc.language.iso": pred_title,
             },
         },
@@ -69,7 +66,7 @@ def test_title_found_nonexistent(evaluator):
             "rowid": "1",
             "dc.title": true_title,
             "dc.language.iso": "eng",
-            prediction_output_key: {
+            "prediction": {
                 "dc.title": pred_title,
             },
         },
@@ -89,7 +86,7 @@ def test_title_superset_match(evaluator):
             "rowid": "1",
             "dc.title": true_title,
             "dc.language.iso": "eng",
-            prediction_output_key: {
+            "prediction": {
                 "dc.title": pred_title,
             },
         },
@@ -109,7 +106,7 @@ def test_title_case_match(evaluator):
             "rowid": "1",
             "dc.title": true_title,
             "dc.language.iso": "eng",
-            prediction_output_key: {
+            "prediction": {
                 "dc.title": pred_title,
             },
         },
@@ -129,7 +126,7 @@ def test_title_superset_case_match(evaluator):
             "rowid": "1",
             "dc.title": true_title,
             "dc.language.iso": "eng",
-            prediction_output_key: {
+            "prediction": {
                 "dc.title": pred_title,
             },
         },
@@ -149,7 +146,7 @@ def test_title_almost_match(evaluator):
             "rowid": "1",
             "dc.title": true_title,
             "dc.language.iso": "eng",
-            prediction_output_key: {
+            "prediction": {
                 "dc.title": pred_title,
             },
         },
@@ -169,7 +166,7 @@ def test_title_almost_case_match(evaluator):
             "rowid": "1",
             "dc.title": true_title,
             "dc.language.iso": "eng",
-            prediction_output_key: {
+            "prediction": {
                 "dc.title": pred_title,
             },
         },
@@ -189,7 +186,7 @@ def test_title_wrong_match(evaluator):
             "rowid": "1",
             "dc.title": true_title,
             "dc.language.iso": "eng",
-            prediction_output_key: {
+            "prediction": {
                 "dc.title": pred_title,
             },
         },

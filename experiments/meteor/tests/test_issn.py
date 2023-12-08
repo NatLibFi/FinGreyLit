@@ -1,6 +1,3 @@
-prediction_output_key = "prediction"
-
-
 def test_issn_not_relevant_match(evaluator):
     true_issn = None
     pred_issn = None
@@ -9,7 +6,7 @@ def test_issn_not_relevant_match(evaluator):
             "rowid": "1",
             "dc.relation.eissn": true_issn,
             "dc.language.iso": "eng",
-            prediction_output_key: {
+            "prediction": {
                 "dc.relation.eissn": pred_issn,
             },
         },
@@ -29,7 +26,7 @@ def test_issn_exact_match(evaluator):
             "rowid": "1",
             "dc.relation.eissn": true_issn,
             "dc.language.iso": "eng",
-            prediction_output_key: {
+            "prediction": {
                 "dc.relation.eissn": pred_issn,
             },
         },
@@ -49,7 +46,7 @@ def test_issn_not_found(evaluator):
             "rowid": "1",
             "dc.relation.eissn": true_issn,
             "dc.language.iso": "eng",
-            prediction_output_key: {
+            "prediction": {
                 "dc.relation.eissn": pred_issn,
             },
         },
@@ -69,7 +66,7 @@ def test_issn_found_nonexistent(evaluator):
             "rowid": "1",
             "dc.relation.eissn": true_issn,
             "dc.language.iso": "eng",
-            prediction_output_key: {
+            "prediction": {
                 "dc.relation.eissn": pred_issn,
             },
         },
@@ -89,7 +86,7 @@ def test_issn_wrong_match(evaluator):
             "rowid": "1",
             "dc.relation.eissn": true_issn,
             "dc.language.iso": "eng",
-            prediction_output_key: {
+            "prediction": {
                 "dc.relation.eissn": pred_issn,
             },
         },
@@ -109,7 +106,7 @@ def test_issn_printed_correct_match(evaluator):
             "rowid": "1",
             "dc.relation.pissn": true_pissn,  # different field for true value
             "dc.language.iso": "eng",
-            prediction_output_key: {
+            "prediction": {
                 "dc.relation.eissn": pred_issn,
             },
         },
@@ -131,7 +128,7 @@ def test_issn_printed_wrong_match(evaluator):
             "dc.relation.eissn": true_eissn,
             "dc.relation.pissn": true_pissn,
             "dc.language.iso": "eng",
-            prediction_output_key: {
+            "prediction": {
                 "dc.relation.eissn": pred_issn,
             },
         },
