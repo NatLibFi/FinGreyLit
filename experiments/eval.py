@@ -10,9 +10,8 @@ class MetadataEvaluator:
     # similarity threshold to be considered "almost correct":
     ALMOST_THRESHOLD = 0.95
 
-    def __init__(self, filename, prediction_output_key):
+    def __init__(self, filename):
         self.filename = filename
-        self.prediction_output_key = prediction_output_key
 
     def _load_records(self):
         records = []
@@ -33,10 +32,10 @@ class MetadataEvaluator:
                 results.append(
                     {
                         "rowid": rec["rowid"],
-                        "language": rec["dc.language.iso"],
+                        "language": rec['ground_truth'].get("dc.language.iso"),
                         "field": field,
                         "predicted_val": rec['prediction'][field],
-                        "true_val": rec.get(field),
+                        "true_val": rec['ground_truth'].get(field),
                         "match_type": match_type,
                         "score": score,
                     }
@@ -44,7 +43,7 @@ class MetadataEvaluator:
         return results
 
     def _compare(self, rec, field):
-        true_val = rec.get(field)
+        true_val = rec['ground_truth'].get(field)
 
         # special case for "authors" field which may contain multiple values
         if field == "dc.contributor.author":
@@ -57,11 +56,11 @@ class MetadataEvaluator:
             true_val = true_val[0]  # compare only against first (usually only) ISBN
             true_val = [true_val.replace("-", "")]  # strip dashes in ISBNs
         elif field == "dc.publisher" and true_val:
-            true_val = true_val[
-                0
-            ]  # compare only against first (usually only) publisher
+            true_val = true_val[0]  # compare only against first (usually only) publisher
 
         predicted_val = rec["prediction"][field]
+        if field == "dc.publisher" and predicted_val is not None:
+            predicted_val = predicted_val[0]  # compare only against first (usually only) publisher
 
         if predicted_val is None and true_val is None:
             return ("not-relevant", 1)
@@ -83,7 +82,7 @@ class MetadataEvaluator:
                     "printed-issn",
                     0,
                 )
-        elif field == "dc.identifier.isbn" and predicted_val[0] == rec.get(
+        elif field == "dc.identifier.isbn" and predicted_val[0] == rec["ground_truth"].get(
             "dc.relation.isbn", [""]
         )[0].replace("-", ""):
             return ("related-isbn", 0)
@@ -110,7 +109,7 @@ class MetadataEvaluator:
 
     def _compare_authors(self, rec):
         true_authors = set(
-            rec.get("dc.contributor.author", []))
+            rec["ground_truth"].get("dc.contributor.author", []))
         predicted_authors = set(
             rec["prediction"].get("dc.contributor.author", []))
 
@@ -143,8 +142,7 @@ if __name__ == "__main__":
     parser.add_argument("--fields", type=str)
     args = parser.parse_args()
 
-    prediction_output_key = "meteor_output"  # TODO Detect this somehow?
-    evaluator = MetadataEvaluator(args.filename, prediction_output_key)
+    evaluator = MetadataEvaluator(args.filename)
     output = evaluator.evaluate_records()
 
     print(output)

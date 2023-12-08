@@ -4,8 +4,9 @@ def test_year_not_relevant_match(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.date.issued": true_year,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.date.issued": true_year,
+            },
             "prediction": {
                 "dc.date.issued": pred_year,
             },
@@ -24,8 +25,9 @@ def test_year_exact_match(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.date.issued": true_year,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.date.issued": true_year,
+            },
             "prediction": {
                 "dc.date.issued": pred_year,
             },
@@ -44,8 +46,9 @@ def test_year_not_found(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.date.issued": true_year,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.date.issued": true_year,
+            },
             "prediction": {
                 "dc.date.issued": pred_year,
             },
@@ -64,8 +67,9 @@ def test_year_found_nonexistent(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.date.issued": true_year,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.date.issued": true_year,
+            },
             "prediction": {
                 "dc.date.issued": pred_year,
             },
@@ -84,8 +88,9 @@ def test_year_wrong_match(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.date.issued": true_year,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.date.issued": true_year,
+            },
             "prediction": {
                 "dc.date.issued": pred_year,
             },

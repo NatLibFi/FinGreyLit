@@ -4,8 +4,9 @@ def test_title_not_relevant_match(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.title": true_title,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.title": true_title,
+            },
             "prediction": {
                 "title": pred_title,
             },
@@ -24,8 +25,9 @@ def test_title_exact_match(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.title": true_title,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.title": true_title,
+            },
             "prediction": {
                 "dc.title": pred_title,
             },
@@ -44,10 +46,11 @@ def test_title_not_found(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.title": true_title,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.title": true_title,
+            },
             "prediction": {
-                "dc.language.iso": pred_title,
+                "dc.title": pred_title,
             },
         },
     ]
@@ -64,8 +67,9 @@ def test_title_found_nonexistent(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.title": true_title,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.title": true_title,
+            },
             "prediction": {
                 "dc.title": pred_title,
             },
@@ -84,8 +88,9 @@ def test_title_superset_match(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.title": true_title,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.title": true_title,
+            },
             "prediction": {
                 "dc.title": pred_title,
             },
@@ -104,8 +109,9 @@ def test_title_case_match(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.title": true_title,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.title": true_title,
+            },
             "prediction": {
                 "dc.title": pred_title,
             },
@@ -124,8 +130,9 @@ def test_title_superset_case_match(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.title": true_title,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.title": true_title,
+            },
             "prediction": {
                 "dc.title": pred_title,
             },
@@ -144,8 +151,9 @@ def test_title_almost_match(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.title": true_title,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.title": true_title,
+            },
             "prediction": {
                 "dc.title": pred_title,
             },
@@ -164,8 +172,9 @@ def test_title_almost_case_match(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.title": true_title,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.title": true_title,
+            },
             "prediction": {
                 "dc.title": pred_title,
             },
@@ -184,8 +193,9 @@ def test_title_wrong_match(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.title": true_title,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.title": true_title,
+            },
             "prediction": {
                 "dc.title": pred_title,
             },

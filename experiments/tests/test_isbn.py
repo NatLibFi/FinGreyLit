@@ -4,8 +4,9 @@ def test_isbn_not_relevant_match(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.identifier.isbn": true_isbn,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.identifier.isbn": true_isbn,
+            },
             "prediction": {
                 "dc.identifier.isbn": pred_isbn,
             },
@@ -24,8 +25,9 @@ def test_isbn_exact_match(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.identifier.isbn": true_isbn,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.identifier.isbn": true_isbn,
+            },
             "prediction": {
                 "dc.identifier.isbn": pred_isbn,
             },
@@ -44,8 +46,9 @@ def test_isbn_not_found(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.identifier.isbn": true_isbn,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.identifier.isbn": true_isbn,
+            },
             "prediction": {
                 "dc.identifier.isbn": pred_isbn,
             },
@@ -64,8 +67,9 @@ def test_isbn_found_nonexistent(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.identifier.isbn": true_isbn,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.identifier.isbn": true_isbn,
+            },
             "prediction": {
                 "dc.identifier.isbn": pred_isbn,
             },
@@ -84,8 +88,9 @@ def test_isbn_wrong_match(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.identifier.isbn": true_isbn,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.identifier.isbn": true_isbn,
+            },
             "prediction": {
                 "dc.identifier.isbn": pred_isbn,
             },
@@ -104,8 +109,9 @@ def test_isbn_relation_match(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.relation.isbn": true_isbn,  # different field for true value
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.relation.isbn": true_isbn,  # different field for true value
+            },
             "prediction": {
                 "dc.identifier.isbn": pred_isbn,
             },

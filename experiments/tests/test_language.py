@@ -4,7 +4,9 @@ def test_language_not_relevant_match(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.language.iso": true_language,
+            "ground_truth": {
+                "dc.language.iso": true_language,
+            },
             "prediction": {
                 "dc.language.iso": pred_language,
             },
@@ -23,7 +25,9 @@ def test_language_exact_match(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.language.iso": true_language,
+            "ground_truth": {
+                "dc.language.iso": true_language,
+            },
             "prediction": {
                 "dc.language.iso": pred_language,
             },
@@ -42,7 +46,9 @@ def test_language_not_found(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.language.iso": true_language,
+            "ground_truth": {
+                "dc.language.iso": true_language,
+            },
             "prediction": {
                 "dc.language.iso": pred_language,
             },
@@ -61,7 +67,9 @@ def test_language_found_nonexistent(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.language.iso": true_language,
+            "ground_truth": {
+                "dc.language.iso": true_language,
+            },
             "prediction": {
                 "dc.language.iso": pred_language,
             },
@@ -80,7 +88,9 @@ def test_language_wrong_match(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.language.iso": true_language,
+            "ground_truth": {
+                "dc.language.iso": true_language,
+            },
             "prediction": {
                 "dc.language.iso": pred_language,
             },

@@ -4,8 +4,9 @@ def test_authors_not_relevant_match(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.contributor.author": true_authors,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.contributor.author": true_authors,
+            },
             "prediction": {
                 "dc.contributor.author": pred_authors,
             },
@@ -24,8 +25,9 @@ def test_authors_exact_match(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.contributor.author": true_authors,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.contributor.author": true_authors,
+            },
             "prediction": {
                 "dc.contributor.author": pred_authors,
             },
@@ -44,8 +46,9 @@ def test_authors_exact_multiple_match(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.contributor.author": true_authors,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.contributor.author": true_authors,
+            },
             "prediction": {
                 "dc.contributor.author": pred_authors,
             },
@@ -64,8 +67,9 @@ def test_authors_not_found(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.contributor.author": true_authors,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.contributor.author": true_authors,
+            },
             "prediction": {
                 "dc.contributor.author": pred_authors,
             },
@@ -84,8 +88,9 @@ def test_authors_found_nonexistent(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.contributor.author": true_authors,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.contributor.author": true_authors,
+            },
             "prediction": {
                 "dc.contributor.author": pred_authors,
             },
@@ -107,8 +112,9 @@ def test_authors_superset_match(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.contributor.author": true_authors,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.contributor.author": true_authors,
+            },
             "prediction": {
                 "dc.contributor.author": pred_authors,
             },
@@ -127,8 +133,9 @@ def test_authors_subset_match(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.contributor.author": true_authors,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.contributor.author": true_authors,
+            },
             "prediction": {
                 "dc.contributor.author": pred_authors,
             },
@@ -150,8 +157,9 @@ def test_authors_overlap_match(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.contributor.author": true_authors,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.contributor.author": true_authors,
+            },
             "prediction": {
                 "dc.contributor.author": pred_authors,
             },
@@ -170,8 +178,9 @@ def test_authors_wrong_match(evaluator):
     records = [
         {
             "rowid": "1",
-            "dc.contributor.author": true_authors,
-            "dc.language.iso": "eng",
+            "ground_truth": {
+                "dc.contributor.author": true_authors,
+            },
             "prediction": {
                 "dc.contributor.author": pred_authors,
             },
