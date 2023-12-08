@@ -1,4 +1,4 @@
-prediction_output_key = "prediction_output"
+prediction_output_key = "prediction"
 
 
 def test_issn_not_relevant_match(evaluator):
@@ -11,7 +11,7 @@ def test_issn_not_relevant_match(evaluator):
             "dc.language.iso": "eng",
             prediction_output_key: {
                 "language": {"value": "en"},
-                "issn": pred_issn,
+                "dc.relation.eissn": pred_issn,
             },
         },
     ]
@@ -32,7 +32,7 @@ def test_issn_exact_match(evaluator):
             "dc.language.iso": "eng",
             prediction_output_key: {
                 "language": {"value": "en"},
-                "issn": {"value": pred_issn},
+                "dc.relation.eissn": pred_issn,
             },
         },
     ]
@@ -53,7 +53,7 @@ def test_issn_not_found(evaluator):
             "dc.language.iso": "eng",
             prediction_output_key: {
                 "language": {"value": "en"},
-                "issn": pred_issn,
+                "dc.relation.eissn": pred_issn,
             },
         },
     ]
@@ -74,7 +74,7 @@ def test_issn_found_nonexistent(evaluator):
             "dc.language.iso": "eng",
             prediction_output_key: {
                 "language": {"value": "en"},
-                "issn": {"value": pred_issn},
+                "dc.relation.eissn": pred_issn,
             },
         },
     ]
@@ -95,7 +95,7 @@ def test_issn_wrong_match(evaluator):
             "dc.language.iso": "eng",
             prediction_output_key: {
                 "language": {"value": "en"},
-                "issn": {"value": pred_issn},
+                "dc.relation.eissn": pred_issn,
             },
         },
     ]
@@ -116,7 +116,7 @@ def test_issn_printed_correct_match(evaluator):
             "dc.language.iso": "eng",
             prediction_output_key: {
                 "language": {"value": "en"},
-                "issn": {"value": pred_issn},
+                "dc.relation.eissn": pred_issn,
             },
         },
     ]
@@ -139,7 +139,7 @@ def test_issn_printed_wrong_match(evaluator):
             "dc.language.iso": "eng",
             prediction_output_key: {
                 "language": {"value": "en"},
-                "issn": {"value": pred_issn},
+                "dc.relation.eissn": pred_issn,
             },
         },
     ]

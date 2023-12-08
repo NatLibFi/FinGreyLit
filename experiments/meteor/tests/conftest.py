@@ -1,7 +1,7 @@
 import pytest
 from ..eval import MetadataEvaluator
 
-prediction_output_key = "prediction_output"
+prediction_output_key = "prediction"
 
 
 @pytest.fixture

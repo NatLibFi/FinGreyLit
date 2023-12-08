@@ -1,4 +1,4 @@
-prediction_output_key = "prediction_output"
+prediction_output_key = "prediction"
 
 
 def test_authors_not_relevant_match(evaluator):
@@ -11,20 +11,20 @@ def test_authors_not_relevant_match(evaluator):
             "dc.language.iso": "eng",
             prediction_output_key: {
                 "language": {"value": "en"},
-                "authors": pred_authors,
+                "dc.contributor.author": pred_authors,
             },
         },
     ]
     result = evaluator.evaluate_records(records)
     for res in result:
-        if res["field"] == "authors":
+        if res["field"] == "dc.contributor.author":
             assert res["match_type"] == "not-relevant"
             assert res["score"] == 1
 
 
 def test_authors_exact_match(evaluator):
     true_authors = ["Mylastname, Myfirstname"]
-    pred_authors = [{"firstname": "Myfirstname", "lastname": "Mylastname"}]
+    pred_authors = ["Mylastname, Myfirstname"]
     records = [
         {
             "rowid": "1",
@@ -32,23 +32,20 @@ def test_authors_exact_match(evaluator):
             "dc.language.iso": "eng",
             prediction_output_key: {
                 "language": {"value": "en"},
-                "authors": pred_authors,
+                "dc.contributor.author": pred_authors,
             },
         },
     ]
     result = evaluator.evaluate_records(records)
     for res in result:
-        if res["field"] == "authors":
+        if res["field"] == "dc.contributor.author":
             assert res["match_type"] == "exact"
             assert res["score"] == 1
 
 
 def test_authors_exact_multiple_match(evaluator):
     true_authors = ["Mylastname, Myfirstname", "Myotherlastname, Myotherfirstname"]
-    pred_authors = [
-        {"firstname": "Myfirstname", "lastname": "Mylastname"},
-        {"firstname": "Myotherfirstname", "lastname": "Myotherlastname"},
-    ]
+    pred_authors = ["Mylastname, Myfirstname", "Myotherlastname, Myotherfirstname"]
     records = [
         {
             "rowid": "1",
@@ -56,13 +53,13 @@ def test_authors_exact_multiple_match(evaluator):
             "dc.language.iso": "eng",
             prediction_output_key: {
                 "language": {"value": "en"},
-                "authors": pred_authors,
+                "dc.contributor.author": pred_authors,
             },
         },
     ]
     result = evaluator.evaluate_records(records)
     for res in result:
-        if res["field"] == "authors":
+        if res["field"] == "dc.contributor.author":
             assert res["match_type"] == "exact"
             assert res["score"] == 1
 
@@ -77,20 +74,20 @@ def test_authors_not_found(evaluator):
             "dc.language.iso": "eng",
             prediction_output_key: {
                 "language": {"value": "en"},
-                "authors": pred_authors,
+                "dc.contributor.author": pred_authors,
             },
         },
     ]
     result = evaluator.evaluate_records(records)
     for res in result:
-        if res["field"] == "authors":
+        if res["field"] == "dc.contributor.author":
             assert res["match_type"] == "not-found"
             assert res["score"] == 0
 
 
 def test_authors_found_nonexistent(evaluator):
     true_authors = []
-    pred_authors = [{"firstname": "Myfirstname", "lastname": "Mylastname"}]
+    pred_authors = ["Mylastname, Myfirstname"]
     records = [
         {
             "rowid": "1",
@@ -98,13 +95,13 @@ def test_authors_found_nonexistent(evaluator):
             "dc.language.iso": "eng",
             prediction_output_key: {
                 "language": {"value": "en"},
-                "authors": pred_authors,
+                "dc.contributor.author": pred_authors,
             },
         },
     ]
     result = evaluator.evaluate_records(records)
     for res in result:
-        if res["field"] == "authors":
+        if res["field"] == "dc.contributor.author":
             assert res["match_type"] == "found-nonexistent"
             assert res["score"] == 0
 
@@ -112,8 +109,8 @@ def test_authors_found_nonexistent(evaluator):
 def test_authors_superset_match(evaluator):
     true_authors = ["Mylastname, Myfirstname"]
     pred_authors = [
-        {"firstname": "Myfirstname", "lastname": "Mylastname"},
-        {"firstname": "Myotherfirstname", "lastname": "Myotherlastname"},
+        "Mylastname, Myfirstname",
+        "Myotherlastname, Myotherfirstname",
     ]
     records = [
         {
@@ -122,20 +119,20 @@ def test_authors_superset_match(evaluator):
             "dc.language.iso": "eng",
             prediction_output_key: {
                 "language": {"value": "en"},
-                "authors": pred_authors,
+                "dc.contributor.author": pred_authors,
             },
         },
     ]
     result = evaluator.evaluate_records(records)
     for res in result:
-        if res["field"] == "authors":
+        if res["field"] == "dc.contributor.author":
             assert res["match_type"] == "superset"
             assert res["score"] == 1
 
 
 def test_authors_subset_match(evaluator):
     true_authors = ["Mylastname, Myfirstname", "Myotherlastname, Myotherfirstname"]
-    pred_authors = [{"firstname": "Myfirstname", "lastname": "Mylastname"}]
+    pred_authors = ["Mylastname, Myfirstname"]
     records = [
         {
             "rowid": "1",
@@ -143,13 +140,13 @@ def test_authors_subset_match(evaluator):
             "dc.language.iso": "eng",
             prediction_output_key: {
                 "language": {"value": "en"},
-                "authors": pred_authors,
+                "dc.contributor.author": pred_authors,
             },
         },
     ]
     result = evaluator.evaluate_records(records)
     for res in result:
-        if res["field"] == "authors":
+        if res["field"] == "dc.contributor.author":
             assert res["match_type"] == "subset"
             assert res["score"] == 0
 
@@ -157,8 +154,8 @@ def test_authors_subset_match(evaluator):
 def test_authors_overlap_match(evaluator):
     true_authors = ["Mylastname, Myfirstname", "Myotherfirstname, Myotherlastname"]
     pred_authors = [
-        {"firstname": "Myfirstname", "lastname": "Mylastname"},
-        {"firstname": "Myaltfirstname", "lastname": "Myaltlastname"},
+        "Mylastname, Myfirstname",
+        "Myaltlastname, Myaltfirstname",
     ]
     records = [
         {
@@ -167,20 +164,20 @@ def test_authors_overlap_match(evaluator):
             "dc.language.iso": "eng",
             prediction_output_key: {
                 "language": {"value": "en"},
-                "authors": pred_authors,
+                "dc.contributor.author": pred_authors,
             },
         },
     ]
     result = evaluator.evaluate_records(records)
     for res in result:
-        if res["field"] == "authors":
+        if res["field"] == "dc.contributor.author":
             assert res["match_type"] == "overlap"
             assert res["score"] == 0
 
 
 def test_authors_wrong_match(evaluator):
     true_authors = ["Mylastname, Myfirstname"]
-    pred_authors = [{"firstname": "Otherfirst", "lastname": "Otherlast"}]
+    pred_authors = ["Otherlast, Otherfirst"]
     records = [
         {
             "rowid": "1",
@@ -188,12 +185,12 @@ def test_authors_wrong_match(evaluator):
             "dc.language.iso": "eng",
             prediction_output_key: {
                 "language": {"value": "en"},
-                "authors": pred_authors,
+                "dc.contributor.author": pred_authors,
             },
         },
     ]
     result = evaluator.evaluate_records(records)
     for res in result:
-        if res["field"] == "authors":
+        if res["field"] == "dc.contributor.author":
             assert res["match_type"] == "wrong"
             assert res["score"] == 0

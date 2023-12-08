@@ -9,16 +9,6 @@ import Levenshtein
 class MetadataEvaluator:
     # similarity threshold to be considered "almost correct":
     ALMOST_THRESHOLD = 0.95
-    LANGMAP = {"fin": "fi", "swe": "sv", "eng": "en"}
-    FIELDS = {
-        "year": "dc.date.issued",
-        "language": "dc.language.iso",
-        "title": "dc.title",
-        "publisher": "dc.publisher",
-        "authors": "dc.contributor.author",
-        "isbn": "dc.identifier.isbn",
-        "issn": "dc.relation.eissn",
-    }
 
     def __init__(self, filename, prediction_output_key):
         self.filename = filename
@@ -38,44 +28,40 @@ class MetadataEvaluator:
         results = []
 
         for rec in records:
-            for field, dc_field in self.FIELDS.items():
-                match_type, score = self._compare(rec, dc_field, field)
+            for field in rec['prediction'].keys():
+                match_type, score = self._compare(rec, field)
                 results.append(
                     {
-                        "rowid": rec["rowid"],  # TODO Should this be optional?
+                        "rowid": rec["rowid"],
                         "language": rec["dc.language.iso"],
                         "field": field,
-                        "predicted_val": self._get_prediction(rec, field),
-                        "true_val": rec.get(dc_field),
+                        "predicted_val": rec['prediction'][field],
+                        "true_val": rec.get(field),
                         "match_type": match_type,
                         "score": score,
                     }
                 )
         return results
 
-    def _compare(self, rec, dc_key, field_key):
-        true_val = rec.get(dc_key)
+    def _compare(self, rec, field):
+        true_val = rec.get(field)
 
         # special case for "authors" field which may contain multiple values
-        if dc_key == "dc.contributor.author":
+        if field == "dc.contributor.author":
             return self._compare_authors(rec)
 
-        # field-specific adjustments
-        if dc_key == "dc.language.iso":
-            true_val = self.LANGMAP.get(
-                true_val
-            )  # convert to ISO 639-1 2-letter language code
-        elif dc_key == "dc.date.issued" and true_val is not None:
+        # field-specific adjustments to true values
+        elif field == "dc.date.issued" and true_val is not None:
             true_val = true_val[:4]  # compare only the year
-        elif dc_key == "dc.identifier.isbn" and true_val:
+        elif field == "dc.identifier.isbn" and true_val:
             true_val = true_val[0]  # compare only against first (usually only) ISBN
-            true_val = true_val.replace("-", "")  # strip dashes in ISBNs
-        elif dc_key == "dc.publisher" and true_val:
+            true_val = [true_val.replace("-", "")]  # strip dashes in ISBNs
+        elif field == "dc.publisher" and true_val:
             true_val = true_val[
                 0
             ]  # compare only against first (usually only) publisher
 
-        predicted_val = self._get_prediction(rec, field_key)
+        predicted_val = rec["prediction"][field]
 
         if predicted_val is None and true_val is None:
             return ("not-relevant", 1)
@@ -83,7 +69,7 @@ class MetadataEvaluator:
             return ("exact", 1)
         elif predicted_val is None:
             return ("not-found", 0)
-        elif dc_key == "dc.relation.eissn" and predicted_val == rec.get(
+        elif field == "dc.relation.eissn" and predicted_val == rec.get(
             "dc.relation.pissn"
         ):
             if true_val is None:
@@ -97,7 +83,7 @@ class MetadataEvaluator:
                     "printed-issn",
                     0,
                 )
-        elif dc_key == "dc.identifier.isbn" and predicted_val == rec.get(
+        elif field == "dc.identifier.isbn" and predicted_val[0] == rec.get(
             "dc.relation.isbn", [""]
         )[0].replace("-", ""):
             return ("related-isbn", 0)
@@ -105,13 +91,13 @@ class MetadataEvaluator:
             return ("found-nonexistent", 0)
         elif true_val in predicted_val:
             return ("superset", 1)
-        elif true_val.lower() == predicted_val.lower():
+        elif isinstance(true_val, str) and true_val.lower() == predicted_val.lower():
             return ("case", 1)
-        elif true_val.lower() in predicted_val.lower():
+        elif isinstance(true_val, str) and true_val.lower() in predicted_val.lower():
             return ("superset-case", 1)
-        elif Levenshtein.ratio(true_val, predicted_val) >= self.ALMOST_THRESHOLD:
+        elif isinstance(true_val, str) and Levenshtein.ratio(true_val, predicted_val) >= self.ALMOST_THRESHOLD:
             return ("almost", 1)
-        elif (
+        elif isinstance(true_val, str) and (
             Levenshtein.ratio(true_val.lower(), predicted_val.lower())
             >= self.ALMOST_THRESHOLD
         ):
@@ -123,16 +109,10 @@ class MetadataEvaluator:
             return ("wrong", 0)
 
     def _compare_authors(self, rec):
-        true_authors = set(rec.get("dc.contributor.author", []))
-        try:
-            predicted_authors = set(
-                [
-                    f"{author['lastname']}, {author['firstname']}"
-                    for author in rec[self.prediction_output_key]["authors"]
-                ]
-            )
-        except (KeyError, TypeError):
-            predicted_authors = set()
+        true_authors = set(
+            rec.get("dc.contributor.author", []))
+        predicted_authors = set(
+            rec["prediction"].get("dc.contributor.author", []))
 
         if not true_authors and not predicted_authors:
             return ("not-relevant", 1)
@@ -150,12 +130,6 @@ class MetadataEvaluator:
             return ("overlap", 0)
         else:
             return ("wrong", 0)
-
-    def _get_prediction(self, rec, prediction_field_key):
-        try:
-            return str(rec[self.prediction_output_key][prediction_field_key]["value"])
-        except (KeyError, TypeError):
-            return None
 
 
 if __name__ == "__main__":
