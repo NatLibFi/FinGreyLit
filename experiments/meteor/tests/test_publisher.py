@@ -10,7 +10,6 @@ def test_publisher_not_relevant_match(evaluator):
             "dc.publisher": true_publisher,
             "dc.language.iso": "eng",
             prediction_output_key: {
-                "language": {"value": "en"},
                 "publisher": pred_publisher,
             },
         },
@@ -31,7 +30,6 @@ def test_publisher_exact_match(evaluator):
             "dc.publisher": true_publisher,
             "dc.language.iso": "eng",
             prediction_output_key: {
-                "language": {"value": "en"},
                 "dc.publisher": pred_publisher,
             },
         },
@@ -52,7 +50,6 @@ def test_publisher_not_found(evaluator):
             "dc.publisher": true_publisher,
             "dc.language.iso": "eng",
             prediction_output_key: {
-                "language": {"value": "en"},
                 "dc.language.iso": pred_publisher,
             },
         },
@@ -73,7 +70,6 @@ def test_publisher_found_nonexistent(evaluator):
             "dc.publisher": true_publisher,
             "dc.language.iso": "eng",
             prediction_output_key: {
-                "language": {"value": "en"},
                 "dc.publisher": pred_publisher,
             },
         },
@@ -94,7 +90,6 @@ def test_publisher_superset_match(evaluator):
             "dc.publisher": true_publisher,
             "dc.language.iso": "eng",
             prediction_output_key: {
-                "language": {"value": "en"},
                 "dc.publisher": pred_publisher,
             },
         },
@@ -115,7 +110,6 @@ def test_publisher_case_match(evaluator):
             "dc.publisher": true_publisher,
             "dc.language.iso": "eng",
             prediction_output_key: {
-                "language": {"value": "en"},
                 "dc.publisher": pred_publisher,
             },
         },
@@ -136,7 +130,6 @@ def test_publisher_superset_case_match(evaluator):
             "dc.publisher": true_publisher,
             "dc.language.iso": "eng",
             prediction_output_key: {
-                "language": {"value": "en"},
                 "dc.publisher": pred_publisher,
             },
         },
@@ -157,7 +150,6 @@ def test_publisher_almost_match(evaluator):
             "dc.publisher": true_publisher,
             "dc.language.iso": "eng",
             prediction_output_key: {
-                "language": {"value": "en"},
                 "dc.publisher": pred_publisher,
             },
         },
@@ -178,7 +170,6 @@ def test_publisher_almost_case_match(evaluator):
             "dc.publisher": true_publisher,
             "dc.language.iso": "eng",
             prediction_output_key: {
-                "language": {"value": "en"},
                 "dc.publisher": pred_publisher,
             },
         },
@@ -199,7 +190,6 @@ def test_publisher_wrong_match(evaluator):
             "dc.publisher": true_publisher,
             "dc.language.iso": "eng",
             prediction_output_key: {
-                "language": {"value": "en"},
                 "dc.publisher": pred_publisher,
             },
         },

@@ -10,7 +10,6 @@ def test_year_not_relevant_match(evaluator):
             "dc.date.issued": true_year,
             "dc.language.iso": "eng",
             prediction_output_key: {
-                "language": {"value": "en"},
                 "dc.date.issued": pred_year,
             },
         },
@@ -31,7 +30,6 @@ def test_year_exact_match(evaluator):
             "dc.date.issued": true_year,
             "dc.language.iso": "eng",
             prediction_output_key: {
-                "language": {"value": "en"},
                 "dc.date.issued": pred_year,
             },
         },
@@ -52,7 +50,6 @@ def test_year_not_found(evaluator):
             "dc.date.issued": true_year,
             "dc.language.iso": "eng",
             prediction_output_key: {
-                "language": {"value": "en"},
                 "dc.date.issued": pred_year,
             },
         },
@@ -73,7 +70,6 @@ def test_year_found_nonexistent(evaluator):
             "dc.date.issued": true_year,
             "dc.language.iso": "eng",
             prediction_output_key: {
-                "language": {"value": "en"},
                 "dc.date.issued": pred_year,
             },
         },
@@ -94,7 +90,6 @@ def test_year_wrong_match(evaluator):
             "dc.date.issued": true_year,
             "dc.language.iso": "eng",
             prediction_output_key: {
-                "language": {"value": "en"},
                 "dc.date.issued": pred_year,
             },
         },

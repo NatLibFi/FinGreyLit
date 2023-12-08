@@ -10,7 +10,6 @@ def test_authors_not_relevant_match(evaluator):
             "dc.contributor.author": true_authors,
             "dc.language.iso": "eng",
             prediction_output_key: {
-                "language": {"value": "en"},
                 "dc.contributor.author": pred_authors,
             },
         },
@@ -31,7 +30,6 @@ def test_authors_exact_match(evaluator):
             "dc.contributor.author": true_authors,
             "dc.language.iso": "eng",
             prediction_output_key: {
-                "language": {"value": "en"},
                 "dc.contributor.author": pred_authors,
             },
         },
@@ -52,7 +50,6 @@ def test_authors_exact_multiple_match(evaluator):
             "dc.contributor.author": true_authors,
             "dc.language.iso": "eng",
             prediction_output_key: {
-                "language": {"value": "en"},
                 "dc.contributor.author": pred_authors,
             },
         },
@@ -73,7 +70,6 @@ def test_authors_not_found(evaluator):
             "dc.contributor.author": true_authors,
             "dc.language.iso": "eng",
             prediction_output_key: {
-                "language": {"value": "en"},
                 "dc.contributor.author": pred_authors,
             },
         },
@@ -94,7 +90,6 @@ def test_authors_found_nonexistent(evaluator):
             "dc.contributor.author": true_authors,
             "dc.language.iso": "eng",
             prediction_output_key: {
-                "language": {"value": "en"},
                 "dc.contributor.author": pred_authors,
             },
         },
@@ -118,7 +113,6 @@ def test_authors_superset_match(evaluator):
             "dc.contributor.author": true_authors,
             "dc.language.iso": "eng",
             prediction_output_key: {
-                "language": {"value": "en"},
                 "dc.contributor.author": pred_authors,
             },
         },
@@ -139,7 +133,6 @@ def test_authors_subset_match(evaluator):
             "dc.contributor.author": true_authors,
             "dc.language.iso": "eng",
             prediction_output_key: {
-                "language": {"value": "en"},
                 "dc.contributor.author": pred_authors,
             },
         },
@@ -163,7 +156,6 @@ def test_authors_overlap_match(evaluator):
             "dc.contributor.author": true_authors,
             "dc.language.iso": "eng",
             prediction_output_key: {
-                "language": {"value": "en"},
                 "dc.contributor.author": pred_authors,
             },
         },
@@ -184,7 +176,6 @@ def test_authors_wrong_match(evaluator):
             "dc.contributor.author": true_authors,
             "dc.language.iso": "eng",
             prediction_output_key: {
-                "language": {"value": "en"},
                 "dc.contributor.author": pred_authors,
             },
         },
