@@ -3,3 +3,4 @@ pandas
 pymupdf
 requests
 tabulate
+regex
