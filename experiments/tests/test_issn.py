@@ -14,7 +14,7 @@ def test_issn_not_relevant_match(evaluator):
     ]
     result = evaluator.evaluate_records(records)
     for res in result:
-        if res["field"] == "issn":
+        if res["field"] == "dc.relation.eissn":
             assert res["match_type"] == "not-relevant"
             assert res["score"] == 1
 
@@ -35,7 +35,7 @@ def test_issn_exact_match(evaluator):
     ]
     result = evaluator.evaluate_records(records)
     for res in result:
-        if res["field"] == "issn":
+        if res["field"] == "dc.relation.eissn":
             assert res["match_type"] == "exact"
             assert res["score"] == 1
 
@@ -56,7 +56,7 @@ def test_issn_not_found(evaluator):
     ]
     result = evaluator.evaluate_records(records)
     for res in result:
-        if res["field"] == "issn":
+        if res["field"] == "dc.relation.eissn":
             assert res["match_type"] == "not-found"
             assert res["score"] == 0
 
@@ -77,7 +77,7 @@ def test_issn_found_nonexistent(evaluator):
     ]
     result = evaluator.evaluate_records(records)
     for res in result:
-        if res["field"] == "issn":
+        if res["field"] == "dc.relation.eissn":
             assert res["match_type"] == "found-nonexistent"
             assert res["score"] == 0
 
@@ -98,36 +98,15 @@ def test_issn_wrong_match(evaluator):
     ]
     result = evaluator.evaluate_records(records)
     for res in result:
-        if res["field"] == "issn":
+        if res["field"] == "dc.relation.eissn":
             assert res["match_type"] == "wrong"
             assert res["score"] == 0
 
 
 def test_issn_printed_correct_match(evaluator):
+    true_eissn = None  # No true eissn
     true_pissn = "123-456-789"
-    pred_issn = "123-456-789"
-    records = [
-        {
-            "rowid": "1",
-            "ground_truth": {
-                "dc.relation.pissn": true_pissn,  # different field for true value
-            },
-            "prediction": {
-                "dc.relation.eissn": pred_issn,
-            },
-        },
-    ]
-    result = evaluator.evaluate_records(records)
-    for res in result:
-        if res["field"] == "issn":
-            assert res["match_type"] == "printed-issn"
-            assert res["score"] == 1
-
-
-def test_issn_printed_wrong_match(evaluator):
-    true_eissn = "000-000-000"
-    true_pissn = "123-456-789"
-    pred_issn = "123-456-789"
+    pred_eissn = true_pissn
     records = [
         {
             "rowid": "1",
@@ -136,12 +115,35 @@ def test_issn_printed_wrong_match(evaluator):
                 "dc.relation.pissn": true_pissn,
             },
             "prediction": {
-                "dc.relation.eissn": pred_issn,
+                "dc.relation.eissn": pred_eissn,
             },
         },
     ]
     result = evaluator.evaluate_records(records)
     for res in result:
-        if res["field"] == "issn":
+        if res["field"] == "dc.relation.eissn":
+            assert res["match_type"] == "printed-issn"
+            assert res["score"] == 1
+
+
+def test_issn_printed_wrong_match(evaluator):
+    true_eissn = "000-000-000"
+    true_pissn = "123-456-789"
+    pred_eissn = true_pissn
+    records = [
+        {
+            "rowid": "1",
+            "ground_truth": {
+                "dc.relation.eissn": true_eissn,
+                "dc.relation.pissn": true_pissn,
+            },
+            "prediction": {
+                "dc.relation.eissn": pred_eissn,
+            },
+        },
+    ]
+    result = evaluator.evaluate_records(records)
+    for res in result:
+        if res["field"] == "dc.relation.eissn":
             assert res["match_type"] == "printed-issn"
             assert res["score"] == 0

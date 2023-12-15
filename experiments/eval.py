@@ -68,7 +68,7 @@ class MetadataEvaluator:
             return ("exact", 1)
         elif predicted_val is None:
             return ("not-found", 0)
-        elif field == "dc.relation.eissn" and predicted_val == rec.get(
+        elif field == "dc.relation.eissn" and predicted_val == rec['ground_truth'].get(
             "dc.relation.pissn"
         ):
             if true_val is None:
