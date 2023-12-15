@@ -1,7 +1,3 @@
-"""
-Description.  # TODO
-"""
-
 import json
 import Levenshtein
 
@@ -134,12 +130,10 @@ class MetadataEvaluator:
 if __name__ == "__main__":
     import argparse
 
-    # TODO ADD description="A script for evaluating extracted metadata records."
     parser = argparse.ArgumentParser()
 
     # Define command-line arguments
-    parser.add_argument("filename", help="Description of the filename")
-    parser.add_argument("--fields", type=str)
+    parser.add_argument("filename", help="File with the records to evaluate.")
     args = parser.parse_args()
 
     evaluator = MetadataEvaluator(args.filename)
