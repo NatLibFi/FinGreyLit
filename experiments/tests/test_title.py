@@ -13,10 +13,8 @@ def test_title_not_relevant_match(evaluator):
         },
     ]
     result = evaluator.evaluate_records(records)
-    for res in result:
-        if res["field"] == "title":
-            assert res["match_type"] == "not-relevant"
-            assert res["score"] == 1
+    assert result[0]["match_type"] == "not-relevant"
+    assert result[0]["score"] == 1
 
 
 def test_title_exact_match(evaluator):
@@ -34,10 +32,8 @@ def test_title_exact_match(evaluator):
         },
     ]
     result = evaluator.evaluate_records(records)
-    for res in result:
-        if res["field"] == "title":
-            assert res["match_type"] == "exact"
-            assert res["score"] == 1
+    assert result[0]["match_type"] == "exact"
+    assert result[0]["score"] == 1
 
 
 def test_title_not_found(evaluator):
@@ -55,10 +51,8 @@ def test_title_not_found(evaluator):
         },
     ]
     result = evaluator.evaluate_records(records)
-    for res in result:
-        if res["field"] == "title":
-            assert res["match_type"] == "not-found"
-            assert res["score"] == 0
+    assert result[0]["match_type"] == "not-found"
+    assert result[0]["score"] == 0
 
 
 def test_title_found_nonexistent(evaluator):
@@ -76,10 +70,8 @@ def test_title_found_nonexistent(evaluator):
         },
     ]
     result = evaluator.evaluate_records(records)
-    for res in result:
-        if res["field"] == "title":
-            assert res["match_type"] == "found-nonexistent"
-            assert res["score"] == 0
+    assert result[0]["match_type"] == "found-nonexistent"
+    assert result[0]["score"] == 0
 
 
 def test_title_superset_match(evaluator):
@@ -97,10 +89,8 @@ def test_title_superset_match(evaluator):
         },
     ]
     result = evaluator.evaluate_records(records)
-    for res in result:
-        if res["field"] == "title":
-            assert res["match_type"] == "superset"
-            assert res["score"] == 1
+    assert result[0]["match_type"] == "superset"
+    assert result[0]["score"] == 1
 
 
 def test_title_case_match(evaluator):
@@ -118,10 +108,8 @@ def test_title_case_match(evaluator):
         },
     ]
     result = evaluator.evaluate_records(records)
-    for res in result:
-        if res["field"] == "title":
-            assert res["match_type"] == "case"
-            assert res["score"] == 1
+    assert result[0]["match_type"] == "case"
+    assert result[0]["score"] == 1
 
 
 def test_title_superset_case_match(evaluator):
@@ -139,10 +127,8 @@ def test_title_superset_case_match(evaluator):
         },
     ]
     result = evaluator.evaluate_records(records)
-    for res in result:
-        if res["field"] == "title":
-            assert res["match_type"] == "superset-case"
-            assert res["score"] == 1
+    assert result[0]["match_type"] == "superset-case"
+    assert result[0]["score"] == 1
 
 
 def test_title_almost_match(evaluator):
@@ -160,10 +146,8 @@ def test_title_almost_match(evaluator):
         },
     ]
     result = evaluator.evaluate_records(records)
-    for res in result:
-        if res["field"] == "title":
-            assert res["match_type"] == "almost"
-            assert res["score"] == 1
+    assert result[0]["match_type"] == "almost"
+    assert result[0]["score"] == 1
 
 
 def test_title_almost_case_match(evaluator):
@@ -181,10 +165,8 @@ def test_title_almost_case_match(evaluator):
         },
     ]
     result = evaluator.evaluate_records(records)
-    for res in result:
-        if res["field"] == "title":
-            assert res["match_type"] == "almost-case"
-            assert res["score"] == 1
+    assert result[0]["match_type"] == "almost-case"
+    assert result[0]["score"] == 1
 
 
 def test_title_wrong_match(evaluator):
@@ -202,7 +184,5 @@ def test_title_wrong_match(evaluator):
         },
     ]
     result = evaluator.evaluate_records(records)
-    for res in result:
-        if res["field"] == "title":
-            assert res["match_type"] == "wrong"
-            assert res["score"] == 0
+    assert result[0]["match_type"] == "wrong"
+    assert result[0]["score"] == 0

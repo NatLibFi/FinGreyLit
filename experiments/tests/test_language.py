@@ -13,10 +13,8 @@ def test_language_not_relevant_match(evaluator):
         },
     ]
     result = evaluator.evaluate_records(records)
-    for res in result:
-        if res["field"] == "dc.language.iso":
-            assert res["match_type"] == "not-relevant"
-            assert res["score"] == 1
+    assert result[0]["match_type"] == "not-relevant"
+    assert result[0]["score"] == 1
 
 
 def test_language_exact_match(evaluator):
@@ -34,10 +32,8 @@ def test_language_exact_match(evaluator):
         },
     ]
     result = evaluator.evaluate_records(records)
-    for res in result:
-        if res["field"] == "dc.language.iso":
-            assert res["match_type"] == "exact"
-            assert res["score"] == 1
+    assert result[0]["match_type"] == "exact"
+    assert result[0]["score"] == 1
 
 
 def test_language_not_found(evaluator):
@@ -55,10 +51,8 @@ def test_language_not_found(evaluator):
         },
     ]
     result = evaluator.evaluate_records(records)
-    for res in result:
-        if res["field"] == "dc.language.iso":
-            assert res["match_type"] == "not-found"
-            assert res["score"] == 0
+    assert result[0]["match_type"] == "not-found"
+    assert result[0]["score"] == 0
 
 
 def test_language_found_nonexistent(evaluator):
@@ -76,10 +70,8 @@ def test_language_found_nonexistent(evaluator):
         },
     ]
     result = evaluator.evaluate_records(records)
-    for res in result:
-        if res["field"] == "dc.language.iso":
-            assert res["match_type"] == "found-nonexistent"
-            assert res["score"] == 0
+    assert result[0]["match_type"] == "found-nonexistent"
+    assert result[0]["score"] == 0
 
 
 def test_language_wrong_match(evaluator):
@@ -97,7 +89,5 @@ def test_language_wrong_match(evaluator):
         },
     ]
     result = evaluator.evaluate_records(records)
-    for res in result:
-        if res["field"] == "dc.language.iso":
-            assert res["match_type"] == "wrong"
-            assert res["score"] == 0
+    assert result[0]["match_type"] == "wrong"
+    assert result[0]["score"] == 0
