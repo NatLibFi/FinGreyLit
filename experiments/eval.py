@@ -6,7 +6,7 @@ class MetadataEvaluator:
     # similarity threshold to be considered "almost correct":
     ALMOST_THRESHOLD = 0.95
 
-    def __init__(self, filename):
+    def __init__(self, filename=None):
         self.filename = filename
 
     def _load_records(self):
