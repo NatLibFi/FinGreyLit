@@ -50,4 +50,5 @@ For some statistics on actual usage of these metadata fields in different types 
 | dc.title.alternative      | An alternative or secondary title of the resource. Often a translation of the main title into another language.          | `Statistical Yearbook of Tourism in Kainuu 2019`                                                              | M |
 | dc.type.coar              | The type of the resource according to the Confederation of Open Access Repositories [Resource Types classification](https://vocabularies.coar-repositories.org/resource_types/). | `research article`                                                                                            | S |
 | dc.type.okm               | The type of the resource according to the Finnish Ministry of Education and Culture [Publication Type Classification](https://wiki.eduuni.fi/display/cscsuorat/7.5+Julkaisutyypit+2023). | `G2 Pro gradu, diplomityö, ylempi amk-opinnäytetyö` | S |
+| dc.type.ontasot               | The type of the resource according to the Metadata thesaurus (see [Repository Services](https://www.kiwi.fi/display/Julkaisuarkistopalvelut/dc.type.ontasot)). | `Doctoral dissertation` | S |
 
