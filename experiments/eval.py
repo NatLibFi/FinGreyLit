@@ -1,5 +1,6 @@
 import json
 import Levenshtein
+import pandas as pd
 
 
 class MetadataEvaluator:
@@ -23,15 +24,15 @@ class MetadataEvaluator:
         results = []
 
         for rec in records:
-            for field in rec['prediction'].keys():
+            for field in rec["prediction"].keys():
                 match_type, score = self._compare(rec, field)
                 results.append(
                     {
                         "rowid": rec["rowid"],
-                        "language": rec['ground_truth'].get("dc.language.iso"),
+                        "language": rec["ground_truth"].get("dc.language.iso"),
                         "field": field,
-                        "predicted_val": rec['prediction'][field],
-                        "true_val": rec['ground_truth'].get(field),
+                        "predicted_val": rec["prediction"][field],
+                        "true_val": rec["ground_truth"].get(field),
                         "match_type": match_type,
                         "score": score,
                     }
@@ -39,7 +40,7 @@ class MetadataEvaluator:
         return results
 
     def _compare(self, rec, field):
-        true_val = rec['ground_truth'].get(field)
+        true_val = rec["ground_truth"].get(field)
 
         # special case for "authors" field which may contain multiple values
         if field == "dc.contributor.author":
@@ -52,11 +53,15 @@ class MetadataEvaluator:
             true_val = true_val[0]  # compare only against first (usually only) ISBN
             true_val = [true_val.replace("-", "")]  # strip dashes in ISBNs
         elif field == "dc.publisher" and true_val:
-            true_val = true_val[0]  # compare only against first (usually only) publisher
+            true_val = true_val[
+                0
+            ]  # compare only against first (usually only) publisher
 
         predicted_val = rec["prediction"][field]
         if field == "dc.publisher" and predicted_val is not None:
-            predicted_val = predicted_val[0]  # compare only against first (usually only) publisher
+            predicted_val = predicted_val[
+                0
+            ]  # compare only against first (usually only) publisher
 
         if predicted_val is None and true_val is None:
             return ("not-relevant", 1)
@@ -64,7 +69,7 @@ class MetadataEvaluator:
             return ("exact", 1)
         elif predicted_val is None:
             return ("not-found", 0)
-        elif field == "dc.relation.eissn" and predicted_val == rec['ground_truth'].get(
+        elif field == "dc.relation.eissn" and predicted_val == rec["ground_truth"].get(
             "dc.relation.pissn"
         ):
             if true_val is None:
@@ -78,9 +83,9 @@ class MetadataEvaluator:
                     "printed-issn",
                     0,
                 )
-        elif field == "dc.identifier.isbn" and predicted_val[0] == rec["ground_truth"].get(
-            "dc.relation.isbn", [""]
-        )[0].replace("-", ""):
+        elif field == "dc.identifier.isbn" and predicted_val[0] == rec[
+            "ground_truth"
+        ].get("dc.relation.isbn", [""])[0].replace("-", ""):
             return ("related-isbn", 0)
         elif true_val is None:
             return ("found-nonexistent", 0)
@@ -90,7 +95,10 @@ class MetadataEvaluator:
             return ("case", 1)
         elif isinstance(true_val, str) and true_val.lower() in predicted_val.lower():
             return ("superset-case", 1)
-        elif isinstance(true_val, str) and Levenshtein.ratio(true_val, predicted_val) >= self.ALMOST_THRESHOLD:
+        elif (
+            isinstance(true_val, str)
+            and Levenshtein.ratio(true_val, predicted_val) >= self.ALMOST_THRESHOLD
+        ):
             return ("almost", 1)
         elif isinstance(true_val, str) and (
             Levenshtein.ratio(true_val.lower(), predicted_val.lower())
@@ -104,10 +112,8 @@ class MetadataEvaluator:
             return ("wrong", 0)
 
     def _compare_authors(self, rec):
-        true_authors = set(
-            rec["ground_truth"].get("dc.contributor.author", []))
-        predicted_authors = set(
-            rec["prediction"].get("dc.contributor.author", []))
+        true_authors = set(rec["ground_truth"].get("dc.contributor.author", []))
+        predicted_authors = set(rec["prediction"].get("dc.contributor.author", []))
 
         if not true_authors and not predicted_authors:
             return ("not-relevant", 1)
@@ -126,6 +132,23 @@ class MetadataEvaluator:
         else:
             return ("wrong", 0)
 
+    def save_md(self, results, filename, fields=None):
+        """Save results statistics in a md file"""
+
+        df = pd.DataFrame(results)
+        if fields is not None:  # Use only given fields
+            df = df[df["field"].isin(fields)]
+
+        with open(filename, "wt") as ofile:
+            print(
+                df.groupby(["language", "field"])["score"]
+                .agg(["mean", "size"])
+                .reset_index()
+                .rename(columns={"idx1": "", "idx2": ""})
+                .to_markdown(tablefmt="github", index=False),
+                file=ofile,
+            )
+
 
 if __name__ == "__main__":
     import argparse
@@ -134,9 +157,21 @@ if __name__ == "__main__":
 
     # Define command-line arguments
     parser.add_argument("filename", help="File with the records to evaluate.")
+    parser.add_argument(
+        "statistics_filename", help="File where to write evaluation statistics."
+    )
     args = parser.parse_args()
 
     evaluator = MetadataEvaluator(args.filename)
-    output = evaluator.evaluate_records()
+    results = evaluator.evaluate_records()
 
-    print(output)
+    fields = [
+        "dc.contributor.author",
+        "dc.date.issued",
+        "dc.identifier.isbn",
+        "dc.language.iso",
+        "dc.publisher",
+        "dc.relation.eissn",
+        "dc.title",
+    ]
+    evaluator.save_md(results, args.statistics_filename, fields)
