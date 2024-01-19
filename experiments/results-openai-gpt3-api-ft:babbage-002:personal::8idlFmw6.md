@@ -1,0 +1,23 @@
+| language   | field                 |     mean |   size |
+|------------|-----------------------|----------|--------|
+| eng        | dc.contributor.author | 0.8      |     55 |
+| eng        | dc.date.issued        | 0.909091 |     55 |
+| eng        | dc.identifier.isbn    | 0.03125  |     32 |
+| eng        | dc.language.iso       | 0.963636 |     55 |
+| eng        | dc.publisher          | 0.62963  |     54 |
+| eng        | dc.relation.eissn     | 0.8      |     15 |
+| eng        | dc.title              | 0.888889 |     54 |
+| fin        | dc.contributor.author | 0.777778 |     45 |
+| fin        | dc.date.issued        | 0.967213 |     61 |
+| fin        | dc.identifier.isbn    | 0        |     24 |
+| fin        | dc.language.iso       | 1        |     62 |
+| fin        | dc.publisher          | 0.725806 |     62 |
+| fin        | dc.relation.eissn     | 0.857143 |     14 |
+| fin        | dc.title              | 0.655738 |     61 |
+| swe        | dc.contributor.author | 0.758621 |     29 |
+| swe        | dc.date.issued        | 0.906977 |     43 |
+| swe        | dc.identifier.isbn    | 0        |     14 |
+| swe        | dc.language.iso       | 1        |     43 |
+| swe        | dc.publisher          | 0.560976 |     41 |
+| swe        | dc.relation.eissn     | 0.285714 |      7 |
+| swe        | dc.title              | 0.697674 |     43 |

@@ -1,11 +1,11 @@
 # Statistics about metadata
 
-Automatically generated 2023-11-08 12:26:48
+Automatically generated 2024-01-18 17:12:38
 
 Type is either:
  * S: single-value
  * M: multi-value, number of values given as (mean/max)
- 
+
 Percentages represent the coverage of a field in a subset. 100% coverage means the field is always present.
 
 ## Document counts by language and document type
