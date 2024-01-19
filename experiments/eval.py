@@ -83,7 +83,7 @@ class MetadataEvaluator:
                     "printed-issn",
                     0,
                 )
-        elif field == "dc.identifier.isbn" and predicted_val[0] == rec[
+        elif field == "dc.identifier.isbn" and rec["ground_truth"].get("dc.relation.isbn") and predicted_val[0] == rec[
             "ground_truth"
         ].get("dc.relation.isbn", [""])[0].replace("-", ""):
             return ("related-isbn", 0)
@@ -112,9 +112,10 @@ class MetadataEvaluator:
             return ("wrong", 0)
 
     def _compare_authors(self, rec):
-        true_authors = set(rec["ground_truth"].get("dc.contributor.author", []))
-        predicted_authors = set(rec["prediction"].get("dc.contributor.author", []))
-
+        true_authors = rec["ground_truth"].get("dc.contributor.author")
+        true_authors = set(true_authors) if true_authors else set()
+        predicted_authors = rec["prediction"].get("dc.contributor.author")
+        predicted_authors = set(predicted_authors) if predicted_authors else set()
         if not true_authors and not predicted_authors:
             return ("not-relevant", 1)
         elif not true_authors:
