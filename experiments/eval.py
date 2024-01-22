@@ -23,15 +23,20 @@ class MetadataEvaluator:
             records = self._load_records()
         results = []
 
+        # find out all possible fields in ground_truth and predictions
+        gt_fields = set([fld for rec in records for fld in rec["ground_truth"].keys()])
+        pred_fields = set([fld for rec in records for fld in rec["prediction"].keys()])
+        all_fields = gt_fields.union(pred_fields)
+
         for rec in records:
-            for field in rec["prediction"].keys():
+            for field in all_fields:
                 match_type, score = self._compare(rec, field)
                 results.append(
                     {
                         "rowid": rec["rowid"],
                         "language": rec["ground_truth"].get("dc.language.iso"),
                         "field": field,
-                        "predicted_val": rec["prediction"][field],
+                        "predicted_val": rec["prediction"].get(field),
                         "true_val": rec["ground_truth"].get(field),
                         "match_type": match_type,
                         "score": score,
@@ -41,7 +46,7 @@ class MetadataEvaluator:
 
     def _compare(self, rec, field):
         true_val = rec["ground_truth"].get(field)
-        predicted_val = rec["prediction"][field]
+        predicted_val = rec["prediction"].get(field)
 
         # special case for "authors" field which may contain multiple values
         if field == "dc.contributor.author":
@@ -50,7 +55,7 @@ class MetadataEvaluator:
         # field-specific adjustments to true values
         elif field == "dc.date.issued" and true_val is not None:
             true_val = true_val[:4]  # compare only the year
-        elif field == "dc.identifier.isbn" and true_val:
+        elif field == "dc.identifier.isbn" and true_val and predicted_val:
             true_val = true_val[0]  # compare only against first (usually only) ISBN
             true_val = [true_val.replace("-", "")]  # strip dashes in ISBNs
             predicted_val = [val.replace("-", "") for val in predicted_val]
