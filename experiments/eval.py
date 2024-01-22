@@ -41,6 +41,7 @@ class MetadataEvaluator:
 
     def _compare(self, rec, field):
         true_val = rec["ground_truth"].get(field)
+        predicted_val = rec["prediction"][field]
 
         # special case for "authors" field which may contain multiple values
         if field == "dc.contributor.author":
@@ -52,12 +53,12 @@ class MetadataEvaluator:
         elif field == "dc.identifier.isbn" and true_val:
             true_val = true_val[0]  # compare only against first (usually only) ISBN
             true_val = [true_val.replace("-", "")]  # strip dashes in ISBNs
+            predicted_val = [val.replace("-", "") for val in predicted_val]
         elif field == "dc.publisher" and true_val:
             true_val = true_val[
                 0
             ]  # compare only against first (usually only) publisher
 
-        predicted_val = rec["prediction"][field]
         if field == "dc.publisher" and predicted_val is not None:
             predicted_val = predicted_val[
                 0
