@@ -1,0 +1,23 @@
+| language   | field                 |   ludwig-fine-tune-zephyr-7b |    meteor |   openai-gpt3-api-ft |
+|------------|-----------------------|------------------------------|-----------|----------------------|
+| eng        | dc.contributor.author |                     0.779661 | 0.576271  |             0.79661  |
+| eng        | dc.date.issued        |                     0.898305 | 0.711864  |             0.847458 |
+| eng        | dc.identifier.isbn    |                     0.779661 | 0.79661   |             0.40678  |
+| eng        | dc.language.iso       |                     1        | 1         |             0.898305 |
+| eng        | dc.publisher          |                     0.610169 | 0.0508475 |             0.576271 |
+| eng        | dc.relation.eissn     |                     0.728814 | 0.847458  |             0.898305 |
+| eng        | dc.title              |                     0.847458 | 0.576271  |             0.813559 |
+| fin        | dc.contributor.author |                   nan        | 0.707692  |             0.723077 |
+| fin        | dc.date.issued        |                   nan        | 0.784615  |             0.907692 |
+| fin        | dc.identifier.isbn    |                   nan        | 0.753846  |             0.569231 |
+| fin        | dc.language.iso       |                   nan        | 0.953846  |             0.953846 |
+| fin        | dc.publisher          |                   nan        | 0.2       |             0.707692 |
+| fin        | dc.relation.eissn     |                   nan        | 0.830769  |             0.938462 |
+| fin        | dc.title              |                   nan        | 0.4       |             0.615385 |
+| swe        | dc.contributor.author |                   nan        | 0.674419  |             0.767442 |
+| swe        | dc.date.issued        |                   nan        | 0.674419  |             0.906977 |
+| swe        | dc.identifier.isbn    |                   nan        | 0.906977  |             0.651163 |
+| swe        | dc.language.iso       |                   nan        | 1         |             1        |
+| swe        | dc.publisher          |                   nan        | 0.162791  |             0.581395 |
+| swe        | dc.relation.eissn     |                   nan        | 0.930233  |             0.837209 |
+| swe        | dc.title              |                   nan        | 0.302326  |             0.697674 |
