@@ -2,7 +2,7 @@
 |------------|-----------------------|----------|--------|
 | eng        | dc.contributor.author | 0.79661  |     59 |
 | eng        | dc.date.issued        | 0.847458 |     59 |
-| eng        | dc.identifier.isbn    | 0.40678  |     59 |
+| eng        | dc.identifier.isbn    | 0.457627 |     59 |
 | eng        | dc.language.iso       | 0.898305 |     59 |
 | eng        | dc.publisher          | 0.576271 |     59 |
 | eng        | dc.relation.eissn     | 0.898305 |     59 |
