@@ -1,23 +1,23 @@
-| language   | field                 | ludwig-fine-tune-zephyr-7b   | meteor     | openai-gpt3-api-ft   |
-|------------|-----------------------|------------------------------|------------|----------------------|
-| eng        | dc.contributor.author | **0.7966**                   | 0.5763     | **0.7966**           |
-| eng        | dc.date.issued        | **0.9322**                   | 0.7119     | 0.8475               |
-| eng        | dc.identifier.isbn    | **0.8814**                   | 0.7966     | 0.4576               |
-| eng        | dc.language.iso       | 0.9831                       | **1.0000** | 0.8983               |
-| eng        | dc.publisher          | **0.6780**                   | 0.0508     | 0.5763               |
-| eng        | dc.relation.eissn     | **0.9153**                   | 0.8475     | 0.8983               |
-| eng        | dc.title              | **0.8644**                   | 0.5763     | 0.8136               |
-| fin        | dc.contributor.author | **0.7692**                   | 0.7077     | 0.7231               |
-| fin        | dc.date.issued        | **0.9385**                   | 0.7846     | 0.9077               |
-| fin        | dc.identifier.isbn    | **0.8769**                   | 0.7538     | 0.5692               |
-| fin        | dc.language.iso       | **0.9846**                   | 0.9538     | 0.9538               |
-| fin        | dc.publisher          | **0.7692**                   | 0.2000     | 0.7077               |
-| fin        | dc.relation.eissn     | 0.8923                       | 0.8308     | **0.9385**           |
-| fin        | dc.title              | **0.7077**                   | 0.4000     | 0.6154               |
-| swe        | dc.contributor.author | **0.8140**                   | 0.6744     | 0.7674               |
-| swe        | dc.date.issued        | **0.9302**                   | 0.6744     | 0.9070               |
-| swe        | dc.identifier.isbn    | **0.9070**                   | **0.9070** | 0.6512               |
-| swe        | dc.language.iso       | 0.9302                       | **1.0000** | **1.0000**           |
-| swe        | dc.publisher          | 0.4884                       | 0.1628     | **0.5814**           |
-| swe        | dc.relation.eissn     | 0.8837                       | **0.9302** | 0.8372               |
-| swe        | dc.title              | **0.7674**                   | 0.3023     | 0.6977               |
+| language   | field                 |   baseline-null | ludwig-fine-tune-zephyr-7b   | meteor     | openai-gpt3-api-ft   |
+|------------|-----------------------|-----------------|------------------------------|------------|----------------------|
+| eng        | dc.contributor.author |          0.0508 | **0.7966**                   | 0.5763     | **0.7966**           |
+| eng        | dc.date.issued        |          0      | **0.9322**                   | 0.7119     | 0.8475               |
+| eng        | dc.identifier.isbn    |          0.4746 | **0.8814**                   | 0.7966     | 0.4576               |
+| eng        | dc.language.iso       |          0      | 0.9831                       | **1.0000** | 0.8983               |
+| eng        | dc.publisher          |          0.0169 | **0.6780**                   | 0.0508     | 0.5763               |
+| eng        | dc.relation.eissn     |          0.7288 | **0.9153**                   | 0.8475     | 0.8983               |
+| eng        | dc.title              |          0      | **0.8644**                   | 0.5763     | 0.8136               |
+| fin        | dc.contributor.author |          0.2    | **0.7692**                   | 0.7077     | 0.7231               |
+| fin        | dc.date.issued        |          0      | **0.9385**                   | 0.7846     | 0.9077               |
+| fin        | dc.identifier.isbn    |          0.6308 | **0.8769**                   | 0.7538     | 0.5692               |
+| fin        | dc.language.iso       |          0      | **0.9846**                   | 0.9538     | 0.9538               |
+| fin        | dc.publisher          |          0.0308 | **0.7692**                   | 0.2000     | 0.7077               |
+| fin        | dc.relation.eissn     |          0.7846 | 0.8923                       | 0.8308     | **0.9385**           |
+| fin        | dc.title              |          0      | **0.7077**                   | 0.4000     | 0.6154               |
+| swe        | dc.contributor.author |          0.2791 | **0.8140**                   | 0.6744     | 0.7674               |
+| swe        | dc.date.issued        |          0      | **0.9302**                   | 0.6744     | 0.9070               |
+| swe        | dc.identifier.isbn    |          0.6744 | **0.9070**                   | **0.9070** | 0.6512               |
+| swe        | dc.language.iso       |          0      | 0.9302                       | **1.0000** | **1.0000**           |
+| swe        | dc.publisher          |          0.1628 | 0.4884                       | 0.1628     | **0.5814**           |
+| swe        | dc.relation.eissn     |          0.814  | 0.8837                       | **0.9302** | 0.8372               |
+| swe        | dc.title              |          0      | **0.7674**                   | 0.3023     | 0.6977               |
