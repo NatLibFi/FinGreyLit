@@ -1,2 +1,3 @@
 api_key.sh
 *.jsonl
+!test-records.jsonl
