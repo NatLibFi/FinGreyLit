@@ -15,6 +15,9 @@ class MetadataEvaluator:
         with open(self.filename) as infile:
             for line in infile:
                 rec = json.loads(line)
+                # robustness: only accept dict values for prediction
+                if not isinstance(rec["prediction"], dict):
+                    rec["prediction"] = {}
                 records.append(rec)
         return records
 
