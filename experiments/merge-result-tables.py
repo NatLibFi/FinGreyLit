@@ -37,9 +37,15 @@ def main():
     for tmp_df in dfs[1:]:
         joined_df = joined_df.merge(tmp_df, on=["language", "field"], how="outer")
 
-    cols = joined_df.columns[2:]
-    joined_df[cols] = highlight_max(joined_df[cols])
-    print(joined_df.to_markdown(tablefmt="github", index=False))
+    num_cols = joined_df.columns[2:]
+    df_avg = joined_df[num_cols].mean().to_frame().T
+
+    full_df = pd.concat([joined_df, df_avg]).reset_index(drop=True)
+    full_df["language"].iloc[-1] = "ALL"
+    full_df["field"].iloc[-1] = "AVERAGE"
+
+    full_df[num_cols] = highlight_max(full_df[num_cols])
+    print(full_df.to_markdown(tablefmt="github", index=False))
 
 
 if __name__ == "__main__":
