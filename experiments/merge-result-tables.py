@@ -1,6 +1,8 @@
 import sys
 import pandas as pd
 
+# "Test" this by running python3 merge-result-tables.py tests/results-*.md
+
 
 def read_md_table(file_path):
     df = pd.read_csv(
@@ -38,9 +40,18 @@ def main():
         joined_df = joined_df.merge(tmp_df, on=["language", "field"], how="outer")
 
     num_cols = joined_df.columns[2:]
+
+    df_grp_langs = joined_df.groupby(by="language")
+    lang_avgs = []
+    for lang, grp in df_grp_langs:
+        df_tmp = grp[num_cols].mean().to_frame().T
+        df_tmp["language"] = lang.upper()
+        df_tmp["field"] = "AVERAGE"
+        lang_avgs.append(df_tmp)
+
     df_avg = joined_df[num_cols].mean().to_frame().T
 
-    full_df = pd.concat([joined_df, df_avg]).reset_index(drop=True)
+    full_df = pd.concat([joined_df, *lang_avgs, df_avg]).reset_index(drop=True)
     full_df["language"].iloc[-1] = "ALL"
     full_df["field"].iloc[-1] = "AVERAGE"
 
