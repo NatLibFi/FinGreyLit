@@ -1,0 +1,7 @@
+transformers
+requests
+pymupdf
+regex
+torch
+accelerate
+peft
