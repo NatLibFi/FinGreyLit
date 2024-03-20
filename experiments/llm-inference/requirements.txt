@@ -5,3 +5,5 @@ regex
 torch
 accelerate
 peft
+sentencepiece
+protobuf
