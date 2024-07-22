@@ -32,7 +32,7 @@ The documents were originally harvested from nine different DSpace repositories 
 * published in DSpace in 2020-2023, with the original publication date between 2012-2023
 * at most 200 documents from the same collection (though in practice much less)
 
-The harvesting resulted in approximately 7000 documents.
+The harvesting resulted in approximately 800 documents.
 
 ## Selection and curation
 
