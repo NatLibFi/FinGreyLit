@@ -4,3 +4,4 @@ pymupdf
 requests
 tabulate
 regex
+Levenshtein
