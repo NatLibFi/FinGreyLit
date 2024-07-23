@@ -1,27 +1,27 @@
-| language   | field                 | baseline-null   | meteor     |
-|------------|-----------------------|-----------------|------------|
-| eng        | dc.contributor.author | 0.0492          | **0.5738** |
-| eng        | dc.date.issued        | 0.0164          | **0.6885** |
-| eng        | dc.identifier.isbn    | 0.5410          | **0.8033** |
-| eng        | dc.language.iso       | 0.0000          | **1.0000** |
-| eng        | dc.publisher          | 0.0164          | **0.0492** |
-| eng        | dc.relation.eissn     | 0.7541          | **0.9508** |
-| eng        | dc.title              | 0.0000          | **0.5738** |
-| fin        | dc.contributor.author | 0.1781          | **0.6575** |
-| fin        | dc.date.issued        | 0.1096          | **0.6986** |
-| fin        | dc.identifier.isbn    | 0.6301          | **0.7260** |
-| fin        | dc.language.iso       | 0.0000          | **0.9589** |
-| fin        | dc.publisher          | 0.0000          | **0.1781** |
-| fin        | dc.relation.eissn     | 0.7534          | **0.8493** |
-| fin        | dc.title              | 0.0000          | **0.4384** |
-| swe        | dc.contributor.author | 0.2609          | **0.6739** |
-| swe        | dc.date.issued        | 0.1957          | **0.6739** |
-| swe        | dc.identifier.isbn    | 0.6957          | **0.8478** |
-| swe        | dc.language.iso       | 0.0000          | **0.9783** |
-| swe        | dc.publisher          | **0.0652**      | **0.0652** |
-| swe        | dc.relation.eissn     | 0.8261          | **0.8913** |
-| swe        | dc.title              | 0.0000          | **0.2826** |
-| ENG        | AVERAGE               | 0.1967          | **0.6628** |
-| FIN        | AVERAGE               | 0.2387          | **0.6438** |
-| SWE        | AVERAGE               | 0.2919          | **0.6304** |
-| ALL        | AVERAGE               | 0.2425          | **0.6457** |
+| language   | field                 | axolotl-Nous-Hermes-2-Mistral-7B-DPO   |   baseline-null | meteor     |
+|------------|-----------------------|----------------------------------------|-----------------|------------|
+| eng        | dc.contributor.author | **0.8361**                             |          0.0492 | 0.5738     |
+| eng        | dc.date.issued        | **0.9180**                             |          0.0164 | 0.6885     |
+| eng        | dc.identifier.isbn    | **0.8361**                             |          0.541  | 0.8033     |
+| eng        | dc.language.iso       | 0.9836                                 |          0      | **1.0000** |
+| eng        | dc.publisher          | **0.7705**                             |          0.0164 | 0.0492     |
+| eng        | dc.relation.eissn     | **0.9672**                             |          0.7541 | 0.9508     |
+| eng        | dc.title              | **0.9016**                             |          0      | 0.5738     |
+| fin        | dc.contributor.author | **0.9041**                             |          0.1781 | 0.6575     |
+| fin        | dc.date.issued        | **0.8767**                             |          0.1096 | 0.6986     |
+| fin        | dc.identifier.isbn    | **0.9041**                             |          0.6301 | 0.7260     |
+| fin        | dc.language.iso       | **1.0000**                             |          0      | 0.9589     |
+| fin        | dc.publisher          | **0.8493**                             |          0      | 0.1781     |
+| fin        | dc.relation.eissn     | **0.9315**                             |          0.7534 | 0.8493     |
+| fin        | dc.title              | **0.8630**                             |          0      | 0.4384     |
+| swe        | dc.contributor.author | **0.9130**                             |          0.2609 | 0.6739     |
+| swe        | dc.date.issued        | **0.9348**                             |          0.1957 | 0.6739     |
+| swe        | dc.identifier.isbn    | **0.8696**                             |          0.6957 | 0.8478     |
+| swe        | dc.language.iso       | **1.0000**                             |          0      | 0.9783     |
+| swe        | dc.publisher          | **0.8043**                             |          0.0652 | 0.0652     |
+| swe        | dc.relation.eissn     | **0.9783**                             |          0.8261 | 0.8913     |
+| swe        | dc.title              | **0.8913**                             |          0      | 0.2826     |
+| ENG        | AVERAGE               | **0.8876**                             |          0.1967 | 0.6628     |
+| FIN        | AVERAGE               | **0.9041**                             |          0.2387 | 0.6438     |
+| SWE        | AVERAGE               | **0.9130**                             |          0.2919 | 0.6304     |
+| ALL        | AVERAGE               | **0.9016**                             |          0.2425 | 0.6457     |
