@@ -32,11 +32,11 @@ The documents were originally harvested from nine different DSpace repositories 
 * published in DSpace in 2020-2023, with the original publication date between 2012-2023
 * at most 200 documents from the same collection (though in practice much less)
 
-The harvesting resulted in approximately 800 documents.
+The harvesting resulted in approximately 7000 documents.
 
 ## Selection and curation
 
-The harvested document metadata was placed in a Google Sheets document on five tabs, separated by document type.  We curated the metadata, checking each document and harmonized the metadata fields so that similar documents from different repositories were represented in the same way despite many differences in the original metadata practices.  We selected approximately 200 documents of each type, aiming for good representation in terms of document types and genres, languages and sources.  We have had to exclude some documents due to various problems in the selection and curation process, so currently there are around 700 documents.
+The harvested document metadata was placed in a Google Sheets document on four tabs (later changed to five), separated by document type.  We curated the metadata, checking each document and harmonized the metadata fields so that similar documents from different repositories were represented in the same way despite many differences in the original metadata practices.  We selected approximately 200 documents of each type, aiming for good representation in terms of document types and genres, languages and sources.  We have had to exclude some documents due to various problems in the selection and curation process. Currently there are around 800 documents.
 
 ## Conversion to structured metadata
 
