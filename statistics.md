@@ -1,6 +1,6 @@
 # Statistics about metadata
 
-Automatically generated 2024-07-24 15:53:06
+Automatically generated 2024-07-24 16:36:26
 
 Type is either:
  * S: single-value
@@ -79,7 +79,7 @@ Percentages represent the coverage of a field in a subset. 100% coverage means t
 | dc.identifier.isbn              | M (1.0/2)  | -      | 100%      | 46%      | 68%    | 11%       |
 | dc.identifier.urn               | S          | 100%   | 100%      | 100%     | 100%   | 98%       |
 | dc.language.iso                 | S          | 100%   | 100%      | 100%     | 100%   | 100%      |
-| dc.publisher                    | M (1.0/6)  | 100%   | 100%      | 100%     | 100%   | 100%      |
+| dc.publisher                    | M (1.0/6)  | 99%    | 100%      | 100%     | 96%    | 58%       |
 | dc.relation.contractor          | S          | 18%    | -         | -        | -      | -         |
 | dc.relation.doi                 | S          | -      | -         | -        | 15%    | 26%       |
 | dc.relation.eissn               | S          | 6%     | 57%       | 35%      | 10%    | 12%       |

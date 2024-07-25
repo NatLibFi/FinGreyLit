@@ -1,12 +1,15 @@
 # Metadata Schema
 
 These fields are used in the metadata records. Most fields are directly defined by Dublin Core, but some are custom adaptations or ad-hoc extensions.
-The type column indicates whether the field is allowed to have only a single value or multiple values:
+The type column indicates whether the field is allowed to have only a single value or multiple values, or whether it's a sub-object:
 
 - S: single-value
 - M: multi-value 
+- O: object
 
 For some statistics on actual usage of these metadata fields in different types of document, see the [statistics report](statistics.md).
+
+## General information
 
 | Field name                | Description                                                                                                              | Example                                                                                                          | Type |
 |---------------------------|--------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|------|
@@ -15,7 +18,18 @@ For some statistics on actual usage of these metadata fields in different types 
 | repository                | The name of the repository from which the record was harvested.                                                         | `Theseus`                                                                                                        | S |
 | id                        | The identifier of the document. This is a DSpace URL that will show a landing page for the document.                    | `https://www.utupub.fi/handle/10024/148744`                                                                    | S |
 | url                       | The URL of the PDF document.                                                                                             | `https://www.utupub.fi/bitstream/handle/10024/148744/Kossila_Johannes_opinnayte.pdf`                             | S |
-| rowid                     | The sheet ID and row number of the record in the metadata curation spreadsheet. Used for tracing changes back to the spreadsheet to make corrections. | `serial2398`                                                                                                     | S |
+| rowid                     | The sheet ID and row number of the record in the metadata curation spreadsheet. Used for tracing changes back to the spreadsheet to make corrections. | `thes123`                                                                                                     | S |
+| ground_truth              | The ground truth metadata about the document as a sub-object, see below.                                                 | `{ "dc:title": "My Title" }`                                                                                     | O | 
+
+## Ground truth metadata
+
+The ground truth metadata is given as a separate object in the field `ground_truth`. In this context, "ground truth" means that the metadata corresponds with what can be seen by a human cataloguer looking at the PDF document.
+
+Ground truth metadata can contain the following fields:
+
+
+| Field name                | Description                                                                                                              | Example                                                                                                          | Type |
+|---------------------------|--------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|------|
 | dc.contributor            | The person, organization, or entity that contributed to the resource.                                                    | `Bank of Finland`                                                                                                | M |
 | dc.contributor.author     | The primary author of the resource.                                                                                      | `Rajala, Hanna`                                                                                                  | M |
 | dc.contributor.degreeSupervisor | The supervisor of the contributor's academic degree.                                                                      | `Professor Kalle Ruoho, University of Tampere `                                                                | M |
