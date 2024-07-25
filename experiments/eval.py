@@ -155,7 +155,7 @@ class MetadataEvaluator:
                 .agg(["mean", "size"])
                 .reset_index()
                 .rename(columns={"idx1": "", "idx2": ""})
-                .to_markdown(tablefmt="github", index=False),
+                .to_markdown(tablefmt="github", floatfmt=".4f", index=False),
                 file=ofile,
             )
 
