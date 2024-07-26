@@ -15,7 +15,8 @@ class MetadataEvaluator:
         "e-isbn",
         "p-isbn",
         "e-issn",
-        "p-issn"
+        "p-issn",
+        "type_coar"
     )
 
     def __init__(self, filename=None):
@@ -188,15 +189,4 @@ if __name__ == "__main__":
     evaluator = MetadataEvaluator(args.filename)
     results = evaluator.evaluate_records()
 
-    fields = [
-        "language",
-        "title",
-        "creator",
-        "year",
-        "publisher",
-        "e-isbn",
-        "p-isbn",
-        "e-issn",
-        "p-issn"
-    ]
     evaluator.save_md(results, args.statistics_filename, evaluator.ALL_FIELDS)
