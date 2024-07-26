@@ -8,7 +8,8 @@
 | eng        | p-issn    | 0.7541 |     61 |
 | eng        | publisher | 0.1311 |     61 |
 | eng        | title     | 0.0000 |     61 |
-| eng        | year      | 0.0000 |     61 |
+| eng        | type_coar | 0.0000 |     61 |
+| eng        | year      | 0.0656 |     61 |
 | fin        | creator   | 0.1781 |     73 |
 | fin        | e-isbn    | 0.6301 |     73 |
 | fin        | e-issn    | 0.7671 |     73 |
@@ -17,7 +18,8 @@
 | fin        | p-issn    | 0.8356 |     73 |
 | fin        | publisher | 0.0411 |     73 |
 | fin        | title     | 0.0000 |     73 |
-| fin        | year      | 0.0000 |     73 |
+| fin        | type_coar | 0.0000 |     73 |
+| fin        | year      | 0.1233 |     73 |
 | swe        | creator   | 0.2609 |     46 |
 | swe        | e-isbn    | 0.6957 |     46 |
 | swe        | e-issn    | 0.8261 |     46 |
@@ -26,4 +28,5 @@
 | swe        | p-issn    | 0.9130 |     46 |
 | swe        | publisher | 0.0870 |     46 |
 | swe        | title     | 0.0000 |     46 |
-| swe        | year      | 0.0000 |     46 |
+| swe        | type_coar | 0.0000 |     46 |
+| swe        | year      | 0.2391 |     46 |
