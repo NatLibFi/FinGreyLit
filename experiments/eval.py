@@ -90,6 +90,10 @@ class MetadataEvaluator:
         if field == 'p_issn':
             return self._compare_simple_string(true_val, pred_val)
 
+        # type_coar
+        if field == 'type_coar':
+            return self._compare_simple_string(true_val, pred_val)
+
         # other/unknown, use simple string comparison
         return self._compare_simple_string(true_val, pred_val)
 
