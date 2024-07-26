@@ -6,6 +6,17 @@ import pandas as pd
 class MetadataEvaluator:
     # similarity threshold to be considered "almost correct":
     ALMOST_THRESHOLD = 0.95
+    ALL_FIELDS = (
+        "language",
+        "title",
+        "creator",
+        "year",
+        "publisher",
+        "e-isbn",
+        "p-isbn",
+        "e-issn",
+        "p-issn"
+    )
 
     def __init__(self, filename=None):
         self.filename = filename
@@ -26,18 +37,13 @@ class MetadataEvaluator:
             records = self._load_records()
         results = []
 
-        # find out all possible fields in ground_truth and predictions
-        gt_fields = set([fld for rec in records for fld in rec["ground_truth"].keys()])
-        pred_fields = set([fld for rec in records for fld in rec["prediction"].keys()])
-        all_fields = gt_fields.union(pred_fields)
-
         for rec in records:
-            for field in all_fields:
+            for field in self.ALL_FIELDS:
                 match_type, score = self._compare(rec, field)
                 results.append(
                     {
                         "rowid": rec["rowid"],
-                        "language": rec["ground_truth"].get("dc.language.iso"),
+                        "language": rec["ground_truth"].get("language"),
                         "field": field,
                         "predicted_val": rec["prediction"].get(field),
                         "true_val": rec["ground_truth"].get(field),
@@ -49,95 +55,102 @@ class MetadataEvaluator:
 
     def _compare(self, rec, field):
         true_val = rec["ground_truth"].get(field)
-        predicted_val = rec["prediction"].get(field)
+        pred_val = rec["prediction"].get(field)
 
-        # special case for "authors" field which may contain multiple values
-        if field == "dc.contributor.author":
-            return self._compare_authors(rec)
+        # language
+        if field == 'language':
+            return self._compare_simple_string(true_val, pred_val)
 
-        # field-specific adjustments to true values
-        elif field == "dc.date.issued" and true_val is not None:
-            true_val = true_val[:4]  # compare only the year
-        elif field == "dc.identifier.isbn" and true_val and predicted_val:
-            true_val = true_val[0]  # compare only against first (usually only) ISBN
-            true_val = [true_val.replace("-", "")]  # strip dashes in ISBNs
-            predicted_val = [val.replace("-", "") for val in predicted_val]
-        elif field == "dc.publisher" and true_val:
-            true_val = true_val[
-                0
-            ]  # compare only against first (usually only) publisher
+        # title
+        if field == 'title':
+            return self._compare_fuzzy_string(true_val, pred_val)
 
-        if field == "dc.publisher" and predicted_val is not None:
-            predicted_val = predicted_val[
-                0
-            ]  # compare only against first (usually only) publisher
+        # creator (multiple values)
+        if field == 'creator':
+            return self._compare_set(true_val, pred_val)
 
-        if predicted_val is None and true_val is None:
+        # year
+        if field == 'year':
+            return self._compare_simple_string(true_val, pred_val)
+
+        # publisher (multiple values)
+        if field == 'publisher':
+            return self._compare_set(true_val, pred_val)
+                    
+        # e-isbn or p-isbn (multiple values)
+        if field in ('e-isbn', 'p-isbn'):
+            return self._compare_set(true_val, pred_val)
+
+        # e-issn
+        if field == 'e_issn':
+            return self._compare_e_issn(true_val, pred_val, rec["ground_truth"].get("p-issn"))
+
+        # p-issn
+        if field == 'p_issn':
+            return self._compare_simple_string(true_val, pred_val)
+
+        # other/unknown, use simple string comparison
+        return self._compare_simple_string(true_val, pred_val)
+
+    def _compare_simple_string(self, true_val, pred_val):
+        if pred_val is None and true_val is None:
             return ("not-relevant", 1)
-        elif predicted_val == true_val:
-            return ("exact", 1)
-        elif predicted_val is None:
-            return ("not-found", 0)
-        elif field == "dc.relation.eissn" and predicted_val == rec["ground_truth"].get(
-            "dc.relation.pissn"
-        ):
-            if true_val is None:
-                return (
-                    "printed-issn",
-                    1,
-                )  # this is the only ISSN available, so counts as a success
-            else:
-                # Meteor chose the wrong (printed) ISSN even though an e-ISSN was available
-                return (
-                    "printed-issn",
-                    0,
-                )
-        elif field == "dc.identifier.isbn" and rec["ground_truth"].get("dc.relation.isbn") and predicted_val[0] == rec[
-            "ground_truth"
-        ].get("dc.relation.isbn", [""])[0].replace("-", ""):
-            return ("related-isbn", 0)
         elif true_val is None:
             return ("found-nonexistent", 0)
-        elif true_val in predicted_val:
-            return ("superset", 1)
-        elif isinstance(true_val, str) and true_val.lower() == predicted_val.lower():
-            return ("case", 1)
-        elif isinstance(true_val, str) and true_val.lower() in predicted_val.lower():
-            return ("superset-case", 1)
-        elif (
-            isinstance(true_val, str)
-            and Levenshtein.ratio(true_val, predicted_val) >= self.ALMOST_THRESHOLD
-        ):
-            return ("almost", 1)
-        elif isinstance(true_val, str) and (
-            Levenshtein.ratio(true_val.lower(), predicted_val.lower())
-            >= self.ALMOST_THRESHOLD
-        ):
-            return ("almost-case", 1)
+        elif pred_val is None:
+            return ("not-found", 0)
+        elif true_val == pred_val:
+            return ("exact", 1)
         else:
-            # if meteor_key not in ('title', 'language', 'year'):
-            # if meteor_key == 'issn':
-            #    print(rec['id'], meteor_key, repr(true_val), repr(predicted_val))
             return ("wrong", 0)
 
-    def _compare_authors(self, rec):
-        true_authors = rec["ground_truth"].get("dc.contributor.author")
-        true_authors = set(true_authors) if true_authors else set()
-        predicted_authors = rec["prediction"].get("dc.contributor.author")
-        predicted_authors = set(predicted_authors) if predicted_authors else set()
-        if not true_authors and not predicted_authors:
+    def _compare_e_issn(self, true_val, pred_val, p_issn_val):
+        base_result = self._compare_simple_string(true_val, pred_val)
+
+        if base_result[0] != 'wrong':
+            return base_result
+
+        # check whether the predicted ISSN is a printed ISSN
+        if p_issn_val and pred_val == p_issn_val:
+            if true_val:
+                return ("printed-issn", 0)
+            else:
+                return ("printed-issn", 1)
+
+        return ("wrong", 0)
+        
+    def _compare_fuzzy_string(self, true_val, pred_val):
+        base_result = self._compare_simple_string(true_val, pred_val)
+
+        if base_result[0] != 'wrong':
+            return base_result
+        
+        # check for fuzzy matches
+        if true_val.lower() == pred_val.lower():
+            return ('case', 1)
+        elif Levenshtein.ratio(true_val, pred_val) >= self.ALMOST_THRESHOLD:
+            return ('almost', 1)
+        elif Levenshtein.ratio(true_val.lower(), pred_val.lower()) >= self.ALMOST_THRESHOLD:
+            return ('almost-case', 1)
+        else:
+            return ('wrong', 0)
+
+    def _compare_set(self, true_val, pred_val):
+        true_set = set(true_val) if true_val else set()
+        pred_set = set(pred_val) if pred_val else set()
+        if not true_set and not pred_set:
             return ("not-relevant", 1)
-        elif not true_authors:
+        elif not true_set:
             return ("found-nonexistent", 0)
-        elif not predicted_authors:
+        elif not pred_set:
             return ("not-found", 0)
-        elif true_authors == predicted_authors:
+        elif true_set == pred_set:
             return ("exact", 1)
-        elif true_authors.issubset(predicted_authors):
+        elif true_set.issubset(pred_set):
             return ("superset", 1)
-        elif true_authors.issuperset(predicted_authors):
+        elif true_set.issuperset(pred_set):
             return ("subset", 0)
-        elif true_authors.intersection(predicted_authors):
+        elif true_set.intersection(pred_set):
             return ("overlap", 0)
         else:
             return ("wrong", 0)
@@ -176,12 +189,14 @@ if __name__ == "__main__":
     results = evaluator.evaluate_records()
 
     fields = [
-        "dc.contributor.author",
-        "dc.date.issued",
-        "dc.identifier.isbn",
-        "dc.language.iso",
-        "dc.publisher",
-        "dc.relation.eissn",
-        "dc.title",
+        "language",
+        "title",
+        "creator",
+        "year",
+        "publisher",
+        "e-isbn",
+        "p-isbn",
+        "e-issn",
+        "p-issn"
     ]
-    evaluator.save_md(results, args.statistics_filename, fields)
+    evaluator.save_md(results, args.statistics_filename, evaluator.ALL_FIELDS)

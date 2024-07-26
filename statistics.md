@@ -1,6 +1,6 @@
 # Statistics about metadata
 
-Automatically generated 2024-07-24 16:36:26
+Automatically generated 2024-07-26 10:27:20
 
 Type is either:
  * S: single-value
@@ -56,45 +56,21 @@ Percentages represent the coverage of a field in a subset. 100% coverage means t
 
 ## Metadata coverage by document type
 
-| Field                           | Type       | thes   | docthes   | report   | book   | article   |
-|---------------------------------|------------|--------|-----------|----------|--------|-----------|
-| doctype                         | S          | 100%   | 100%      | 100%     | 100%   | 100%      |
-| subset                          | S          | 100%   | 100%      | 100%     | 100%   | 100%      |
-| repository                      | S          | 100%   | 100%      | 100%     | 100%   | 100%      |
-| id                              | S          | 100%   | 100%      | 100%     | 100%   | 100%      |
-| url                             | S          | 100%   | 100%      | 100%     | 100%   | 100%      |
-| rowid                           | S          | 100%   | 100%      | 100%     | 100%   | 100%      |
-| dc.contributor.author           | M (1.9/58) | 100%   | 100%      | 48%      | 62%    | 97%       |
-| dc.contributor.degreeSupervisor | M (2.0/9)  | -      | 91%       | -        | -      | -         |
-| dc.contributor.department       | M (1.8/2)  | 10%    | 22%       | 1%       | 6%     | 8%        |
-| dc.contributor.editor           | M (2.4/8)  | -      | -         | 9%       | 57%    | 10%       |
-| dc.contributor.faculty          | M (1.8/3)  | 43%    | 97%       | 4%       | 6%     | 9%        |
-| dc.contributor.opponent         | M (1.1/2)  | -      | 90%       | -        | -      | -         |
-| dc.contributor.organization     | M (1.8/3)  | 100%   | 99%       | 52%      | 68%    | 74%       |
-| dc.contributor.orgunit          | M (1.2/2)  | -      | -         | 9%       | 1%     | -         |
-| dc.contributor.reviewer         | M (2.0/3)  | -      | 78%       | -        | -      | -         |
-| dc.contributor.supervisor       | M (1.9/9)  | -      | 28%       | -        | -      | -         |
-| dc.date.issued                  | S          | 100%   | 100%      | 100%     | 98%    | 99%       |
-| dc.format.extent                | S          | 93%    | 74%       | 100%     | 93%    | 84%       |
-| dc.identifier.isbn              | M (1.0/2)  | -      | 100%      | 46%      | 68%    | 11%       |
-| dc.identifier.urn               | S          | 100%   | 100%      | 100%     | 100%   | 98%       |
-| dc.language.iso                 | S          | 100%   | 100%      | 100%     | 100%   | 100%      |
-| dc.publisher                    | M (1.0/6)  | 99%    | 100%      | 100%     | 96%    | 58%       |
-| dc.relation.contractor          | S          | 18%    | -         | -        | -      | -         |
-| dc.relation.doi                 | S          | -      | -         | -        | 15%    | 26%       |
-| dc.relation.eissn               | S          | 6%     | 57%       | 35%      | 10%    | 12%       |
-| dc.relation.isbn                | M (1.0/2)  | -      | 97%       | 10%      | 46%    | 3%        |
-| dc.relation.ispartofseries      | S          | -      | 73%       | 61%      | 15%    | 7%        |
-| dc.relation.issue               | S          | -      | -         | 3%       | 3%     | 22%       |
-| dc.relation.numberinseries      | S          | -      | 71%       | 25%      | 12%    | 21%       |
-| dc.relation.pissn               | S          | -      | 73%       | 18%      | 6%     | 3%        |
-| dc.relation.volume              | S          | -      | -         | 1%       | 2%     | 27%       |
-| dc.series.year                  | S          | -      | -         | 44%      | 5%     | 28%       |
-| dc.subject.degreeprogram        | M (1.5/3)  | 78%    | 43%       | -        | -      | -         |
-| dc.subject.discipline           | M (2.2/6)  | 82%    | 41%       | 1%       | 5%     | 9%        |
-| dc.title                        | S          | 100%   | 100%      | 100%     | 100%   | 100%      |
-| dc.title.alternative            | M (1.1/4)  | 44%    | 27%       | 15%      | 7%     | 4%        |
-| dc.type.coar                    | S          | 100%   | 100%      | 100%     | 100%   | 100%      |
-| dc.type.okm                     | S          | 100%   | 99%       | 100%     | 95%    | 98%       |
-| dc.type.ontasot                 | S          | 100%   | 99%       | -        | -      | -         |
+| Field      | Type       | thes   | docthes   | report   | book   | article   |
+|------------|------------|--------|-----------|----------|--------|-----------|
+| doctype    | S          | 100%   | 100%      | 100%     | 100%   | 100%      |
+| subset     | S          | 100%   | 100%      | 100%     | 100%   | 100%      |
+| repository | S          | 100%   | 100%      | 100%     | 100%   | 100%      |
+| url        | S          | 100%   | 100%      | 100%     | 100%   | 100%      |
+| id         | S          | 100%   | 100%      | 100%     | 100%   | 100%      |
+| rowid      | S          | 100%   | 100%      | 100%     | 100%   | 100%      |
+| language   | S          | 100%   | 100%      | 100%     | 100%   | 100%      |
+| title      | S          | 100%   | 100%      | 100%     | 100%   | 100%      |
+| creator    | M (1.9/58) | 100%   | 100%      | 48%      | 62%    | 97%       |
+| year       | S          | 100%   | 100%      | 100%     | 98%    | 99%       |
+| publisher  | M (1.0/6)  | 99%    | 100%      | 100%     | 96%    | 57%       |
+| e-isbn     | M (1.0/2)  | -      | 100%      | 46%      | 68%    | 11%       |
+| p-isbn     | M (1.0/2)  | -      | 97%       | 10%      | 46%    | 3%        |
+| e-issn     | S          | 6%     | 57%       | 35%      | 10%    | 12%       |
+| p-issn     | S          | -      | 73%       | 18%      | 6%     | 3%        |
 
