@@ -1,6 +1,6 @@
 # Statistics about metadata
 
-Automatically generated 2024-07-26 13:36:49
+Automatically generated 2024-07-29 14:37:52
 
 Type is either:
  * S: single-value
@@ -66,7 +66,7 @@ Percentages represent the coverage of a field in a subset. 100% coverage means t
 | rowid      | S          | 100%   | 100%      | 100%     | 100%   | 100%      |
 | language   | S          | 100%   | 100%      | 100%     | 100%   | 100%      |
 | title      | S          | 100%   | 100%      | 100%     | 100%   | 100%      |
-| creator    | M (1.9/58) | 100%   | 100%      | 48%      | 62%    | 97%       |
+| creator    | M (2.0/58) | 100%   | 100%      | 46%      | 62%    | 97%       |
 | year       | S          | 100%   | 100%      | 50%      | 95%    | 95%       |
 | type_coar  | S          | 100%   | 100%      | 100%     | 100%   | 100%      |
 | publisher  | M (1.0/6)  | 99%    | 100%      | 100%     | 96%    | 57%       |
