@@ -12,6 +12,7 @@ class MetadataEvaluator:
         "creator",
         "year",
         "publisher",
+        "doi",
         "e-isbn",
         "p-isbn",
         "e-issn",
@@ -78,6 +79,10 @@ class MetadataEvaluator:
         if field == 'publisher':
             return self._compare_set(true_val, pred_val)
                     
+        # DOI
+        if field == 'doi':
+            return self._compare_simple_string(true_val, pred_val)
+
         # e-isbn or p-isbn (multiple values)
         if field in ('e-isbn', 'p-isbn'):
             return self._compare_set(true_val, pred_val)

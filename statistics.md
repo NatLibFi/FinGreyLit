@@ -1,6 +1,6 @@
 # Statistics about metadata
 
-Automatically generated 2024-07-30 12:11:58
+Automatically generated 2024-07-30 14:06:34
 
 Type is either:
  * S: single-value
@@ -70,6 +70,7 @@ Percentages represent the coverage of a field in a subset. 100% coverage means t
 | year       | S          | 100%   | 100%      | 50%      | 95%    | 95%       |
 | type_coar  | S          | 100%   | 100%      | 100%     | 100%   | 100%      |
 | publisher  | M (1.0/6)  | 99%    | 100%      | 100%     | 96%    | 57%       |
+| doi        | S          | -      | -         | -        | 12%    | 23%       |
 | e-isbn     | M (1.0/2)  | -      | 100%      | 46%      | 70%    | 3%        |
 | e-issn     | S          | 6%     | 57%       | 35%      | 10%    | 12%       |
 | p-issn     | S          | -      | 73%       | 18%      | 6%     | 3%        |
