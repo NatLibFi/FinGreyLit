@@ -1,6 +1,6 @@
 # Statistics about metadata
 
-Automatically generated 2024-07-30 11:43:46
+Automatically generated 2024-07-30 12:11:58
 
 Type is either:
  * S: single-value
@@ -10,12 +10,12 @@ Percentages represent the coverage of a field in a subset. 100% coverage means t
 
 ## Document counts by language and document type
 
-| language/iso   |   thes |   docthes |   report |   book |   article |   TOTAL |
-|----------------|--------|-----------|----------|--------|-----------|---------|
-| fin            |     89 |        56 |       56 |     60 |        70 |     331 |
-| eng            |     58 |        99 |       19 |     46 |        79 |     301 |
-| swe            |     53 |        25 |       37 |     19 |        34 |     168 |
-| TOTAL          |    200 |       180 |      112 |    125 |       183 |     800 |
+| language   |   thes |   docthes |   report |   book |   article |   TOTAL |
+|------------|--------|-----------|----------|--------|-----------|---------|
+| fin        |     89 |        56 |       56 |     60 |        70 |     331 |
+| eng        |     58 |        99 |       19 |     46 |        79 |     301 |
+| swe        |     53 |        25 |       37 |     19 |        34 |     168 |
+| TOTAL      |    200 |       180 |      112 |    125 |       183 |     800 |
 
 ## Document counts by repository and document type
 
@@ -34,7 +34,7 @@ Percentages represent the coverage of a field in a subset. 100% coverage means t
 
 ## Document counts by COAR resource type and document type
 
-| type/coar         |   thes |   docthes |   report |   book |   article |   TOTAL |
+| type_coar         |   thes |   docthes |   report |   book |   article |   TOTAL |
 |-------------------|--------|-----------|----------|--------|-----------|---------|
 | master thesis     |    115 |         0 |        0 |      0 |         0 |     115 |
 | bachelor thesis   |     79 |         0 |        0 |      0 |         0 |      79 |
