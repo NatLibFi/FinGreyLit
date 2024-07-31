@@ -1,0 +1,4 @@
+jupyter
+requests
+pymupdf
+regex
