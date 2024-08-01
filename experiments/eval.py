@@ -78,7 +78,7 @@ class MetadataEvaluator:
         # publisher (multiple values)
         if field == 'publisher':
             return self._compare_set(true_val, pred_val)
-                    
+
         # DOI
         if field == 'doi':
             return self._compare_simple_string(true_val, pred_val)
@@ -128,13 +128,13 @@ class MetadataEvaluator:
                 return ("printed-issn", 1)
 
         return ("wrong", 0)
-        
+
     def _compare_fuzzy_string(self, true_val, pred_val):
         base_result = self._compare_simple_string(true_val, pred_val)
 
         if base_result[0] != 'wrong':
             return base_result
-        
+
         # check for fuzzy matches
         if true_val.lower() == pred_val.lower():
             return ('case', 1)
