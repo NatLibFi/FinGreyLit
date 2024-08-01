@@ -52,8 +52,8 @@ def main():
     df_avg = joined_df[num_cols].mean().to_frame().T
 
     full_df = pd.concat([joined_df, *lang_avgs, df_avg]).reset_index(drop=True)
-    full_df["language"].iloc[-1] = "ALL"
-    full_df["field"].iloc[-1] = "AVERAGE"
+    full_df.iloc[-1, full_df.columns.get_loc("language")] = "ALL"
+    full_df.iloc[-1, full_df.columns.get_loc("field")] = "AVERAGE"
 
     full_df[num_cols] = highlight_max(full_df[num_cols])
     print(full_df.to_markdown(tablefmt="github", index=False))
