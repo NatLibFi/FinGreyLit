@@ -182,6 +182,10 @@ class MetadataEvaluator:
                 file=ofile,
             )
 
+    def save_full_csv(self, results, filename):
+        df = pd.DataFrame(results)
+        df.to_csv(filename)
+
 
 if __name__ == "__main__":
     import argparse
@@ -193,9 +197,13 @@ if __name__ == "__main__":
     parser.add_argument(
         "statistics_filename", help="File where to write evaluation statistics."
     )
+    # Add optional argument
+    parser.add_argument("--full-csv", help="File where to write full results.", default=None)
     args = parser.parse_args()
 
     evaluator = MetadataEvaluator(args.filename)
     results = evaluator.evaluate_records()
 
     evaluator.save_md(results, args.statistics_filename, evaluator.ALL_FIELDS)
+    if args.full_csv:
+        evaluator.save_full_csv(results, args.full_csv)
