@@ -8,7 +8,7 @@ The **most important rule** is that FinGreyLit metadata should follow the [groun
 
 ## Information available as images only
 
-In some cases information in PDFs may only appear in the form of images. For example the publisher may be indicated using a logo that has no alt text that could be extracted; or a preprint of an article may be an image format without corresponding text. As long as this information is visible and legible to a (sighted) human reader, these still count as being stated in the publication, even though the information may be more difficult to extract for a machine process.
+In some cases information in PDFs may only appear in the form of images. For example the publisher may be indicated using a logo that has no alt text that could be extracted; or a preprint of an article may be in an image format without corresponding text. As long as this information is visible and legible to a (sighted) human reader, these still count as being stated in the publication, even though the information may be more difficult to extract for a machine process.
 
 ## Embedded PDF metadata
 
