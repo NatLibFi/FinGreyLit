@@ -8,7 +8,7 @@ All the publication PDF files are openly accessible from the original DSpace sys
 
 # Metadata format and schema
 
-The metadata is represented as JSONL files. See [metadata/README.md](metadata/README.md) for details about the file format and [schema.md](schema.md) for information about the metadata schema.
+The metadata is represented as JSONL files. See [metadata/README.md](metadata/README.md) for details about the file format and [schema.md](schema.md) for information about the metadata schema. Further details about the cataloguing process (how the metadata should be recorded) are available in the [cataloguing rules](cataloguing-rules.md) specification. (Note that the data set is still a work in progress and may not yet strictly follow all the rules!)
 
 For some statistics about the included documents and their metadata, see the automatically generated [statistics report](statistics.md).
 
@@ -31,6 +31,7 @@ The documents were originally harvested from nine different DSpace repositories 
 * text can be successfully extracted from the cover pages containing metadata
 * published in DSpace in 2020-2023, with the original publication date between 2012-2023
 * at most 200 documents from the same collection (though in practice much less)
+* has a primary language (documents with parallel text in multiple languages are excluded)
 
 The harvesting resulted in approximately 7000 documents.
 
