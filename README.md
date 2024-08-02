@@ -24,7 +24,7 @@ For some statistics about the included documents and their metadata, see the aut
 
 The documents were originally harvested from nine different DSpace repositories (Doria, Julkari, Kaisu, LutPub, Osuva, Taju, Theseus, Trepo, UtuPub) that are used for public archiving documents from different Finnish academic and public sector organisations. The criteria for inclusion of individual documents include:
 
-* published in a collection which has a significant number of documents is growing every year
+* published in a collection which has a significant number of documents and is growing every year
 * PDF format
 * freely accessible on the web
 * born digital (not digitized older documents)
