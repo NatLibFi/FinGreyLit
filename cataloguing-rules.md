@@ -138,7 +138,7 @@ Example 1: (multiple parts)
 
 Example 2: (unofficial name form; information as image only; multiple capitalization styles)
  * Title of publication: [Viet Nam Plastic Waste Strategies](https://www.theseus.fi/bitstream/handle/10024/498683/VIET%20NAM%20PLASTICS%20STRATEGY%20final%20fix(Autosaved)%202-compressed.pdf)
- * Name of the institution given as "ARCADA" on the cover page logo and "Arcada" on the title page, even though its full official name is "Arcada University of Applied Sciences" or "Yrkeshögskolan Arcada"
+ * Name of the institution given as "ARCADA" on the cover page logo (image only) and "Arcada" on the title page, even though its full official name is "Arcada University of Applied Sciences" or "Yrkeshögskolan Arcada"
  * Publisher catalogued as **Arcada**
 
 ### DOI
