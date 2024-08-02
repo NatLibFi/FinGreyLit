@@ -56,13 +56,44 @@ Example 4: (colon is retained without space, because the title proper would othe
  * Original title: [Tutkittua tietoa: Ossaamista on!](https://www.theseus.fi/bitstream/handle/10024/511633/Oamk%20Journal%2086_2021.pdf)
  * Catalogued as: **Tutkittua tietoa: ossaamista on!**
 
+Example 5: (multiple versions - prefer the title page version; drop capitalization)
+ * Title on cover page: [Viet Nam Plastics Waste Strategy](https://www.theseus.fi/bitstream/handle/10024/498683/VIET%20NAM%20PLASTICS%20STRATEGY%20final%20fix(Autosaved)%202-compressed.pdf)
+ * Title on page 2 (title page): Viet Nam Plastic Waste Strategies
+ * Catalogued as **Viet Nam plastic waste strategies**
+
 ### Alternative title(s)
 
-TBD. These should follow the same syntactic rules as the main title and also indicate the language (how?)
+Alternative titles are generally parallel versions of the main title in different languages.
+
+Alternative titles should follow the same syntactic rules as the main title and also indicate the language by suffixing the title with a BCP47 language tag such as `{fi}`, `{sv}` or `{en}`.
+
+In the case of several alternative titles, they should be listed in the order that they appear on the publication.
+
+Example 1:
+ * Original title in Swedish: [Utveckling av streaming-tjänster för sociala medier som marknadsföring och produkt](https://www.theseus.fi/bitstream/handle/10024/496477/Aberg_Jacob.pdf)
+ * English title (page 4): Development of streaming services for social media as marketing and product
+ * Finnish title (page 5): Suoratoistopalvelujen kehittäminen sosiaaliseen mediaan markkinointina ja tuotteena
+ * Alternative titles catalogued as:
+    * **Development of streaming services for social media as marketing and product {en}**
+    * **Suoratoistopalvelujen kehittäminen sosiaaliseen mediaan markkinointina ja tuotteena {fi}**
 
 ### Creator(s)
 
 Person names should be given in the style "Lastname, First Names". The most complete form of a name available in the publication should be preferred. The names should be listed in the order they appear on the publication.
+
+Example 1: (full form available only as image)
+ * Title of publication: [Siivouskemikaalien ja -menetelmien vaikutukset koulu- ja päiväkotiympäristön mikrobistoon ja sisäilman laatuun](https://www.theseus.fi/bitstream/handle/10024/276865/Siivouskemikaalien_ja_menetelmien_vaikutukset.pdf)
+ * This is a self-archived version of an original article. The names are given in different forms on the cover page and in the article itself.
+   * Cover page (page 1) only includes abbreviated names: "Kakko, L., Reunanen, E., Kylmäkorpi, P., Alapieti, T., Täubel, M., Mikkola, R. & Salonen, H."
+   * Article itself (page 2) uses full names (e.g. Leila Kakko, Eija Reunanen), but it is an image with no text that can be easily extracted.
+ * Creators catalogued as:
+   * **Kakko, Leila**
+   * **Reunanen, Eija**
+   * **Kylmäkorpi, Paula**
+   * **Alapieti, Tuomas**
+   * **Täubel, Martin**
+   * **Mikkola, Raimo**
+   * **Salonen, Heidi**
 
 ### Editor(s)
 
