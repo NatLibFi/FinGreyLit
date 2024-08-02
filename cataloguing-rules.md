@@ -22,6 +22,8 @@ There are some syntactic rules (mainly based on ISBD) that should be applied whe
 
 The main language of the publication should be stated using a BCP47 language tag, e.g. `fi`, `sv`, `en`. (Note: this is still WIP, currently ISO-639-1 codes are still used)
 
+Multilingual documents where there is no clear primary language (for example parallel text in two languages) are excluded from the data set.
+
 ### Title
 
 The main title of the publication. If there are multiple variations of the title used in the publication, prefer the full form instead of any abbreviated forms. If the different titles are of similar length, prefer the one that is given on a [title page](https://en.wikipedia.org/wiki/Title_page) along with other metadata such as author, publication date, identifiers etc.
@@ -130,7 +132,7 @@ Example 1: (multiple parts)
  * Publisher given as "Sibelius Academy" followed by "University of the Arts Helsinki" on the next line
  * Publisher catalogued as **Sibelius Academy, University of the Arts Helsinki**
 
-Example 2: (not official name form; multiple capitalization styles)
+Example 2: (unofficial name form; information as image only; multiple capitalization styles)
  * Title of publication: [Viet Nam Plastic Waste Strategies](https://www.theseus.fi/bitstream/handle/10024/498683/VIET%20NAM%20PLASTICS%20STRATEGY%20final%20fix(Autosaved)%202-compressed.pdf)
  * Name of the institution given as "ARCADA" on the cover page logo and "Arcada" on the title page, even though its full official name is "Arcada University of Applied Sciences" or "Yrkeshögskolan Arcada"
  * Publisher catalogued as **Arcada**
