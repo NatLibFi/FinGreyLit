@@ -145,15 +145,21 @@ Example 2: (unofficial name form; information as image only; multiple capitaliza
 
 DOI should be given in the short form, e.g. `10.1000/182`, not in URL form that includes the resolver service.
 
-Although DOIs themselves are case-insensitive and some punctuation may not always be significant, the DOI should be catalogued with the exact same form given in the publication.
+Although DOIs themselves are case-insensitive and some punctuation may not always be significant, the DOI should be catalogued in the exact same form given in the publication.
 
 ### ISBNs (printed and electronic)
 
-ISBNs should be catalogued without any dashes.
+ISBNs should be catalogued without any dashes. 
+
+The type of ISBN (printed or electronic) should be chosen based on context, for example qualifiers such as "pdf", "online" or "print". If there is no indication about the type of ISBN, it can be assumed to be electronic unless the PDF is clearly intended for printing.
+
+If there are multiple ISBNs of the same type (rare but possible), they should be catalogued in the order they appear in the publication.
 
 ### ISSNs (printed and electronic)
 
 ISSNs should be catalogued using a plain hyphen as the separator, even though the publication may use another separator style.
+
+The type of ISSN (printed or electronic) should be chosen using the same principle as with ISBNs.
 
 # Type according to COAR
 
