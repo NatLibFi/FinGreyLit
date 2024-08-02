@@ -107,13 +107,17 @@ Publication year should be indicated if and only if it is clearly visible in the
 
 If more than one year is given (for example copyright year and year of printing), the latest should be chosen.
 
-Example 1:
-
+Example 1: (publication year not clearly stated)
  * Title of publication: [Yhteiskuntavastuuraportti : Oulun ammattikorkeakoulu, lukuvuosi 2018-2019](https://www.theseus.fi/bitstream/handle/10024/475985/Oamk_Yhteiskuntavastuuraportti_2018-2019.pdf)
  * Embedded PDF metadata:
    * Created: Tue 01 Oct 2019 11:12:56 +03:00
    * Modified: Mon 14 Oct 2019 14:07:41 +03:00
  * The likely publication year 2019 can be deduced from the title and the embedded PDF metadata, but it's not clearly stated in the publication, so it **will be left blank**.
+
+Example 2: (year given as image only)
+ * Title of publication: [Kansalliset keskuspankit tuntevat oman maansa markkinapaikat](https://publications.bof.fi/bitstream/handle/10024/43379/02022015Hievanen.pdf)
+ * The date of the blog post is given as "2.2.2015", but this is only an image without easily extractable text (and the same applies to the title and author name)
+ * Catalogued as **2015** because the information is still legible to a human reader
 
 ### Publisher(s)
 
