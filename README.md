@@ -1,6 +1,6 @@
 # FinGreyLit
 
-This repository contains a data set of curated Dublin Core style metadata from a selection of Finnish "grey literature" publications, along with links to the PDF publications. The dataset is mainly intended to enable and facilitate the development of automated methods for metadata extraction from PDF files, including but not limited to the use of large language models (LLMs).
+This repository contains a data set of curated Dublin Core style ground truth metadata from a selection of Finnish "grey literature" publications, along with links to the PDF publications. The dataset is mainly intended to enable and facilitate the development of automated methods for metadata extraction from PDF files, including but not limited to the use of large language models (LLMs).
 
 The publications have been sampled from various DSpace based open repository systems administered by the National Library of Finland. The dataset is trilingual, containing publications in Finnish, Swedish and English language.
 
@@ -8,7 +8,7 @@ All the publication PDF files are openly accessible from the original DSpace sys
 
 # Metadata format and schema
 
-The metadata is represented as JSONL files. See [metadata/README.md](metadata/README.md) for details about the file format and [schema.md](schema.md) for information about the metadata schema.
+The metadata is represented as JSONL files. See [metadata/README.md](metadata/README.md) for details about the file format and [schema.md](schema.md) for information about the metadata schema. Further details about the cataloguing process (how the metadata should be recorded) are available in the [cataloguing rules](cataloguing-rules.md) specification. (Note that the data set is still a work in progress and may not yet strictly follow all the rules!)
 
 For some statistics about the included documents and their metadata, see the automatically generated [statistics report](statistics.md).
 
@@ -24,13 +24,14 @@ For some statistics about the included documents and their metadata, see the aut
 
 The documents were originally harvested from nine different DSpace repositories (Doria, Julkari, Kaisu, LutPub, Osuva, Taju, Theseus, Trepo, UtuPub) that are used for public archiving documents from different Finnish academic and public sector organisations. The criteria for inclusion of individual documents include:
 
-* published in a collection which has a significant number of documents is growing every year
+* published in a collection which has a significant number of documents and is growing every year
 * PDF format
 * freely accessible on the web
 * born digital (not digitized older documents)
 * text can be successfully extracted from the cover pages containing metadata
 * published in DSpace in 2020-2023, with the original publication date between 2012-2023
 * at most 200 documents from the same collection (though in practice much less)
+* has a primary language (documents with parallel text in multiple languages are excluded)
 
 The harvesting resulted in approximately 7000 documents.
 
