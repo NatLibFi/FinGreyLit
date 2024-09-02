@@ -9,6 +9,7 @@ class MetadataEvaluator:
     ALL_FIELDS = (
         "language",
         "title",
+        "alt_title",
         "creator",
         "year",
         "publisher",
