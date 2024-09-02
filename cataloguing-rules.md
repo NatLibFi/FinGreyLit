@@ -20,7 +20,7 @@ There are some syntactic rules (mainly based on ISBD) that should be applied whe
 
 ### Language
 
-The main language of the publication should be stated using a BCP47 language tag, e.g. `fi`, `sv`, `en`. (Note: this is still WIP, currently ISO-639-3 three-letter codes are still used)
+The main language of the publication should be stated using a BCP47 language tag, e.g. `fi`, `sv`, `en`.
 
 Multilingual documents where there is no clear primary language (for example parallel text in two languages) are excluded from the data set.
 
