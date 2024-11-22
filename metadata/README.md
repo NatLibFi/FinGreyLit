@@ -14,7 +14,7 @@ with open(JSONL_FILE) as jsonl_file:
     for line in jsonl_file:
         record = json.loads(line)
         # record is now a dictionary with keys such as `url` and `dc.title`:
-        print(f"PDF file at {record['url']} has title {record['dc.title']}")
+        print(f"PDF file at {record['url']} has title {record['ground_truth']['title']}")
 ```
 
 ## Metadata schema
