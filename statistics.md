@@ -1,6 +1,6 @@
 # Statistics about metadata
 
-Automatically generated 2024-09-02 14:06:35
+Automatically generated 2024-09-02 14:25:25
 
 Type is either:
  * S: single-value
