@@ -204,11 +204,11 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    # Process fields if specified
-    fields = tuple(args.fields.split(',')) if args.fields else evaluator.ALL_FIELDS
-
     evaluator = MetadataEvaluator(args.filename)
     results = evaluator.evaluate_records()
+
+    # Process fields if specified
+    fields = tuple(args.fields.split(',')) if args.fields else evaluator.ALL_FIELDS
 
     evaluator.save_md(results, args.statistics_filename, fields)
     if args.full_csv:
