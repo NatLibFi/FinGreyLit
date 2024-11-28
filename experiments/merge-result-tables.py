@@ -47,7 +47,8 @@ def main():
         df_tmp = grp[num_cols].mean().to_frame().T
         df_tmp["language"] = lang.upper()
         df_tmp["field"] = "AVERAGE"
-        lang_avgs.append(df_tmp)
+        if lang != 'se':  # don't include Northern Sami because of very few docs
+            lang_avgs.append(df_tmp)
 
     df_avg = joined_df[num_cols].mean().to_frame().T
 
