@@ -200,11 +200,16 @@ if __name__ == "__main__":
     )
     # Add optional argument
     parser.add_argument("--full-csv", help="File where to write full results.", default=None)
+    parser.add_argument("--fields", help="Comma-separated list of fields to use.", default=None)
+
     args = parser.parse_args()
+
+    # Process fields if specified
+    fields = tuple(args.fields.split(',')) if args.fields else evaluator.ALL_FIELDS
 
     evaluator = MetadataEvaluator(args.filename)
     results = evaluator.evaluate_records()
 
-    evaluator.save_md(results, args.statistics_filename, evaluator.ALL_FIELDS)
+    evaluator.save_md(results, args.statistics_filename, fields)
     if args.full_csv:
         evaluator.save_full_csv(results, args.full_csv)
