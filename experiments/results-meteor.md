@@ -1,9 +1,9 @@
 | language   | field     |   mean |   size |
 |------------|-----------|--------|--------|
 | en         | alt_title | 0.7705 |     61 |
-| en         | creator   | 0.5738 |     61 |
+| en         | creator   | 0.5032 |     61 |
 | en         | doi       | 0.7705 |     61 |
-| en         | e-isbn    | 0.8197 |     61 |
+| en         | e-isbn    | 0.8306 |     61 |
 | en         | e-issn    | 0.9016 |     61 |
 | en         | language  | 0.9836 |     61 |
 | en         | p-isbn    | 0.6393 |     61 |
@@ -13,7 +13,7 @@
 | en         | type_coar | 0.0000 |     61 |
 | en         | year      | 0.7049 |     61 |
 | fi         | alt_title | 0.7260 |     73 |
-| fi         | creator   | 0.6712 |     73 |
+| fi         | creator   | 0.6539 |     73 |
 | fi         | doi       | 1.0000 |     73 |
 | fi         | e-isbn    | 0.7808 |     73 |
 | fi         | e-issn    | 0.8219 |     73 |
@@ -25,7 +25,7 @@
 | fi         | type_coar | 0.0000 |     73 |
 | fi         | year      | 0.7123 |     73 |
 | sv         | alt_title | 0.7778 |     45 |
-| sv         | creator   | 0.7111 |     45 |
+| sv         | creator   | 0.6454 |     45 |
 | sv         | doi       | 0.9556 |     45 |
 | sv         | e-isbn    | 0.8889 |     45 |
 | sv         | e-issn    | 0.8667 |     45 |
