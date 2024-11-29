@@ -147,8 +147,10 @@ class MetadataEvaluator:
             return ('wrong', 0)
 
     def _compare_set(self, true_val, pred_val):
-        true_set = set(true_val) if true_val else set()
-        pred_set = set(pred_val) if pred_val else set()
+        true_set = set(true_val) if true_val else []
+        pred_set = set(pred_val) if pred_val else []
+
+        # Handle simple cases directly
         if not true_set and not pred_set:
             return ("not-relevant", 1)
         elif not true_set:
@@ -157,12 +159,27 @@ class MetadataEvaluator:
             return ("not-found", 0)
         elif true_set == pred_set:
             return ("exact", 1)
-        elif true_set.issubset(pred_set):
-            return ("superset", 1)
+
+        # For the remaining cases, calculate F1 score
+
+        # Count true positives, false positives, and false negatives
+        true_positives = sum(1 for x in pred_set if x in true_set)
+        false_positives = sum(1 for x in pred_set if x not in true_set)
+        false_negatives = sum(1 for x in true_set if x not in pred_set)
+
+        # Calculate precision and recall
+        precision = true_positives / (true_positives + false_positives) if (true_positives + false_positives) > 0 else 0
+        recall = true_positives / (true_positives + false_negatives) if (true_positives + false_negatives) > 0 else 0
+
+        # Calculate F1 score
+        f1 = 2 * (precision * recall) / (precision + recall) if precision + recall > 0 else 0
+
+        if true_set.issubset(pred_set):
+            return ("superset", f1)
         elif true_set.issuperset(pred_set):
-            return ("subset", 0)
+            return ("subset", f1)
         elif true_set.intersection(pred_set):
-            return ("overlap", 0)
+            return ("overlap", f1)
         else:
             return ("wrong", 0)
 
