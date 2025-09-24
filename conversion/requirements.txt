@@ -1,6 +1,6 @@
 jupyter
 pandas
-pymupdf
+pymupdf4llm
 requests
 tabulate
 regex
