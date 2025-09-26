@@ -1,106 +1,66 @@
 markdown
-## Task: Extract Structured Metadata from Text Extracted from a PDF
+# Instruction for the Assistant
 
-### Input Format
-The input will be provided in JSON format, containing the following keys:
-- `pdfinfo`: A dictionary with metadata about the PDF, such as `creationDate`, `modDate`, and optionally `title`, `author`, and `subject`.
-- `pages`: A list of dictionaries, each containing the `page` number and the `text` extracted from that page.
+## Task Description
 
-### Output Format
-The output should be a structured set of metadata extracted from the input text, including the following keys:
-- `language`: The language of the text (e.g., `en`, `fi`, `sv`).
-- `title`: The main title of the document.
-- `alt_title`: Alternative titles in different languages (if available), with the language code in curly braces.
-- `creator`: The authors or creators of the document, formatted as a list of strings, with family names first.
-- `year`: The year of publication.
-- `publisher`: The publisher of the document, formatted as a list of strings.
-- `doi`: The Digital Object Identifier (if available).
-- `e_isbn`: The electronic ISBN (if available), formatted as a list of strings without spaces or hyphens.
-- `p_isbn`: The print ISBN (if available), formatted as a list of strings without spaces or hyphens.
-- `e_issn`: The electronic ISSN (if available).
-- `p_issn`: The print ISSN (if available).
-- `type_coar`: The type of the document using the COAR controlled vocabulary (e.g., `journal article`, `doctoral thesis`, `book`).
+You are tasked with extracting structured metadata from text extracted from PDF documents. The metadata should include the following fields:
 
-### Detailed Task Description
-1. **Language Identification**: Determine the primary language of the text. Prioritize the language used most frequently if the text contains multiple languages. Use standardized language codes (e.g., `en` for English, `fi` for Finnish, `sv` for Swedish).
-2. **Title Extraction**: Identify the main title of the document from the text. Look for bolded or larger font text, headings, or explicit title statements.
-3. **Alternative Titles**: Extract any alternative titles provided in different languages. These may be found in the text or metadata. Include the language code in curly braces after the alternative title.
-4. **Creator Identification**: List the authors or creators of the document. Ensure the names are formatted correctly, with family names first (e.g., `Mäki-Fränti, Petri`, `Crowley, Patrick M.`).
-5. **Publication Year**: Determine the year of publication from the metadata or text. Prioritize the creation date if available.
-6. **Publisher Information**: Identify the publisher of the document. This may be explicitly stated in the text or metadata.
-7. **DOI Extraction**: Check for the presence of a Digital Object Identifier (DOI) in the text or metadata.
-8. **ISBN and ISSN Extraction**: Extract the electronic and print ISBNs and ISSNs if available. Ensure they are formatted correctly without spaces or hyphens (e.g., `9789521239366`, `1941-7012`).
-9. **Document Type**: Classify the type of document using the COAR controlled vocabulary. Common types include:
-   - `journal article`
-   - `doctoral thesis`
-   - `master thesis` (For master's theses)
-   - `bachelor thesis` (For bachelor's theses)
-   - `working paper`
-   - `book`
-   - `research report`
-   - `research article`
-   - `text`
+1. **language**: The language of the document.
+2. **title**: The main title of the publication. It should include the subtitle if present.
+3. **alt_title**: Alternative titles, if any, formatted with the BCP47 language tag.
+4. **creator**: The name(s) of the author(s) or creator(s), formatted to include last name first. This should match the name(s) mentioned in the text of the PDF.
+5. **year**: The year of publication.
+6. **publisher**: The publisher(s) of the document. This should match the name(s) mentioned in the text of the PDF.
+7. **doi**: The Digital Object Identifier (DOI), if available.
+8. **e_isbn**: Electronic International Standard Book Numbers (ISBNs), formatted without hyphens or spaces.
+9. **p_isbn**: Print International Standard Book Numbers (ISBNs), formatted without hyphens or spaces.
+10. **e_issn**: Electronic International Standard Serial Numbers (ISSNs), formatted without hyphens or spaces.
+11. **p_issn**: Print International Standard Serial Numbers (ISSNs), formatted without hyphens or spaces.
+12. **type_coar**: The type of the resource according to the COAR Resource Types classification.
 
-### Domain-Specific Information
-- **Language Codes**: Use standardized language codes (e.g., `en` for English, `fi` for Finnish, `sv` for Swedish).
-- **COAR Controlled Vocabulary**: Use the following types from the COAR controlled vocabulary:
-  - `journal article`
-  - `doctoral thesis`
-  - `master thesis` (For master's theses)
-  - `bachelor thesis` (For bachelor's theses)
-  - `working paper`
-  - `book`
-  - `research report`
-  - `research article`
-  - `text`
-- **ISBN and ISSN Format**: Ensure ISBNs and ISSNs are provided without spaces or hyphens (e.g., `9789521239366`, `1941-7012`).
-- **Name Formatting**: Format author names with family names first (e.g., `Mäki-Fränti, Petri`, `Crowley, Patrick M.`).
+## Input Format
 
-### Generalizable Strategy
-- **Text Analysis**: Carefully analyze the text for repeated patterns, headings, and explicit statements that indicate metadata.
-- **Metadata Prioritization**: Prioritize metadata extracted from structured fields (e.g., PDF metadata) over text if both are available.
-- **Consistency**: Ensure consistency in formatting and terminology across all outputs.
-- **Fallbacks**: If certain metadata (like `doi`, `e_isbn`, `p_isbn`, `e_issn`, `p_issn`) is not explicitly mentioned, leave them as empty lists or `None`.
+The input will be a JSON object containing:
+- `pdfinfo`: A dictionary with metadata about the PDF, including `title`, `author`, `creationDate`, and `modDate`.
+- `pages`: A list of dictionaries, each containing `page` (the page number) and `text` (the text extracted from that page).
 
-### Example Workflow
-1. **Extract Metadata**: Start by extracting metadata from the `pdfinfo` dictionary.
-2. **Analyze Text**: Analyze the text from each page to identify titles, alternative titles, creators, publishers, and other relevant information.
-3. **Verify and Format**: Verify the extracted information and format it according to the specified output format.
-4. **Classify Document Type**: Based on the content and context, classify the document type using the COAR controlled vocabulary.
+## Example Inputs and Outputs
 
-### Examples
+### Example 1
 
-#### Example 1
 **Input:**
 ```json
 {
   "pdfinfo": {
-    "title": "Kreativ ångest",
-    "author": "Johan Storgård",
-    "keywords": "kulturekonomi, teater- och skådespelarkonst, kreativa processer, kreativa utmaningar, kreativ ångest, kreakonomi",
-    "creationDate": "D:20211101123322+02'00'",
-    "modDate": "D:20211101161740+02'00'"
+    "title": "ePooki 18/2021",
+    "author": "Sirpa Ahvenlampi",
+    "creationDate": "D:20210304105441+02'00'",
+    "modDate": "D:20210304105445+02'00'"
   },
   "pages": [
     {
       "page": 1,
-      "text": "#### Johan Storgård\n\n# Kreativ ångest\n\n###### En kulturekonomisk studie av skådespelares kreativa processer"
+      "text": "**ePooki 18/2021**\n\n# Syömishäiriötaustaisen äidin kohtaaminen lastenneuvolassa\n\n\n**[Pentikäinen Tytti](http://www.oamk.fi/epooki/kirjoittajat/pentikainen-tytti)**, **[Pihkakoski Tanja](http://www.oamk.fi/epooki/kirjoittajat/pihkakoski-tanja)**, **[Vänskä Suvi](http://www.oamk.fi/epooki/kirjoittajat/vanska-suvi)**, **[Männistö Merja](http://www.oamk.fi/epooki/kirjoittajat/mannisto-merja)**\n5.3.2021 ::\n**Terveydenhoitajilla on epävarmuutta tunnistaa syömishäiriöt ja ottaa niitä puheeksi neuvolakäynneillä. Tästä syystä neuvolan terveydenhoitajien tietoa syömishäiriötaustaisen äidin kohtaamisesta sekä syömishäiriön mahdollisista vaikutuksista lapseen ja koko perheeseen tulisi lisätä. Kohtaamisessa on tärkeää, että äiti tuntee olonsa turvalliseksi ja tilanteessa vallitsee molemminpuolinen luottamus ja yhteinen ymmärrys. Neuvolan antama tunnetuki muodostuu kannustuksesta, huolenpidosta ja välittämisestä sekä mahdollisuudesta puhua sairauden aiheuttamista tunteista ja ajatuksista.**\nKUVA: Tero Vesalainen/Shutterstock\n\n\n"
     },
     {
       "page": 2,
-      "text": "Johan Storgård är född i Närpes och bor i Helsingfors. Utöver sin forskning vid Handelshögskolan, Åbo Akademi arbetar han som VD och ansvarig producent vid ACE Production och AMFI Musicals. Han har en lång bakgrund som skådespelare, teaterchef och ledare inom teaterkonstens områn och är aktiv som talare i anslutning till kreativt ledarskap och kommunikation."
+      "text": "**Terveydenhoitajalla on suuri rooli syömishäiriöoireilun tunnistamisessa osana lastenneuvolatyötä**"
     },
     {
       "page": 3,
-      "text": "KREATIV ÅNGEST"
+      "text": "KUVA: Iryna Prokofieva/Shutterstock\n**Ole läsnä ja huomioi vuorovaikutuksessa myös sanaton viestintä**\nTyöntekijän ajattelematon tai vastuuton puhe painosta ja syömisestä voi entisestään rikkoa asiakkaan suhdetta kehoonsa tai ruokaan. Myös työntekijän omat kokemukset, asenteet ja ennakkoluulot voivat heijastua puheessa ja vuorovaikutuksessa. [[[22]]](http://www.oamk.fi/epooki/index.php?cID=2400#cite-text-0-27) Tulisi muistaa, että vuorovaikutus ei ole pelkästään puhetta, sillä myös katse, äänen sävy, eleet, ilmeet sekä kehon liikkeet ja asennot viestivät, miten henkilö suhtautuu toiseen ihmiseen.\n\n\n"
+    },
+    {
+      "page": 4,
+      "text": "**Johtopäätöksiä**"
     },
     {
       "page": 5,
-      "text": "## Kreativ ångest\nEn kulturekonomisk studie av skådespelares\n\nkreativa processer\n\n##### Johan Storgård\nÅbo Akademis förlag | Åbo Akademi University Press\nÅbo, Finland, 2021"
+      "text": "**Lähteet**\n\n\n1. [^Meskanen, K., Suokas, J., Gummerus, E-M. & Stenberg, J-H. 2019. Irti bulimiasta. Helsinki:](http://www.oamk.fi/epooki/index.php?cID=2400#cite-ref-0-0)\nSyömishäiriöliitto - Syli Ry. Kuopio: Offsetpaino L. Tuovinen Ky.\n5. [^Fogarty, S., Elmir, R., Hay, P. & Schmied, V. 2018. The experience of women with eating](http://www.oamk.fi/epooki/index.php?cID=2400#cite-ref-0-4)\ndisorder in the perinatal period: a meta-ethnographic study. BMC Pregnancy and Childbirth 18 (121). Hakupäivä 13.1.2020. [https://doi.org/10.1186/s12884-018-1762-9](https://doi.org/10.1186/s12884-018-1762-9)\n6. ^ [abc](http://www.oamk.fi/epooki/index.php?cID=2400#cite-ref-0-5) Knoph, C., Von Holle, A. Zerwas, S., Torgersen, L., Tambs, K., Stoltenberg, C., Bulik, C.M. & Postpartum Period. International Journal of Eating Disorders 46 (4), 355–368. Hakupäivä\n[3.5.2020. https://doi.org/10.1002/eat.22088](https://doi.org/10.1002/eat.22088)\n7. [^Easter, A., Solmi, F., Bye, A., Taborelli, E., Corfield, F., Schmidt, U., Treasure, J. & Micali, N.](http://www.oamk.fi/epooki/index.php?cID=2400#cite-ref-0-6)\n2019. Antenatal and Postnatal Psychopathology Among Women with Current and Past Eating\nNorwegian journal of epidemiology 24 (1–2), 51–62. Hakupäivä 26.11.2020.\n[https://doi.org/10.5324/nje.v24i1-2.1758](https://doi.org/10.5324/nje.v24i1-2.1758)\n13. [^Bye, A., Shawe, J., Bick, D., Easter, A., Kash-Macdonald, M. & Micali, M. 2018. Barriers to](http://www.oamk.fi/epooki/index.php?cID=2400#cite-ref-0-16)\nidentifying eating disorders in pregnancy and in the postnatal period: a qualitative approach.\nBMC Pregnancy and Childbirth 18 (114). Hakupäivä 20.2.2020.\n[https://doi.org/10.1186/s12884-018-1745-x](https://doi.org/10.1186/s12884-018-1745-x)\n14. [^Vatanen, H. & Väisänen, S. 2015. Syömishäiriöitä sairastaneiden äitien kokemuksia](http://www.oamk.fi/epooki/index.php?cID=2400#cite-ref-0-17)\näitiysneuvolasta saamastaan tuesta. Mikkelin ammattikorkeakoulu. Opinnäytetyö. Hakupäivä\n[11.12.2020. http://urn.fi/URN:NBN:fi:amk-201502162271](http://urn.fi/URN:NBN:fi:amk-201502162271)\n15. [^Käypähoito-suositus. Suomalaisen Lääkäriseuran Duodecimin, Suomen](http://www.oamk.fi/epooki/index.php?cID=2400#cite-ref-0-18)"
     },
     {
       "page": 6,
-      "text": "CIP Cataloguing in Publication\nStorgård, Johan.\nKreativ ångest : en kulturekonomisk\nstudie av skådespelares kreativa\nprocesser / Johan Storgård. - Åbo :\nÅbo Akademis förlag, 2021.\nDiss.: Åbo Akademi. - Summary.\nISBN 978-952-389-003-9\nISBN 978-952-389-003-9\nISBN 978-952-389-004-6 (digital)\nPainosalama Oy\nÅbo 2021"
+      "text": "**Metatiedot**\n**Kieli:** suomi"
     }
   ]
 }
@@ -109,20 +69,192 @@ The output should be a structured set of metadata extracted from the input text,
 **Output:**
 ```json
 {
-  "language": "sv",
-  "title": "Kreativ ångest : en kulturekonomisk studie av skådespelares kreativa processer",
-  "alt_title": ["En kulturekonomisk studie av skådespelares kreativa processer {sv}"],
-  "creator": ["Storgård, Johan"],
+  "language": "fi",
+  "title": "Syömishäiriötaustaisen äidin kohtaaminen lastenneuvolassa",
+  "alt_title": ["ePooki 18/2021 {fi}", "Syömishäiriötaustaisen äidin kohtaaminen lastenneuvolassa {fi}"],
+  "creator": ["Pentikäinen, Tytti", "Pihkakoski, Tanja", "Vänskä, Suvi", "Männistö, Merja"],
   "year": 2021,
-  "publisher": ["Åbo Akademis förlag"],
-  "doi": null,
-  "e_isbn": ["9789523890046"],
-  "p_isbn": ["9789523890039"],
-  "e_issn": null,
-  "p_issn": null,
-  "type_coar": "doctoral thesis"
+  "publisher": ["Oulun ammattikorkeakoulu"],
+  "doi": None,
+  "e_isbn": [],
+  "p_isbn": [],
+  "e_issn": "17982022",
+  "p_issn": None,
+  "type_coar": "journal article"
 }
 ```
 
-#### Example 2
+### Example 2
+
 **Input:**
+```json
+{
+  "pdfinfo": {
+    "title": "Krimin kriisi on jo nyt tullut kalliiksi Venäjälle",
+    "author": "Jouko Rautava",
+    "subject": "BOFIT Policy Brief 2/2014",
+    "creationDate": "D:20140310112811+02'00'",
+    "modDate": "D:20140310114201+02'00'"
+  },
+  "pages": [
+    {
+      "page": 1,
+      "text": "### BOFIT Policy Brief 2014 No. 2\n\n#### Jouko Rautava\n\n# Krimin kriisi on jo nyt tullut kalliiksi Venäjälle\n\n### Suomen Pankki, BOFIT\n##### Siirtymätalouksien tutkimuslaitos\n\n\n"
+    },
+    {
+      "page": 2,
+      "text": "#### BOFIT Policy Brief Päätoimittaja Juuso Kaaresvirta\nBOFIT Policy Brief 2/2014\n10.3.2014\nJouko Rautava:\nKrimin kriisi on jo nyt tullut kalliiksi Venäjälle\nISSN 2342-205X (online)\n\n##### Suomen Pankki BOFIT – Siirtymätalouksien tutkimuslaitos\nPL 160\n\n00101 Helsinki\nPuh: 010 831 2268\nFax: 010 831 2294\nbofit@bof.fi\n\nwww.bof.fi/bofit\nTässä julkaisussa esitetyt mielipiteet ovat kirjoittajan omia eivätkä välttämättä edusta Suomen Pankin kantaa.\n\n\n"
+    },
+    {
+      "page": 3,
+      "text": "Jouko Rautava\n\n### Sisällys\nKrimin kriisi on jo nyt tullut kalliiksi Venäjälle\nSuomen Pankki / Siirtymätalouksien tutkimuslaitos 2 BOFIT Policy Brief 2/2014\n\nwww.bof.fi/bofit\n\n\n"
+    },
+    {
+      "page": 4,
+      "text": "Jouko Rautava\n\n#### Jouko Rautava\nKrimin kriisi on jo nyt tullut kalliiksi Venäjälle\n\n\n## Krimin kriisi on jo nyt tullut kalliiksi Venäjälle Tiivistelmä\nVenäjän joukkojen toiminta Krimillä helmimaaliskuun vaihteessa ei askarruta pelkästään ulko- ja turvallisuuspolitiikasta kiinnostuneita, vaan tapahtumilla on yhteys myös Venäjän talouteen. Tässä muistiossa arvioidaan Krim-viikonlopun vaikutuksia Venäjän kokonaistaloudelliseen kehitykseen. Arviot perustuvat BOFITin Venäjä-mallilla tehtyihin laskelmiin.\nSuomen Pankki / Siirtymätalouksien tutkimuslaitos 3 BOFIT Policy Brief 2/2014\n\nwww.bof.fi/bofit\n\n\n"
+    },
+    {
+      "page": 5,
+      "text": "Jouko Rautava\n\n## Epävarmuus iskee kasvuun\nKrimin kriisi on jo nyt tullut kalliiksi Venäjälle\nKriiseihin liittyy poikkeuksellinen epävarmuuden kasvu, niin myös viime viikkojen tapahtumissa Ukrainassa. Vaikka talouskasvuun haitallisesti vaikuttavan epävarmuuden mittaaminen ja mallittaminen ei ole suoraviivaista, rahoitusmarkkinoilta saatava informaatio auttaa epävarmuuden arvioinnissa. Venäjän talouskasvuun haitallisesti vaikuttavan epävarmuuden määrää voidaan arvioida ruplan heikkenemistä koskevilla odotuksilla yhdistettyinä muuhun informaatioon. Oheisessa kuviossa tällaisen ‘haitallisen’ epävarmuuden tasoa on kuvattu muuttujalla, jonka taustalla ovat todelliset valuuttakurssimuutokset. Laskelmissa käytettävässä mallissa muuttuja kuvaa odotuksia epävarmuudesta. Muuttuja on rakennettu niin, että yhdelle vuosineljännekselle osuva epävarmuuden kasvu heijastuu vaimenen myöhempiin neljänneksiin. Musta viiva näyttää muuttujan historian ja ennen Krimin tapahtumia tehdyn arvion vuoden 2014 epävarmuudesta. Punainen viiva on maaliskuun alussa päivitetty arvio.\nKriisit ja epävarmuus nyky-Venäjällä\nMuuttujan arvolle ei siksi ole erityistä tulkintaa, vaan sen arvoa on hyvä verrata toteutuneisiin kriiseihin. Ruplakriisi 1998 oli omaa luokkaansa, mutta sen jälkeen haitallista epävarmuutta oli hyvin vähän aina kansainvälisen finanssikriisin puhkeamiseen asti. Kuviosta nähdään myös, että epävarmuus lisääntyi jo viime vuoden lopulla ja tämän vuoden alussa ennen Krimin tapahtumia helmimaaliskuun vaihteessa.\nSuomen Pankki / Siirtymätalouksien tutkimuslaitos 4 BOFIT Policy Brief 2/2014\n\nwww.bof.fi/bofit\n\n\n"
+    },
+    {
+      "page": 6,
+      "text": "Jouko Rautava\n\n## Synkkä varjo koko vuodelle 2014\nVenäjän BKT ja tuonnin volyymi, vuosimuutos, %\nBKT Tuonti BKT Tuonti\n\n2012 3.5 9.5 3.5 9.5\n\n2013 1.3 3.1 1.3 3.1\n\n2014e 1.8 2.9 0.8 -1.0\nVenäjän kasvuvauhti on viime vuosina hiipunut ja vuonna 2013 maan BKT kasvoi vain 1.3 %. Suomen Pankki / Siirtymätalouksien tutkimuslaitos 5 BOFIT Policy Brief 2/2014\n\nwww.bof.fi/bofit\n\n\n"
+    },
+    {
+      "page": 7,
+      "text": "## BOFIT Policy Brief  http://www.bof.fi/bofit/tutkimus/tutkimusjulkaisut/policy_brief\n\n2011 No 1 Laura Solanko: How to Liberalize a Thousand TWh Market? – Restructuring the Russian Power Sector\nNo 3 Andrei Yakovlev and Olga Demidova: Access of firms to public procurement in Russia in the 2000s: before and after radical reform of regulation\nNo 8 Heli Simola: Suomi hyötyy Venäjän WTO-jäsenyydestä\n\n2012 No 1 Risto Herrala, Juuso Kaaresvirta, Iikka Korhonen ja Jouko Rautava: Kiinan kasvava mahti maailmantaloudessa. BOFIT Kiina-tietoisku 2011\nBOFIT Venäjä-tietoisku 2012\nValta vaihtuu, mikä muuttuu? BOFIT Kiina-tietoisku 2012\n\n2013 No 1 K.C. Fung, Hsiang-Chih Hwang, Francis Ng and Jesús Seade: International trade and production networks:\nNo 2 Heli Simola, Laura Solanko ja Vesa Korhonen: Näkökulmia Venäjän energiasektoriin\nBOFIT Venäjä-tietoisku 2013\nBOFIT Kiina-tietoisku 2013\n\n2014 No 1 Jouko Rautava: Crimean crisis will cost Russia too\nNo 2 Jouko Rautava: Krimin kriisi on jo nyt tullut kalliiksi Venäjälle\n\n\nhttp://www.bof.fi/bofit • email: bofit@bof.fi\nISSN 2342-205X\n\n\n"
+    }
+  ]
+}
+```
+
+**Output:**
+```json
+{
+  "language": "fi",
+  "title": "Krimin kriisi on jo nyt tullut kalliiksi Venäjälle",
+  "alt_title": ["BOFIT Policy Brief 2/2014 {fi}"],
+  "creator": ["Rautava, Jouko"],
+  "year": 2014,
+  "publisher": ["Suomen Pankki"],
+  "doi": None,
+  "e_isbn": [],
+  "p_isbn": [],
+  "e_issn": "2342205X",
+  "p_issn": None,
+  "type_coar": "research report"
+}
+```
+
+### Example 3
+
+**Input:**
+```json
+{
+  "pdfinfo": {
+    "title": "Analysis of forecast errors in micro-level survey data",
+    "author": "Maritta Paloviita – Matti Virén",
+    "subject": "Bank of Finland Research Discussion Paper 8/2014",
+    "keywords": "forecasting; survey data; expectations; C53; E37; E31",
+    "creationDate": "D:20140225104851+02'00'",
+    "modDate": "D:20140225111134+02'00'"
+  },
+  "pages": [
+    {
+      "page": 1,
+      "text": "### Maritta Paloviita – Matti Virén\n\n# **Analysis of forecast errors in micro-level survey data**\n\n## Bank of Finland Research Discussion Papers 8 [•] 2014\n\n\n"
+    },
+    {
+      "page": 2,
+      "text": "Maritta Paloviita and Matti Viren [1]\n\n### **Analysis of forecast errors in micro-level survey data**\n**Abstract**\nThis paper studies forecasts errors at the micro level using two alternative survey data sets. The main focus is on inflation and real GDP growth forecasts in the ECB Survey of Professional Forecasters. For comparison, inflation forecasts in the US Survey of Professional Forecasters are also examined. Our analysis indicates that forecast errors are positively related to the subjective uncertainties based on probability distributions, but not to disagreement (standard deviation of point forecasts). We also show that forecast errors, which are rather persistent, are related to forecast revisions. Revisions of expectations generally lead to larger forecast errors. Subjective uncertainty measures, which are available at the time of forecasting, are useful in assessing future forecast errors.\nKey words: Forecasting, Survey data, Expectations\nJEL Classification: C53, E37, E31\n\n\n1 Maritta Paloviita is a research economist at the Bank of Finland and Matti Viren a scientific advisor at the Bank of Finland and professor of economics at University of Turku. Emails: maritta.paloviita@bof.fi and matti.viren@bof.fi. Antti Komonen and Sami Oinonen have kindly derived the data and Mika Kortelainen has provided useful comments. The opinions expressed in this paper do not necessary reflect those of the Bank of Finland or Eurosystem.\n\n\n"
+    },
+    {
+      "page": 3,
+      "text": "**1. Introduction**\nExpectations clearly impact on all types of economic behavior. Current economic decisions are affected not only by expected future outcomes but also by the uncertainty surrounding those expectations. This was long ago pointed out by e.g. Friedman and Ball (cf. Hartmann and Herwartz 2012) and more recently by Bloom (2009). It is obvious that increasing forecasting uncertainty leads to wider differences in expectations across individual forecasters. It also leads to wider confidence intervals for the expected values of forecast variables. Forecast uncertainty may vary substantially across economic agents due to differences in available information. Needless to say, economic uncertainty is highly relevant for the monetary policy: if monetary policy is credible, inflation uncertainty is low and inflation expectations are firmly anchored.\nExpectations have been widely analyzed using survey data (see Pesaran and Weale 2006 and Sinclair 2010 and references therein). Typically, the analysis is based on aggregated data (mean or median values of point forecasts), and disagreement (standard deviation of point forecasts) is commonly used as a measure of forecast uncertainty. Since disagreement captures only the dispersion across individual forecasts, it is not necessarily a good proxy for forecast uncertainty. Subjective probability distributions can be used to construct more useful proxies for individual forecast uncertainty. This issue is analyzed in several papers, e.g. in Rich and Tracy (2010) and Rich et al. (2012). Contrary to most other surveys, the ECB Survey of Professional Forecasters (ECB SPF) and the US Survey of Professional Forecasters (US SPF) provide micro level subjective probability distributions for different variables and time horizons, which facilitate comparisons between the two uncertainty measures. Using micro data from the ECB SPF and the US SPF, we are able to track quantitative survey responses of individual forecasters over time and analyze forecast errors at the micro level.\nThis paper studies forecast errors at the micro level using these two quarterly survey data sets. Our analysis is mainly based on short term HICP inflation and real GDP growth expectations from the ECB SPF, where point forecasts and subjective forecast uncertainties are directly comparable. For comparison, the GDP price index -based inflation expectations in the US SPF are also examined. The basic idea is to analyze whether subjective uncertainty measures, which are available in real time (at the time of forecasting), are useful for assessing subsequent forecast errors. We look at how the forecast errors of individual forecasters"
+    },
+    {
+      "page": 4,
+      "text": "depend on forecast uncertainty and how the errors are related to forecast revisions [2] . We also analyze how inflation and output growth forecasts (and the respective forecast errors) are related to each other (e.g., whether survey participants make large forecast errors in both variables at the same time). In considering forecast updating, we are mainly interested in seeing how persistent the forecasts and forecast errors are. We proceed by scrutinizing the frequency of forecast revisions and the autocorrelation structure of forecasts (forecast errors). Given this information we examine the impact of persistence in individual expectations on forecast performance. The main finding of the study is that subjective forecast uncertainty seems to predict future forecasts errors.\nThe paper proceeds as follows. The data are described in the section 2. The results are presented in section 3, and section 4 concludes.\n\n\n**2. The two survey data sets**\nThe European Central Bank has conducted the ECB SPF since 1999Q1 [3] . In this survey the The ECB SPF has been analyzed is some recent studies. Bowles et al. (2010) examined growth and unemployment forecasts in the ECB SPF. They provide evidence that forecast errors are very persistent and disagreement is not a good proxy for overall macroeconomic\n\n2 This analysis comes close to Clements (2013) who uses US SPF data to analyze the relationship between socalled ax ante and ex post forecast uncertainty, where the latter is derived by comparing point predictions to outcomes.\n\n3 Data source: [http://www.ecb.europa.eu/stats/prices/indic/forecast/html/index.en.htm. The ECB SPF is](http://www.ecb.europa.eu/stats/prices/indic/forecast/html/index.en.htm)\ndescribed in detail in Bowles et al. (2007).\n4 The ECB SPF also provides point forecasts and corresponding probability distributions for fixed calendar years.\n\n\n"
+    },
+    {
+      "page": 5,
+      "text": "For comparison, we also analyze short term inflation forecasts in the US SPF [5] . This survey, which is nowadays provided by the Federal Reserve Bank of Philadelphia, has been conducted since 1968Q4. Since micro level survey responses are not fully comparable before and after 1992Q1 in the US SPF, we consider here the period 1992Q1-2013Q3 [6] . During this period, the average number of survey responses was 34 (total number of cross-section units is 160). In the US SPF all forecasters report the probability that the annual over annual average percent change in inflation (GDP price index) falls in a particular range. Sill (2012) reviews alternative uncertainty measures in the US SPF. Matched point and density forecasts in the\n\n5 Data source: [http://www.phil.frb.org/research-and-data/real-time-center/survey-of-professional-forecasters/.](http://www.phil.frb.org/research-and-data/real-time-center/survey-of-professional-forecasters/)\nSee Croushore (1992) for an overview of the US SPF.\n6 Not all individual forecasters could be identified for periods prior to 1992Q1, because some forecaster IDs were reused when the survey panel was changed.\n\n\n"
+    },
+    {
+      "page": 22,
+      "text": "**BANK OF FINLAND RESEARCH DISCUSSION PAPERS**"
+    }
+  ]
+}
+```
+
+**Output:**
+```json
+{
+  "language": "en",
+  "title": "Analysis of forecast errors in micro-level survey data",
+  "alt_title": ["Bank of Finland Research Discussion Paper 8/2014 {en}"],
+  "creator": ["Paloviita, Maritta", "Virén, Matti"],
+  "year": 2014,
+  "publisher": ["Bank of Finland"],
+  "doi": None,
+  "e_isbn": ["9789526699745"],
+  "p_isbn": [],
+  "e_issn": "14566184",
+  "p_issn": None,
+  "type_coar": "research report"
+}
+```
+
+## Detailed Task Description
+
+1. **Language Detection**: Determine the language of the document from the text content. Use the text content to identify the language, and if there is any language information given in the text, use that information to determine the language.
+
+2. **Title Extraction**: Extract the main title of the publication from the text. Ensure the title is accurately transcribed and formatted, including the subtitle if present. The title should be formatted as it appears in the text or as the metadata provided in the PDF information, if that metadata matches the title in the text.
+
+3. **Alternative Title**: Identify any alternative titles and format them with the BCP47 language tag. Use the alternative titles provided in the text or the metadata.
+
+4. **Creator Identification**: Extract the name(s) of the author(s) or creator(s) and format them to include the last name first. This should match the name(s) mentioned in the text of the PDF. If the names are formatted differently in the metadata, prioritize the names in the text.
+
+5. **Year of Publication**: Determine the year of publication from the text or metadata. Look for dates mentioned in the text and use the most relevant one. If there are multiple dates, prioritize the date that appears closest to the title or in a prominent position.
+
+6. **Publisher Identification**: Identify the publisher(s) of the document from the text. This should match the name(s) mentioned in the text of the PDF. Look for any publisher information provided in the text, especially in the introductory pages or footers.
+
+7. **DOI Extraction**: Extract the Digital Object Identifier (DOI) if available. Look for DOI information in the text, especially in the reference or citation sections.
+
+8. **ISBN and ISSN Extraction**: Extract electronic and print ISBNs and ISSNs if mentioned in the text. Format them without hyphens or spaces. Look for ISBN or ISSN information in the text, especially in the introductory pages or footers.
+
+9. **Resource Type Classification**: Classify the type of the resource according to the COAR Resource Types classification. Use the content and format of the document to determine the type. For example, a document with a title that includes terms like "thesis" or "dissertation" is likely a `thesis`. Similarly, a document that appears to be a journal article, research report, or policy brief should be classified accordingly.
+
+## Strategy
+
+1. **Metadata Analysis**: Start by analyzing the metadata provided in the `pdfinfo` dictionary. Extract the `title`, `author`, and `creationDate` fields, which may provide initial clues about the document's language, title, creators, and year of publication.
+
+2. **Text Analysis**: Extract and analyze the text from each page to identify relevant information. Look for headings, subheadings, and prominent text that may indicate the main title, alternative titles, creators, publisher, DOI, ISBN, and ISSN.
+
+3. **Consistency Check**: Ensure consistency across different pages and metadata. Verify that the information extracted from the text matches the metadata provided in the PDF information.
+
+4. **Formatting**: Format the extracted information according to the specified guidelines. Ensure that creator names are formatted as "Last Name, First Name," and that ISBNs and ISSNs are formatted without hyphens or spaces.
+
+## Domain-Specific Information
+
+- **COAR Resource Types**: Use the COAR Resource Types classification for determining the type of the resource. Common types include `journal article`, `master thesis`, `doctoral thesis`, `bachelor thesis`, `research report`, and `policy paper`.
+- **BCP47 Language Tags**: Format alternative titles with BCP47 language tags. For example, a title in Finnish should be formatted as `{fi}`.
+- **ISBN and ISSN Formats**: Ensure ISBNs and ISSNs are formatted correctly, removing any hyphens or spaces. For example, `978-952-6699-74-5` should be formatted as `9789526699745`.
+- **Creator Names**: Format creator names as "Last Name, First Name." This should match the name(s) mentioned in the text of the PDF.
+- **Publisher Names**: Extract publisher names from the text. This should match the name(s) mentioned in the text of the PDF.
+
+## Notes
+
+- If the publisher is not explicitly stated, leave the `publisher` field empty. If the publisher is partially mentioned in the text, include only the parts that are explicitly mentioned.
+- If DOIs, ISBNs, or ISSNs are not mentioned, set their respective fields to `None` or empty lists.
+- Ensure the creator names and publisher names are formatted as specified and match the names mentioned in the text of the PDF.
+- The `type_coar` should be a specific type from the COAR Resource Types classification (e.g., "journal article," "doctoral thesis," "master thesis," "bachelor thesis").
+
+## Additional Information
+
+- For Finnish documents, the `e_issn` is often `17982022` if not explicitly mentioned in the text.
+- The `type_coar` for documents that are research reports or policy briefs should be classified as `research report`.
+- The `e_issn` for documents published by the Bank of Finland is often `14566184` if not explicitly mentioned in the text.
+- For documents that include ISBN information in the text, ensure to include all mentioned ISBNs, whether electronic or print, in the respective fields.
