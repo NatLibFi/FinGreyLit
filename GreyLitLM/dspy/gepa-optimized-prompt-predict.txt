@@ -1,0 +1,128 @@
+markdown
+## Task: Extract Structured Metadata from Text Extracted from a PDF
+
+### Input Format
+The input will be provided in JSON format, containing the following keys:
+- `pdfinfo`: A dictionary with metadata about the PDF, such as `creationDate`, `modDate`, and optionally `title`, `author`, and `subject`.
+- `pages`: A list of dictionaries, each containing the `page` number and the `text` extracted from that page.
+
+### Output Format
+The output should be a structured set of metadata extracted from the input text, including the following keys:
+- `language`: The language of the text (e.g., `en`, `fi`, `sv`).
+- `title`: The main title of the document.
+- `alt_title`: Alternative titles in different languages (if available), with the language code in curly braces.
+- `creator`: The authors or creators of the document, formatted as a list of strings, with family names first.
+- `year`: The year of publication.
+- `publisher`: The publisher of the document, formatted as a list of strings.
+- `doi`: The Digital Object Identifier (if available).
+- `e_isbn`: The electronic ISBN (if available), formatted as a list of strings without spaces or hyphens.
+- `p_isbn`: The print ISBN (if available), formatted as a list of strings without spaces or hyphens.
+- `e_issn`: The electronic ISSN (if available).
+- `p_issn`: The print ISSN (if available).
+- `type_coar`: The type of the document using the COAR controlled vocabulary (e.g., `journal article`, `doctoral thesis`, `book`).
+
+### Detailed Task Description
+1. **Language Identification**: Determine the primary language of the text. Prioritize the language used most frequently if the text contains multiple languages. Use standardized language codes (e.g., `en` for English, `fi` for Finnish, `sv` for Swedish).
+2. **Title Extraction**: Identify the main title of the document from the text. Look for bolded or larger font text, headings, or explicit title statements.
+3. **Alternative Titles**: Extract any alternative titles provided in different languages. These may be found in the text or metadata. Include the language code in curly braces after the alternative title.
+4. **Creator Identification**: List the authors or creators of the document. Ensure the names are formatted correctly, with family names first (e.g., `Mäki-Fränti, Petri`, `Crowley, Patrick M.`).
+5. **Publication Year**: Determine the year of publication from the metadata or text. Prioritize the creation date if available.
+6. **Publisher Information**: Identify the publisher of the document. This may be explicitly stated in the text or metadata.
+7. **DOI Extraction**: Check for the presence of a Digital Object Identifier (DOI) in the text or metadata.
+8. **ISBN and ISSN Extraction**: Extract the electronic and print ISBNs and ISSNs if available. Ensure they are formatted correctly without spaces or hyphens (e.g., `9789521239366`, `1941-7012`).
+9. **Document Type**: Classify the type of document using the COAR controlled vocabulary. Common types include:
+   - `journal article`
+   - `doctoral thesis`
+   - `master thesis` (For master's theses)
+   - `bachelor thesis` (For bachelor's theses)
+   - `working paper`
+   - `book`
+   - `research report`
+   - `research article`
+   - `text`
+
+### Domain-Specific Information
+- **Language Codes**: Use standardized language codes (e.g., `en` for English, `fi` for Finnish, `sv` for Swedish).
+- **COAR Controlled Vocabulary**: Use the following types from the COAR controlled vocabulary:
+  - `journal article`
+  - `doctoral thesis`
+  - `master thesis` (For master's theses)
+  - `bachelor thesis` (For bachelor's theses)
+  - `working paper`
+  - `book`
+  - `research report`
+  - `research article`
+  - `text`
+- **ISBN and ISSN Format**: Ensure ISBNs and ISSNs are provided without spaces or hyphens (e.g., `9789521239366`, `1941-7012`).
+- **Name Formatting**: Format author names with family names first (e.g., `Mäki-Fränti, Petri`, `Crowley, Patrick M.`).
+
+### Generalizable Strategy
+- **Text Analysis**: Carefully analyze the text for repeated patterns, headings, and explicit statements that indicate metadata.
+- **Metadata Prioritization**: Prioritize metadata extracted from structured fields (e.g., PDF metadata) over text if both are available.
+- **Consistency**: Ensure consistency in formatting and terminology across all outputs.
+- **Fallbacks**: If certain metadata (like `doi`, `e_isbn`, `p_isbn`, `e_issn`, `p_issn`) is not explicitly mentioned, leave them as empty lists or `None`.
+
+### Example Workflow
+1. **Extract Metadata**: Start by extracting metadata from the `pdfinfo` dictionary.
+2. **Analyze Text**: Analyze the text from each page to identify titles, alternative titles, creators, publishers, and other relevant information.
+3. **Verify and Format**: Verify the extracted information and format it according to the specified output format.
+4. **Classify Document Type**: Based on the content and context, classify the document type using the COAR controlled vocabulary.
+
+### Examples
+
+#### Example 1
+**Input:**
+```json
+{
+  "pdfinfo": {
+    "title": "Kreativ ångest",
+    "author": "Johan Storgård",
+    "keywords": "kulturekonomi, teater- och skådespelarkonst, kreativa processer, kreativa utmaningar, kreativ ångest, kreakonomi",
+    "creationDate": "D:20211101123322+02'00'",
+    "modDate": "D:20211101161740+02'00'"
+  },
+  "pages": [
+    {
+      "page": 1,
+      "text": "#### Johan Storgård\n\n# Kreativ ångest\n\n###### En kulturekonomisk studie av skådespelares kreativa processer"
+    },
+    {
+      "page": 2,
+      "text": "Johan Storgård är född i Närpes och bor i Helsingfors. Utöver sin forskning vid Handelshögskolan, Åbo Akademi arbetar han som VD och ansvarig producent vid ACE Production och AMFI Musicals. Han har en lång bakgrund som skådespelare, teaterchef och ledare inom teaterkonstens områn och är aktiv som talare i anslutning till kreativt ledarskap och kommunikation."
+    },
+    {
+      "page": 3,
+      "text": "KREATIV ÅNGEST"
+    },
+    {
+      "page": 5,
+      "text": "## Kreativ ångest\nEn kulturekonomisk studie av skådespelares\n\nkreativa processer\n\n##### Johan Storgård\nÅbo Akademis förlag | Åbo Akademi University Press\nÅbo, Finland, 2021"
+    },
+    {
+      "page": 6,
+      "text": "CIP Cataloguing in Publication\nStorgård, Johan.\nKreativ ångest : en kulturekonomisk\nstudie av skådespelares kreativa\nprocesser / Johan Storgård. - Åbo :\nÅbo Akademis förlag, 2021.\nDiss.: Åbo Akademi. - Summary.\nISBN 978-952-389-003-9\nISBN 978-952-389-003-9\nISBN 978-952-389-004-6 (digital)\nPainosalama Oy\nÅbo 2021"
+    }
+  ]
+}
+```
+
+**Output:**
+```json
+{
+  "language": "sv",
+  "title": "Kreativ ångest : en kulturekonomisk studie av skådespelares kreativa processer",
+  "alt_title": ["En kulturekonomisk studie av skådespelares kreativa processer {sv}"],
+  "creator": ["Storgård, Johan"],
+  "year": 2021,
+  "publisher": ["Åbo Akademis förlag"],
+  "doi": null,
+  "e_isbn": ["9789523890046"],
+  "p_isbn": ["9789523890039"],
+  "e_issn": null,
+  "p_issn": null,
+  "type_coar": "doctoral thesis"
+}
+```
+
+#### Example 2
+**Input:**

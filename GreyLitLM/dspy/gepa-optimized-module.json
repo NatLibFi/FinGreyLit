@@ -1,0 +1,76 @@
+{
+  "predict": {
+    "traces": [],
+    "train": [],
+    "demos": [],
+    "signature": {
+      "instructions": "markdown\n## Task: Extract Structured Metadata from Text Extracted from a PDF\n\n### Input Format\nThe input will be provided in JSON format, containing the following keys:\n- `pdfinfo`: A dictionary with metadata about the PDF, such as `creationDate`, `modDate`, and optionally `title`, `author`, and `subject`.\n- `pages`: A list of dictionaries, each containing the `page` number and the `text` extracted from that page.\n\n### Output Format\nThe output should be a structured set of metadata extracted from the input text, including the following keys:\n- `language`: The language of the text (e.g., `en`, `fi`, `sv`).\n- `title`: The main title of the document.\n- `alt_title`: Alternative titles in different languages (if available), with the language code in curly braces.\n- `creator`: The authors or creators of the document, formatted as a list of strings, with family names first.\n- `year`: The year of publication.\n- `publisher`: The publisher of the document, formatted as a list of strings.\n- `doi`: The Digital Object Identifier (if available).\n- `e_isbn`: The electronic ISBN (if available), formatted as a list of strings without spaces or hyphens.\n- `p_isbn`: The print ISBN (if available), formatted as a list of strings without spaces or hyphens.\n- `e_issn`: The electronic ISSN (if available).\n- `p_issn`: The print ISSN (if available).\n- `type_coar`: The type of the document using the COAR controlled vocabulary (e.g., `journal article`, `doctoral thesis`, `book`).\n\n### Detailed Task Description\n1. **Language Identification**: Determine the primary language of the text. Prioritize the language used most frequently if the text contains multiple languages. Use standardized language codes (e.g., `en` for English, `fi` for Finnish, `sv` for Swedish).\n2. **Title Extraction**: Identify the main title of the document from the text. Look for bolded or larger font text, headings, or explicit title statements.\n3. **Alternative Titles**: Extract any alternative titles provided in different languages. These may be found in the text or metadata. Include the language code in curly braces after the alternative title.\n4. **Creator Identification**: List the authors or creators of the document. Ensure the names are formatted correctly, with family names first (e.g., `Mäki-Fränti, Petri`, `Crowley, Patrick M.`).\n5. **Publication Year**: Determine the year of publication from the metadata or text. Prioritize the creation date if available.\n6. **Publisher Information**: Identify the publisher of the document. This may be explicitly stated in the text or metadata.\n7. **DOI Extraction**: Check for the presence of a Digital Object Identifier (DOI) in the text or metadata.\n8. **ISBN and ISSN Extraction**: Extract the electronic and print ISBNs and ISSNs if available. Ensure they are formatted correctly without spaces or hyphens (e.g., `9789521239366`, `1941-7012`).\n9. **Document Type**: Classify the type of document using the COAR controlled vocabulary. Common types include:\n   - `journal article`\n   - `doctoral thesis`\n   - `master thesis` (For master's theses)\n   - `bachelor thesis` (For bachelor's theses)\n   - `working paper`\n   - `book`\n   - `research report`\n   - `research article`\n   - `text`\n\n### Domain-Specific Information\n- **Language Codes**: Use standardized language codes (e.g., `en` for English, `fi` for Finnish, `sv` for Swedish).\n- **COAR Controlled Vocabulary**: Use the following types from the COAR controlled vocabulary:\n  - `journal article`\n  - `doctoral thesis`\n  - `master thesis` (For master's theses)\n  - `bachelor thesis` (For bachelor's theses)\n  - `working paper`\n  - `book`\n  - `research report`\n  - `research article`\n  - `text`\n- **ISBN and ISSN Format**: Ensure ISBNs and ISSNs are provided without spaces or hyphens (e.g., `9789521239366`, `1941-7012`).\n- **Name Formatting**: Format author names with family names first (e.g., `Mäki-Fränti, Petri`, `Crowley, Patrick M.`).\n\n### Generalizable Strategy\n- **Text Analysis**: Carefully analyze the text for repeated patterns, headings, and explicit statements that indicate metadata.\n- **Metadata Prioritization**: Prioritize metadata extracted from structured fields (e.g., PDF metadata) over text if both are available.\n- **Consistency**: Ensure consistency in formatting and terminology across all outputs.\n- **Fallbacks**: If certain metadata (like `doi`, `e_isbn`, `p_isbn`, `e_issn`, `p_issn`) is not explicitly mentioned, leave them as empty lists or `None`.\n\n### Example Workflow\n1. **Extract Metadata**: Start by extracting metadata from the `pdfinfo` dictionary.\n2. **Analyze Text**: Analyze the text from each page to identify titles, alternative titles, creators, publishers, and other relevant information.\n3. **Verify and Format**: Verify the extracted information and format it according to the specified output format.\n4. **Classify Document Type**: Based on the content and context, classify the document type using the COAR controlled vocabulary.\n\n### Examples\n\n#### Example 1\n**Input:**\n```json\n{\n  \"pdfinfo\": {\n    \"title\": \"Kreativ ångest\",\n    \"author\": \"Johan Storgård\",\n    \"keywords\": \"kulturekonomi, teater- och skådespelarkonst, kreativa processer, kreativa utmaningar, kreativ ångest, kreakonomi\",\n    \"creationDate\": \"D:20211101123322+02'00'\",\n    \"modDate\": \"D:20211101161740+02'00'\"\n  },\n  \"pages\": [\n    {\n      \"page\": 1,\n      \"text\": \"#### Johan Storgård\\n\\n# Kreativ ångest\\n\\n###### En kulturekonomisk studie av skådespelares kreativa processer\"\n    },\n    {\n      \"page\": 2,\n      \"text\": \"Johan Storgård är född i Närpes och bor i Helsingfors. Utöver sin forskning vid Handelshögskolan, Åbo Akademi arbetar han som VD och ansvarig producent vid ACE Production och AMFI Musicals. Han har en lång bakgrund som skådespelare, teaterchef och ledare inom teaterkonstens områn och är aktiv som talare i anslutning till kreativt ledarskap och kommunikation.\"\n    },\n    {\n      \"page\": 3,\n      \"text\": \"KREATIV ÅNGEST\"\n    },\n    {\n      \"page\": 5,\n      \"text\": \"## Kreativ ångest\\nEn kulturekonomisk studie av skådespelares\\n\\nkreativa processer\\n\\n##### Johan Storgård\\nÅbo Akademis förlag | Åbo Akademi University Press\\nÅbo, Finland, 2021\"\n    },\n    {\n      \"page\": 6,\n      \"text\": \"CIP Cataloguing in Publication\\nStorgård, Johan.\\nKreativ ångest : en kulturekonomisk\\nstudie av skådespelares kreativa\\nprocesser / Johan Storgård. - Åbo :\\nÅbo Akademis förlag, 2021.\\nDiss.: Åbo Akademi. - Summary.\\nISBN 978-952-389-003-9\\nISBN 978-952-389-003-9\\nISBN 978-952-389-004-6 (digital)\\nPainosalama Oy\\nÅbo 2021\"\n    }\n  ]\n}\n```\n\n**Output:**\n```json\n{\n  \"language\": \"sv\",\n  \"title\": \"Kreativ ångest : en kulturekonomisk studie av skådespelares kreativa processer\",\n  \"alt_title\": [\"En kulturekonomisk studie av skådespelares kreativa processer {sv}\"],\n  \"creator\": [\"Storgård, Johan\"],\n  \"year\": 2021,\n  \"publisher\": [\"Åbo Akademis förlag\"],\n  \"doi\": null,\n  \"e_isbn\": [\"9789523890046\"],\n  \"p_isbn\": [\"9789523890039\"],\n  \"e_issn\": null,\n  \"p_issn\": null,\n  \"type_coar\": \"doctoral thesis\"\n}\n```\n\n#### Example 2\n**Input:**",
+      "fields": [
+        {
+          "prefix": "Content:",
+          "description": "${content}"
+        },
+        {
+          "prefix": "Reasoning: Let's think step by step in order to",
+          "description": "${reasoning}"
+        },
+        {
+          "prefix": "Language:",
+          "description": "The language of the resource expressed as a BCP47 language tag."
+        },
+        {
+          "prefix": "Title:",
+          "description": "The main title of the publication."
+        },
+        {
+          "prefix": "Alt Title:",
+          "description": "Alternative or parallel titles of the publication, suffixed with a BCP47 language tag in curly brackets."
+        },
+        {
+          "prefix": "Creator:",
+          "description": "The primary author(s) of the resource."
+        },
+        {
+          "prefix": "Year:",
+          "description": "The year on which the resource was issued or made available."
+        },
+        {
+          "prefix": "Publisher:",
+          "description": "The entity/entities responsible for making the resource available."
+        },
+        {
+          "prefix": "Doi:",
+          "description": "The Digital Object Identifier (DOI) associated with the resource."
+        },
+        {
+          "prefix": "E Isbn:",
+          "description": "The ISBN associated with the electronic resource."
+        },
+        {
+          "prefix": "P Isbn:",
+          "description": "The ISBN of the printed version of this document."
+        },
+        {
+          "prefix": "E Issn:",
+          "description": "The ISSN associated with the electronic resource."
+        },
+        {
+          "prefix": "P Issn:",
+          "description": "The ISSN of the printed version of this document."
+        },
+        {
+          "prefix": "Type Coar:",
+          "description": "The type of the resource according to the COAR Resource Types classification."
+        }
+      ]
+    },
+    "lm": null
+  },
+  "metadata": {
+    "dependency_versions": {
+      "python": "3.12",
+      "dspy": "3.0.3",
+      "cloudpickle": "3.1"
+    }
+  }
+}
