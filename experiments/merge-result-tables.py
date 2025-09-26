@@ -30,32 +30,49 @@ def main():
         print("Usage: python merge-result-tables.py results-*.md > combined-results.md")
         sys.exit(1)
 
-    dfs = []
-    for fpath in sys.argv[1:]:
-        column_name = fpath.split("-", maxsplit=1)[1].rsplit(".")[0].split(":")[0]
-        dfs.append(read_md_table(fpath).rename(columns={"mean": column_name}))
+    model_dfs = []
+    overall_avgs = []
 
-    joined_df = dfs[0]
-    for tmp_df in dfs[1:]:
-        joined_df = joined_df.merge(tmp_df, on=["language", "field"], how="outer")
+    for fpath in sys.argv[1:]:
+        model_name = fpath.split("-", maxsplit=1)[1].rsplit(".")[0].split(":")[0]
+        df = pd.read_csv(
+            fpath,
+            sep="|",
+            skiprows=[1],
+        ).dropna(axis=1, how="all")
+        df.columns = df.columns.str.strip()
+
+        # Compute weighted average for this model
+        weighted_avg = (df["mean"] * df["size"]).sum() / df["size"].sum()
+        overall_avgs.append((model_name, weighted_avg))
+
+        # Prepare model-specific dataframe
+        df_model = df[["language", "field", "mean"]].copy()
+        df_model.rename(columns={"mean": model_name}, inplace=True)
+        model_dfs.append(df_model)
+
+    # Merge all model dataframes
+    joined_df = model_dfs[0]
+    for df in model_dfs[1:]:
+        joined_df = joined_df.merge(df, on=["language", "field"], how="outer")
 
     num_cols = joined_df.columns[2:]
 
-    df_grp_langs = joined_df.groupby(by="language")
+    # Per-language averages
     lang_avgs = []
-    for lang, grp in df_grp_langs:
-        df_tmp = grp[num_cols].mean().to_frame().T
-        df_tmp["language"] = lang.upper()
-        df_tmp["field"] = "AVERAGE"
-        if lang != 'se':  # don't include Northern Sami because of very few docs
-            lang_avgs.append(df_tmp)
+    for lang, grp in joined_df.groupby("language"):
+        avg_row = grp[num_cols].mean().to_frame().T
+        avg_row["language"] = lang.upper()
+        avg_row["field"] = "AVERAGE"
+        lang_avgs.append(avg_row)
 
-    df_avg = joined_df[num_cols].mean().to_frame().T
+    # Overall weighted average row
+    df_avg = pd.DataFrame({name: [avg] for name, avg in overall_avgs})
+    df_avg["language"] = "ALL"
+    df_avg["field"] = "AVERAGE"
 
-    full_df = pd.concat([joined_df, *lang_avgs, df_avg]).reset_index(drop=True)
-    full_df.iloc[-1, full_df.columns.get_loc("language")] = "ALL"
-    full_df.iloc[-1, full_df.columns.get_loc("field")] = "AVERAGE"
-
+    # Final table
+    full_df = pd.concat([joined_df, *lang_avgs, df_avg], ignore_index=True)
     full_df[num_cols] = highlight_max(full_df[num_cols])
     print(full_df.to_markdown(tablefmt="github", index=False))
 
