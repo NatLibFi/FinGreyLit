@@ -1,80 +1,84 @@
 markdown
-## Instructions for Extracting Structured Metadata from PDF Text
+# 📋 Task – Structured Bibliographic Metadata Extraction (Re‑specified)
 
-### Task Overview
-The goal is to extract structured metadata from the text content extracted from a PDF. The metadata should be formatted according to a predefined JSON schema. The task involves identifying key elements such as language, title, alternative titles, creators, year of publication, publisher, DOI, ISBNs, ISSNs, and type of resource.
+You will receive **one JSON object** that represents a PDF document.  
+The object has exactly two top‑level keys:
 
-### Input Format
-The input will be a JSON object containing the following fields:
-- `pdfinfo`: A dictionary with metadata about the PDF, including `title`, `author`, `creationDate`, and `modDate`.
-- `pages`: A list of dictionaries, each containing a `page` number and the corresponding `text` extracted from that page.
+| Key      | Description |
+|----------|-------------|
+| `pdfinfo`| Metadata that was extracted directly from the PDF file (e.g. `title`, `author`, `creationDate`, `modDate`). |
+| `pages`  | A list of page objects. Each page object contains `page` (the page number) and `text` (the OCR‑extracted plain‑text of that page). |
 
-### Detailed Task Description
-1. **Language Detection**: Identify the language of the document.
-2. **Title Extraction**: Extract the main title of the document.
-3. **Alternative Titles**: Identify any alternative titles or subtitles.
-4. **Creator Identification**: Extract the names of the creators/authors, formatting them as `Last Name, First Name`.
-5. **Year of Publication**: Determine the year the document was published.
-6. **Publisher Identification**: Identify the publisher of the document.
-7. **DOI Extraction**: Extract the Digital Object Identifier (DOI) if available.
-8. **ISBN Extraction**: Extract both electronic (e-ISBN) and print (p-ISBN) ISBNs if available.
-9. **ISSN Extraction**: Extract both electronic (e-ISSN) and print (p-ISSN) ISSNs if available.
-10. **Type of Resource**: Determine the type of resource (e.g., journal article, dissertation, thesis, etc.).
+Your job is to produce **one JSON object** that follows the schema below.  
+If a field cannot be determined, use the exact empty value indicated (`null` for scalars, `[]` for lists).  
+All string values must be plain ASCII – normalise quotes to `"` (or the apostrophe `’`), collapse multiple spaces to a single space, and trim leading/trailing whitespace.
 
-### Specific Guidelines
-- **Language Detection**: Use the language code (e.g., `fi` for Finnish, `en` for English).
-- **Title and Alternative Titles**: Ensure titles are accurate and match the text closely. Alternative titles should be listed if present.
-- **Creator Identification**: Always format creator names as `Last Name, First Name`. Ensure all creators are included.
-- **Year of Publication**: Extract the year from the text or metadata.
-- **Publisher Identification**: Ensure the publisher is accurately identified and formatted.
-- **DOI, ISBN, and ISSN**: Extract these identifiers if they are present in the text or metadata. Use the correct format for e-ISBN and p-ISBN.
-- **Type of Resource**: Use specific terms like `doctoral thesis`, `master thesis`, `journal article`, etc., based on the content and context.
+---
 
-### Examples and Feedback
-1. **Example 1**:
-   - **Language**: `fi`
-   - **Title**: `Kasvua kohti moniulotteista kehollisuutta`
-   - **Creator**: `['Kauppinen, Petri']`
-   - **Year**: `2020`
-   - **Publisher**: `set()` (no specific publisher mentioned)
-   - **Type**: `journal article`
+## Output JSON Schema
 
-2. **Example 2**:
-   - **Language**: `en`
-   - **Title**: `The locomotive behaviours of the tree-climbing fish, Periophthalmus variabilis: a cross-disciplinary approach to bioinspired design`
-   - **Creator**: `['Wicaksono, Adhityo']`
-   - **Year**: `2022`
-   - **Publisher**: `['Åbo Akademi University']`
-   - **Type**: `doctoral thesis`
+| Field | Type | Required format / rules |
+|-------|------|--------------------------|
+| `language` | string | ISO‑639‑1 code. Scan **the first 200 characters of the *concatenated* text of the whole document** (i.e. `pages[0].text + pages[1].text + …`). If any of the characters **ä ö Ä Ö å Å** appear, set to `"fi"`; otherwise `"en"`. |
+| `title` | string | Main title of the work. <br>1. If `pdfinfo.title` exists → clean it and use it. <br>2. Otherwise, read the text of page 1 (`pages[0].text`). Split it into lines (preserve order). <br>   * Skip empty lines. <br>   * Skip lines that start with a markdown heading marker (`#`, `##`, `###`, …). <br>   * Skip lines that look like an author line (see *Creator extraction*). <br>   * The **first** remaining line that is ≥ 6 characters becomes the *candidate* title. <br>3. **Title‑line extensions** – if the candidate line ends with a colon **or** the next line is non‑empty, starts with a capital letter and is not an author line, concatenate it (single space). Repeat while the same condition holds. <br>4. If a line contains one of the explicit title markers `Title:`, `Thesis:`, `Master’s Thesis:`, `Doctoral Thesis:` (case‑insensitive), take the text **after the colon** (trimmed) as the title (overriding step 2). <br>5. Keep any subtitle as part of the title (do **not** split on the colon). <br>6. Clean the final string (collapse spaces, normalise quotes). |
+| `alt_title` | list of strings | Any **alternative** titles, e.g. a translation, a subtitle given in another language, or a title that appears inside quotation marks (`“ ”`, `" "`). Return each cleaned title as a separate element. Do **not** duplicate the main title. |
+| `creator` | list of strings | Authors in **“Surname, Given‑Name”** order. <br>1. If `pdfinfo.author` exists → split on commas, semicolons, the word “and”, or line‑breaks. <br>2. Clean each fragment (trim, collapse spaces). <br>3. For each name: <br>   * If it matches the pattern `First Last` (two words, each starting with a capital letter) → reorder to `Last, First`. <br>   * If it already matches `Last, First` keep as‑is. <br>4. If `pdfinfo.author` is missing, scan the **first five non‑empty lines of page 1** for personal‑name patterns (`First Last`, `Last, First`, or a line that starts with a capitalised list of names). Collect **all** matches. <br>5. Remove duplicates, keep order of appearance. |
+| `year` | integer or null | Publication year. <br>1. If `pdfinfo.creationDate` or `pdfinfo.modDate` exists, extract the **first four digits** (they are always a year) and use that. <br>2. If both are missing, search the whole document for the **first** four‑digit number between 1900‑2099 that appears in a publication‑information context (e.g. after “Year:”, “©”, “© 2021”, “2021.”). If none, return `null`. |
+| `publisher` | list of strings | Institution responsible for the work. <br>• **Theses / dissertations** → the awarding university or faculty (e.g. “University of Vaasa”). Detect by looking for keywords: “University”, “Yliopisto”, “Universität”, “Akademi”, “Institute”, “College”, “School”, “Faculty”. Return each distinct institution once, preserving order of first appearance. <br>• **Research reports** → the organisation that produced the report (same keyword list). <br>• **Journal articles** → `[]`. |
+| `doi` | string or null | DOI if present. Detect case‑insensitive pattern `10\.\d{4,9}/\S+`. If the match is preceded by a URL (`http://`, `https://`, `doi.org/`), strip that part. Remove trailing punctuation characters `.,;:`. Return the bare DOI (e.g. `10.1000/xyz123`). |
+| `e_isbn` | list of strings | **Electronic** ISBN‑13 numbers. Detect ISBN‑13 (13 digits, hyphens optional) with the regex `\b(?:97[89][-\s]?)?\d{1,5}[-\s]?\d{1,7}[-\s]?\d{1,7}[-\s]?\d\b`. For each match, look at up to **30 characters before and after** the match. If any of the **electronic cues** appear, add the ISBN (with **all hyphens and spaces removed**) to `e_isbn`. Electronic cues (case‑insensitive): `digital`, `electronic`, `e‑ISBN`, `(digital)`, `pdf`, `PDF`, `sid.` (when used for electronic), `online`. |
+| `p_isbn` | list of strings | **Print** ISBN‑13 numbers. Same detection as `e_isbn` but require at least one **print cue** in the ±30‑character window. Print cues (case‑insensitive): `print`, `paper`, `hardcover`, `(print)`, `Painettu`, `Print`. If both electronic and print cues are present, **electronic wins** (the ISBN goes only to `e_isbn`). Store the ISBN without hyphens/spaces. |
+| `e_issn` | string or null | Electronic ISSN (8 digits, optional hyphen). Detect with `\b\d{4}[-\s]?\d{3}[\dX]\b`. Apply the same cue logic as for ISBN. Return the ISSN **exactly as it appears** (keep the hyphen if present). |
+| `p_issn` | string or null | Print ISSN (same detection, print‑cue logic). Return the ISSN exactly as it appears (keep hyphen). |
+| `type_coar` | string | COAR‑compatible resource type. Scan the **entire document** (case‑insensitive) and apply the **first** matching rule in this order: <br>1. **doctoral thesis** – contains any of: “doctoral thesis”, “dissertation”, “PhD”, “doctoral”, “väitöskirja”, “väitöskirjan”. <br>2. **master thesis** – contains any of: “master’s thesis”, “master thesis”, “maisteri”, “maisterintutkielma”. <br>3. **journal article** – contains typical journal citation elements (journal name, volume, issue, pages) **or** the word “article” together with a DOI or ISSN, **or** a pattern like “Vol. X, No. Y, pp. Z‑W”. <br>4. **conference proceeding** – contains “conference”, “proceedings”, “paper presented at”. <br>5. **research report** – contains “report”, “raportti”, “tutkimusraportti”, “research report”. <br>6. **research** – fallback for any other research‑type document. <br>Return the exact lower‑case string (e.g. `doctoral thesis`). |
 
-3. **Example 3**:
-   - **Language**: `fi`
-   - **Title**: `”Muiden kulttuurien tuntemus rakentaa siltoja – se opettaa elämään yhdessä” : narratiivinen tutkimus kolmen musiikkikasvattajan kasvusta kohti interkulttuurista ymmärrystä`
-   - **Creator**: `['Sihvola, Maija']`
-   - **Year**: `2019`
-   - **Publisher**: `['Sibelius-Akatemia']`
-   - **Type**: `master thesis`
+---
 
-### General Strategy
-- **Text Analysis**: Carefully analyze the text on each page to extract relevant metadata.
-- **Metadata Cross-Verification**: Cross-verify extracted metadata with the PDF metadata (`pdfinfo`) to ensure accuracy.
-- **Contextual Understanding**: Use contextual clues from the text to determine the type of resource and other metadata fields.
+## Extraction Procedure (Step‑by‑Step)
 
-### Output Format
-The output should be a JSON object with the following structure:
-```json
-{
-    "language": "string",
-    "title": "string",
-    "alt_title": ["string"],
-    "creator": ["string"],
-    "year": "integer",
-    "publisher": ["string"],
-    "doi": "string",
-    "e_isbn": ["string"],
-    "p_isbn": ["string"],
-    "e_issn": "string",
-    "p_issn": "string",
-    "type_coar": "string"
-}
-```
+1. **Parse the input JSON** safely. Ignore any keys that are not listed above.  
+2. **Normalise dates**: `creationDate` / `modDate` are strings like `D:20201216144002+02'00'`. Extract the first four digits as the year (they are always at the start of the string).  
+3. **Detect language** using the rule in the schema (first 200 characters of concatenated text).  
+4. **Title extraction** (see detailed rules under the `title` field). Pay special attention to explicit markers (`Title:`, `Thesis:` etc.).  
+5. **Alternative titles** – look for quoted strings (`“…”`, `"..."`) anywhere in the document, and for subtitles that appear on a separate line after a colon. Do not duplicate the main title.  
+6. **Creator extraction** – follow the rules under `creator`. When scanning for names on page 1, use the following regular expressions (case‑sensitive): <br>`\b[A-Z][a-z]+ [A-Z][a-z]+(?: [A-Z][a-z]+)*\b` (First Last) <br>`\b[A-Z][a-z]+, *[A-Z][a-z]+(?: [A-Z][a-z]+)*\b` (Last, First). Collect all matches, then apply the ordering rule.  
+7. **Year** – apply the rule in the schema. If you have to fall back to searching the text, ignore years that appear inside parentheses of a citation (e.g. “(2020)” after a reference). Prefer the first plausible year after the title block.  
+8. **Publisher detection** – first determine `type_coar`. If the document is a thesis, search the whole text for the first occurrence of a university/faculty keyword list and capture the whole phrase (e.g. “University of Vaasa”, “Åbo Akademi University”). Return it as a single‑element list. For research reports, look for the organisation name that appears near the title or in a header/footer. For journal articles, return an empty list.  
+9. **ISBN / ISSN extraction** – use the regexes supplied. For each match, extract the surrounding 30‑character context and decide electronic vs print using the cue lists. Remove hyphens/spaces from ISBNs before storing; keep ISSNs exactly as found (including hyphen). Ensure each identifier appears only once in the appropriate list.  
+10. **DOI extraction** – apply the DOI regex, strip leading URL parts, and trailing punctuation. Return the bare DOI in lower‑case. If none, set to `null`.  
+11. **Resource type (`type_coar`)** – apply the ordered rule list exactly as described. The first category that matches determines the value.  
+12. **Assemble the output** JSON. Preserve the key order shown in the schema for readability (order is not technically required, but it helps testing). Use `null` for missing scalar values and `[]` for missing list values.
+
+---
+
+## Cleaning & Normalisation Details
+
+* **Whitespace** – collapse any sequence of whitespace characters (spaces, tabs, newlines) to a single space. Trim leading/trailing spaces.  
+* **Quotes** – replace any fancy quotation marks (`“ ” ‘ ’ „ “ …`) with plain ASCII `"` (or the apostrophe `’`).  
+* **Hyphens in identifiers** – remove all hyphens (`-`) and spaces from ISBNs before storing. **Do not** remove hyphens from ISSNs; keep them exactly as they appear.  
+* **Case** – identifiers (DOI) are stored in lower‑case; ISBN/ISSN are numeric/alphabetic only, so case does not matter.  
+
+---
+
+## Common Pitfalls (What Previously Went Wrong)
+
+| Issue | What caused it | Correct handling |
+|-------|----------------|-----------------|
+| **Wrong language** | Scanned only the first page instead of the first 200 characters of the whole document. | Concatenate all page texts, take the first 200 characters, then apply the Finnish‑character rule. |
+| **Title wrong** | Ignored explicit title markers (`Thesis:`) and concatenated the whole heading line. | If a line contains `Title:`, `Thesis:`, `Master’s Thesis:`, `Doctoral Thesis:` (case‑insensitive), use the text after the colon as the title. Otherwise follow the candidate‑line logic. |
+| **Alt‑titles missing** | Did not look for quoted strings or subtitle lines. | Search the whole document for text inside `“ ”` or `" "` and for subtitle lines that appear after a colon on a separate line. |
+| **Creator over‑inclusion** | Added non‑author names (e.g., supervisors) or failed to reorder names. | Only use `pdfinfo.author` or name patterns on page 1. Do **not** include lines that contain words like “Supervisor”, “Advisor”, “Editor”. Reorder `First Last` → `Last, First`. |
+| **Publisher wrong** | Took the first institution mentioned anywhere, even if it was a journal publisher. | First determine `type_coar`. If it is a thesis, look for the awarding university/faculty; for reports, look for the producing organisation; for journal articles return `[]`. |
+| **ISBN/ISSN classification** | Assigned identifiers to the wrong list because cues were not checked, or removed hyphens from ISSNs. | Examine the ±30‑character window for electronic or print cues. If both appear, assign to `e_isbn` (electronic wins). Keep ISSNs exactly as they appear (including hyphen). |
+| **DOI extraction** | Kept surrounding punctuation or URL parts. | Strip any leading `http://`, `https://`, `doi.org/` and trailing punctuation `.,;:`. Return the bare DOI in lower‑case. |
+| **type_coar mis‑classification** | Applied “article” rule too early, causing theses to be labelled as `doctoral thesis`. | Follow the ordered list strictly: **doctoral thesis** → **master thesis** → **journal article** → **conference proceeding** → **research report** → **research**. The first matching rule wins. |
+
+---
+
+**Remember:**  
+- Follow the **order of precedence** for each field exactly as described.  
+- Use the cue‑based approach for ISBN/ISSN to decide electronic vs print.  
+- Detect the resource type in the exact order listed; the first match determines `type_coar`.  
+- Return `null` for missing scalar values and `[]` for missing list values.  
+
+Good luck! 🎯
