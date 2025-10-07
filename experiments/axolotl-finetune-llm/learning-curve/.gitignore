@@ -1,8 +1,0 @@
-config-*
-test-records-*
-train-*
-test.jsonl
-last_run_prepared*
-lc-ft-output*
-out-*
-
