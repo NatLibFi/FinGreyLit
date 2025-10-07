@@ -52,20 +52,27 @@ outputs = llm.generate(
 
 generated_texts = [output.outputs[0].text for output in outputs]
 
+total_records = 0
+parse_errors = 0
+
 #with tempfile.NamedTemporaryFile(mode='w', suffix='.jsonl', delete_on_close=False) as tmpf:
 with open('test-data.jsonl', 'w') as tmpf:
 
     # write predictions into a temporary jsonl file, along with ground truth
     for rec, output in zip(test_recs, generated_texts):
+        total_records += 1
         ground_truth = json.loads(rec['conversations'][-1]["value"])
         try:
             prediction = json.loads(output)
         except json.JSONDecodeError:
+            parse_errors += 1
             prediction = {}
         record = {"ground_truth": ground_truth, "prediction": prediction, "rowid": "unknown"}
         json.dump(record, tmpf)
         tmpf.write("\n")
     tmpf.close()
+
+    print(f"Errors: {parse_errors} out of {total_records} records ({parse_errors/total_records:.2%})", file=sys.stderr)
 
     # evaluate
 
