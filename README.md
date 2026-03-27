@@ -53,5 +53,5 @@ The original publications referenced in this data set are copyrighted by their a
 
 * Original authors of the publications
 * The people who originally entered metadata for the publications in DSpace (often the authors themselves)
-* Tuukka Hämäläinen who curated and harmonized the metadata
+* Tuukka Hämäläinen and Jaana Kalliala who curated and harmonized the metadata
 * NatLibFi automated cataloguing team (Mona Lehtinen, Osma Suominen, Juho Inkinen) for overseeing the project
